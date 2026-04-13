@@ -1,0 +1,138 @@
+@import url('https://fonts.googleapis.com/css2?family=Chiron+GoRound+TC&text=ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789%21%40%23%24%25%5E%26%2A%28%29%2D%5F%3D%2B%5B%5D%7B%7D%3B%3A%27%22%2C%2E%3C%3E%2F%3F%5C%7C%60%7E&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&family=Geologica:wght@300;400;700&family=Outfit:wght@400;700&family=Inter:wght@400;600&family=Noto+Sans+KR:wght@400;700&display=swap');
+
+@import "tailwindcss";
+
+
+
+:root {
+  /* Default Portfolio Layout Background (Dark mode base) */
+  --bg-color: #0d0d0d;
+  --text-color: #f3f4f6;
+  --font-main: 'Inter', 'Noto Sans KR', sans-serif;
+
+  /* ================== */
+  /* [1] PEECE MAKER    */
+  /* ================== */
+  --pm-accent: #fb923c;
+  --font-peecemaker: 'Chiron GoRound TC', 'Noto Sans KR', sans-serif;
+
+  /* ================== */
+  /* [2] FOR THE TEAM   */
+  /* ================== */
+  --ftt-accent: #e23645;
+  --font-ftt-title: 'Oswald', 'Noto Sans KR', sans-serif;
+
+  /* ================== */
+  /* [3] UFC            */
+  /* ================== */
+  --ufc-bg: #1e2024;
+  --ufc-fg: #e1e4e8;
+  --ufc-border: #747474;
+  --font-ufc: 'Geologica', 'Noto Sans KR', sans-serif;
+}
+
+@theme inline {
+  --font-main: var(--font-main);
+  --font-peecemaker: var(--font-peecemaker);
+  --font-ftt: var(--font-ftt-title);
+  --font-ufc: var(--font-ufc);
+
+  --color-pm: var(--pm-accent);
+  --color-ftt: var(--ftt-accent);
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  font-family: var(--font-main);
+  /* 부드러운 스크롤을 위한 트랜지션 (Lenis 등 JS 툴을 쓰지만 CSS 백업) */
+  transition: background-color 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+    color 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow-x: hidden;
+}
+
+/* ================== */
+/* Custom UI Utilities*/
+/* ================== */
+
+/* Peecemaker: Glassmorphism */
+.glass-panel {
+  position: relative;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+  border-radius: 1.5rem;
+  z-index: 1;
+}
+
+.glass-panel::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  z-index: -1;
+  /* 크롬/사파리 블러 스미어링 원천 차단 */
+  transform: translate3d(0, 0, 0);
+  clip-path: inset(0 round 1.5rem);
+  contain: paint;
+}
+
+/* For The Team: Neon Sport Glow */
+.ftt-glow {
+  box-shadow: 0 0 15px var(--ftt-accent),
+    inset 0 0 5px rgba(226, 54, 69, 0.5);
+}
+
+/* UFC: Corner Frame UI (ㄱ자 마크) */
+.corner-frame {
+  position: relative;
+}
+
+.corner-top-left,
+.corner-top-right,
+.corner-bottom-left,
+.corner-bottom-right {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  pointer-events: none;
+  z-index: 10;
+  opacity: 0.7;
+}
+
+.corner-top-left {
+  top: -1px;
+  left: -1px;
+  border-top: 1.5px solid currentColor;
+  border-left: 1.5px solid currentColor;
+}
+
+.corner-top-right {
+  top: -1px;
+  right: -1px;
+  border-top: 1.5px solid currentColor;
+  border-right: 1.5px solid currentColor;
+}
+
+.corner-bottom-left {
+  bottom: -1px;
+  left: -1px;
+  border-bottom: 1.5px solid currentColor;
+  border-left: 1.5px solid currentColor;
+}
+
+.corner-bottom-right {
+  bottom: -1px;
+  right: -1px;
+  border-bottom: 1.5px solid currentColor;
+  border-right: 1.5px solid currentColor;
+}
+
+/* Hide scrollbars completely for aesthetic purposes */
+::-webkit-scrollbar {
+  width: 0px;
+  background: transparent;
+}

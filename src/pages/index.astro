@@ -1,17 +1,24 @@
 ---
-
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.tsx';
+import SmoothScroll from '../components/SmoothScroll.tsx';
+import TrilogyContainer from '../components/TrilogyContainer.tsx';
+import HeroSection from '../components/HeroSection.tsx';
+import TechStackSection from '../components/TechStackSection.tsx';
+import PeecemakerSection from '../components/PeecemakerSection.tsx';
+import ForTheTeamSection from '../components/ForTheTeamSection.tsx';
+import UfcSection from '../components/UfcSection.tsx';
 ---
-
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Layout title="NX280 | Trilogy Portfolio">
+  <Header client:load />
+  <!-- Lenis Scroll 적용 -->
+  <SmoothScroll client:load>
+    <TrilogyContainer client:load>
+      <HeroSection client:load />
+      <TechStackSection client:visible />
+      <PeecemakerSection client:visible />
+      <ForTheTeamSection client:visible />
+      <UfcSection client:visible />
+    </TrilogyContainer>
+  </SmoothScroll>
+</Layout>
