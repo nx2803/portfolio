@@ -46,19 +46,19 @@ export default function TypewriterText({ text, className = '', style, delay = 0,
   }, [isInView, text, delay, speed]);
 
   return (
-    <div ref={ref} className={className} style={style}>
-      {/* relative wrapper: invisible 전체 텍스트가 공간 확보, 타이핑 텍스트가 위에 오버레이 */}
-      <span className="relative whitespace-pre-wrap">
+    <div ref={ref} className={`${className} w-full`} style={style}>
+      {/* relative wrapper: block으로 변경하여 너비 확보 안정화 */}
+      <div className="relative w-full break-keep">
         {/* 공간 확보용 - 항상 full text 높이/너비 유지 */}
-        <span className="invisible">{text}</span>
+        <div className="invisible whitespace-pre-wrap">{text}</div>
         {/* 실제 타이핑 텍스트 - absolute로 위에 덮음 */}
-        <span className="absolute inset-0">
+        <div className="absolute inset-0 whitespace-pre-wrap">
           {text.substring(0, displayedLength)}
           {!isCompleted && (
-            <span className="inline-block w-0.5 h-[0.85em] bg-green-400 ml-px align-middle" />
+            <span className="inline-block w-0.5 h-[0.85em] bg-green-400 ml-px align-middle animate-pulse" />
           )}
-        </span>
-      </span>
+        </div>
+      </div>
     </div>
   );
 }

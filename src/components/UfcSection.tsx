@@ -12,17 +12,17 @@ export default function UfcSection() {
   return (
     <section id="ufc" className="relative w-full min-h-screen py-20 md:py-24 flex items-center justify-center text-[#e1e4e8] bg-transparent" style={{ fontFamily: 'var(--font-ufc)', backgroundImage: 'radial-gradient(at 0% 0%, rgba(255, 255, 255, 0.03) 0, transparent 50%), radial-gradient(at 100% 100%, rgba(255, 255, 255, 0.02) 0, transparent 50%)' }}>
 
-      <div className="w-full  max-w-[1600px] mx-auto px-6 md:px-12">
+      <div className="w-full max-w-[1600px] mx-auto px-6 md:px-12">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 md:mb-16 border-[#747474] pb-4 corner-frame p-6 md:p-8 gap-8 md:gap-0">
           <div className="corner-top-left" />
           <div className="corner-top-right" />
           <div className="corner-bottom-left" />
           <div className="corner-bottom-right" />
-          <div>
-            <h3 className="text-xs tracking-widest text-[#6a737d] mb-2 uppercase">C:\UFC\SYSTEM\ANALYSIS_MODULE</h3>
+          <div className="w-full">
+            <h3 className="text-xs tracking-widest text-[#6a737d] mb-2 uppercase font-mono">C:\UFC\SYSTEM\ANALYSIS_MODULE</h3>
 
             <h2
-              className="text-3xl md:text-5xl lg:text-6xl font-black tracking-tighter text-white leading-[0.9] flex flex-col"
+              className="text-[clamp(1.5rem,8vw,3.75rem)] md:text-5xl lg:text-6xl font-black tracking-tighter text-white leading-[0.9] flex flex-col"
               style={{
                 viewTransitionName: isTransitionTarget ? 'project-title' : 'none',
                 fontFamily: '"Geologica", sans-serif',
@@ -35,17 +35,15 @@ export default function UfcSection() {
               <span>CHAMPIONSHIP</span>
             </h2>
 
-            {/* 설명 문단 */}
-            <div style={{ fontFamily: '"Geologica", sans-serif' }}>
+            <div className="w-full" style={{ fontFamily: '"Geologica", sans-serif' }}>
               <TypewriterText
                 text="대규모 기술 트렌드 데이터를 Java 21과 AI 에이전트를 통해 정밀 분석하여 시각화하는 고성능 랭킹 플랫폼입니다. Spring Batch 6.x 기반의 배치 아키텍처와 LLM 인퍼런스를 결합하여 기술 생태계의 동적 변화를 팩트 기반의 인사이트로 변환합니다."
-                className="mt-6 text-sm md:text-base text-white font-sans max-w-2xl font-light leading-relaxed"
+                className="mt-6 text-sm md:text-base text-white/80 font-sans max-w-2xl font-light leading-relaxed"
                 delay={1.8}
                 speed={18}
               />
             </div>
           </div>
-
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
