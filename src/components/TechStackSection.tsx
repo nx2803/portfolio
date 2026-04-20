@@ -14,35 +14,42 @@ interface TechItem {
 }
 
 const frontendItems: TechItem[] = [
-  { name: 'NEXT.JS', icon: SiNextdotjs, version: '15.1' },
-  { name: 'REACT', icon: SiReact, version: '19.0' },
-  { name: 'TYPESCRIPT', icon: SiTypescript, version: '5.7' },
-  { name: 'FLUTTER', icon: SiFlutter, version: '3.27' },
-  { name: 'TAILWIND', icon: SiTailwindcss, version: '4.0' },
-  { name: 'REACT QUERY', icon: SiReactquery, version: '5.0' },
-  { name: 'FRAMER MOTION', icon: SiFramer, version: '11.0' },
+  { name: 'NEXT.JS', icon: SiNextdotjs },
+  { name: 'REACT', icon: SiReact },
+  { name: 'TYPESCRIPT', icon: SiTypescript },
+  { name: 'DART', icon: SiDart },
+  { name: 'FLUTTER', icon: SiFlutter },
+  { name: 'TAILWIND', icon: SiTailwindcss },
+  { name: 'REACT QUERY', icon: SiReactquery },
+  { name: 'FRAMER MOTION', icon: SiFramer },
 ];
 
 const backendItems: TechItem[] = [
-  { name: 'SPRING BOOT', icon: SiSpringboot, version: '3.4' },
-  { name: 'NESTJS', icon: SiNestjs, version: '11.0' },
-  { name: 'PYTHON', icon: SiPython, version: '3.13' },
-  { name: 'FASTAPI', icon: SiFastapi, version: '0.115' },
-  { name: 'JAVA', icon: FaJava, version: '21' },
-  { name: 'GEMINI AI', icon: SiGooglegemini, version: '1.5' },
+  { name: 'SPRING BOOT', icon: SiSpringboot },
+  { name: 'NESTJS', icon: SiNestjs },
+  { name: 'SOCKET.IO', icon: SiSocketdotio },
+  { name: 'PYTHON', icon: SiPython },
+  { name: 'FASTAPI', icon: SiFastapi },
+  { name: 'JAVA', icon: FaJava },
+  { name: 'GEMINI AI', icon: SiGooglegemini },
+
 ];
 
 const infraItems: TechItem[] = [
-  { name: 'POSTGRESQL', icon: SiPostgresql, version: '17' },
-  { name: 'DOCKER', icon: SiDocker, version: '27' },
-  { name: 'PRISMA', icon: SiPrisma, version: '6.0' },
-  { name: 'REDIS', icon: SiRedis, version: '7.4' },
-  { name: 'VERCEL', icon: SiVercel, version: 'LATEST' },
-  { name: 'SUPABASE', icon: SiSupabase, version: 'BaaS' },
+  { name: 'POSTGRESQL', icon: SiPostgresql },
+  { name: 'DOCKER', icon: SiDocker },
+  { name: 'PRISMA', icon: SiPrisma },
+  { name: 'REDIS', icon: SiRedis },
+  { name: 'OPENTELEMETRY', icon: SiOpentelemetry },
+  { name: 'VERCEL', icon: SiVercel },
+  { name: 'RENDER', icon: SiRender },
+  { name: 'SUPABASE', icon: SiSupabase },
+  { name: 'KOYEB', icon: SiKoyeb },
+  { name: 'HUGGING FACE', icon: SiHuggingface },
 ];
 
 // 무한 티커 컴포넌트
-const TechTicker = ({ items, reverse = false, speed = 60 }: { items: (TechItem & { version: string })[], reverse?: boolean, speed?: number }) => {
+const TechTicker = ({ items, reverse = false, speed = 60 }: { items: TechItem[], reverse?: boolean, speed?: number }) => {
   const duplicatedItems = [...items, ...items, ...items, ...items];
 
   return (
@@ -60,9 +67,6 @@ const TechTicker = ({ items, reverse = false, speed = 60 }: { items: (TechItem &
               <div className="flex items-center gap-3">
                 <span className="text-base font-mono tracking-[0.3em] text-white/60 uppercase font-black group-hover/item:text-white transition-colors">
                   {item.name}
-                </span>
-                <span className="text-[10px] font-mono text-white/20 group-hover/item:text-white/40 transition-colors">
-                  v.{item.version}
                 </span>
               </div>
               <div className="w-0 group-hover/item:w-full h-0.5 bg-white transition-all duration-500 shadow-[0_0_8px_white]" />
@@ -113,7 +117,7 @@ export default function TechStackSection() {
               className="text-5xl md:text-7xl font-black uppercase text-white tracking-tighter"
               style={{ fontFamily: "'Saira Stencil One', sans-serif" }}
             >
-              INTERFACE
+              FRONTEND
             </h3>
             <div className="flex-1 h-px bg-white opacity-10 mb-4" />
           </div>
@@ -128,7 +132,7 @@ export default function TechStackSection() {
               className="text-5xl md:text-7xl font-black uppercase text-white tracking-tighter"
               style={{ fontFamily: "'Saira Stencil One', sans-serif" }}
             >
-              LOGIC
+              BACKEND
             </h3>
             <div className="flex-1 h-px bg-white opacity-10 mb-4" />
           </div>

@@ -4,38 +4,38 @@ import React from 'react';
 export default function PhilosophySection() {
   const philosophies = [
     {
-      label: "PERFORMANCE_OPTIMIZATION",
-      title: "Performance-Driven Engineering",
-      titleKr: "성능 한계를 돌파하는 최적화 역량",
-      desc: "Java 21 Virtual Threads를 이용한 고성능 I/O 처리와 수천 개의 위치 데이터를 병목 없이 렌더링하는 알고리즘 최적화 등, 시스템의 임계 성능을 이해하고 극대화하는 데 집중합니다.",
-      tags: ["High-Throughput", "Latency Optimization", "System Efficiency"]
+      label: "PRODUCTION_RESILIENCE",
+      title: "Resilient Integrity",
+      titleKr: "데이터 정합성과 시스템의 회복 탄력성",
+      desc: "외부 API의 불안정성과 데이터 공백에 대응하기 위해 정교한 Retry 및 Fallback 파이프라인을 구축합니다. 기술적 예외 상황에서도 사용자에게 도달하는 정보가 무결함을 유지하도록 데이터 정합성을 최우선으로 설계합니다.",
+      tags: ["Spring Retry", "Data Interpolation", "Fail-Safe Architecture"]
     },
     {
-      label: "SYSTEM_RELIABILITY",
-      title: "Fault-Tolerant System Design",
-      titleKr: "장애 내성과 데이터 무결성의 확보",
-      desc: "다중 외부 소스 통합 시의 Failover 전략 구축과 AI 할루시네이션 방지 로직 설계 등, 어떤 환경에서도 서비스의 지속 가능성과 데이터 신뢰도를 보장하는 시스템을 설계합니다.",
-      tags: ["Fail-Safe", "Data Integrity", "Service Continuity"]
+      label: "DESIGN_ENGINEERING",
+      title: "Algorithmic Craftsmanship",
+      titleKr: "알고리즘으로 구현하는 정밀한 인터페이스",
+      desc: "시각적 감각을 엔지니어링의 관점에서 코드로 정밀하게 제어합니다. WCAG 기준의 휘도 계산 엔진을 직접 구현하여 가독성 문제를 해결하는 등, 심미적 완성도가 기술적 논리 위에서 구현될 때 비로소 지속 가능한 UI가 완성된다고 믿습니다.",
+      tags: ["Contrast Engine", "Dynamic CSS Injection", "Precision UI/UX"]
     },
     {
-      label: "FULLSTACK_CRAFTSMANSHIP",
-      title: "Modern Full-Stack Craftsmanship",
-      titleKr: "최신 스택 기반의 정교한 구현력",
-      desc: "Astro 6, React 19 등 최신 생태계를 실무에 능숙하게 적용하며, 폰트 피처와 인터랙션 디테일까지 정밀하게 제어하여 기획 의도를 완벽한 사용자 경험으로 치환합니다.",
-      tags: ["Modern Ecosystem", "Precision UI", "Interactive UX"]
+      label: "SYSTEM_EVOLUTION",
+      title: "Systemic Evolution",
+      titleKr: "확장을 위한 점진적 기술 고도화",
+      desc: "공공 서비스(Peecemaker)에서 글로벌 실시간 데이터 동기화(For The Team), 그리고 AI 통합 인사이트 플랫폼(UFC)으로 이어지는 기술적 확장을 추구합니다. 각 단계에서 가상 스레드와 분산 트레이싱 등 고도화된 기술을 도입하며, 시스템 빌더로서의 서사를 체계적으로 완성해 왔습니다.",
+      tags: ["Virtual Threads", "Next.js 16 PPR", "OTEL Tracing", "FastAPI AI Engine"]
     }
   ];
 
   return (
     <section id="philosophy" className="relative w-full py-60 flex flex-col items-center justify-center bg-transparent overflow-hidden">
-      
+
       {/* ── BACKGROUND DECORATION (Hero Style) ── */}
       <div className="absolute inset-0 pointer-events-none opacity-10">
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full border-x border-white/30" />
       </div>
 
-      <div className="w-full max-w-[1600px] mx-auto px-6 md:px-20 relative z-10">
-        
+      <div className="w-full max-w-400 mx-auto px-6 md:px-20 relative z-10">
+
         {/* Header: Tactical Style matching Hero/TechStack */}
         <div className="flex flex-col mb-40">
           <motion.div
@@ -52,7 +52,7 @@ export default function PhilosophySection() {
             </div>
 
             <div className="flex items-center gap-8 mt-2">
-              <h2 
+              <h2
                 className="text-[clamp(3rem,10vw,8rem)] font-black uppercase text-white leading-none tracking-[-0.04em]"
                 style={{ fontFamily: "'Saira Stencil One', sans-serif" }}
               >
@@ -75,7 +75,7 @@ export default function PhilosophySection() {
             >
               {/* Index Number (Hero Style Large Stencil) - Cleaned */}
               <div className="relative mb-8 md:mb-0 md:w-1/4">
-                <span 
+                <span
                   className="text-8xl md:text-[10rem] font-black text-white/15 group-hover:text-white/40 transition-colors duration-700 leading-none select-none"
                   style={{ fontFamily: "'Saira Stencil One', sans-serif" }}
                 >
@@ -114,7 +114,7 @@ export default function PhilosophySection() {
               </div>
 
               {/* Hover Glow Effect */}
-              <div className="absolute inset-0 bg-white/[0.02] opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
+              <div className="absolute inset-0 bg-white/2 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
             </motion.div>
           ))}
         </div>
