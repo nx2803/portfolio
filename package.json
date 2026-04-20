@@ -1,5 +1,5 @@
 {
-  "name": "helpless-hubble",
+  "name": "portfolio",
   "type": "module",
   "version": "0.0.1",
   "engines": {
@@ -15,7 +15,6 @@
     "@astrojs/mdx": "^5.0.3",
     "@astrojs/react": "^5.0.3",
     "@nanostores/react": "^1.1.0",
-    "@studio-freight/lenis": "^1.0.42",
     "@tailwindcss/vite": "^4.2.2",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
