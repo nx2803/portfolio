@@ -14,35 +14,35 @@ interface TechItem {
 }
 
 const frontendItems: TechItem[] = [
-  { name: 'NEXT.JS', icon: SiNextdotjs },
-  { name: 'REACT', icon: SiReact },
-  { name: 'TYPESCRIPT', icon: SiTypescript },
-  { name: 'FLUTTER', icon: SiFlutter },
-  { name: 'TAILWIND', icon: SiTailwindcss },
-  { name: 'REACT QUERY', icon: SiReactquery },
-  { name: 'FRAMER MOTION', icon: SiFramer },
+  { name: 'NEXT.JS', icon: SiNextdotjs, version: '15.1' },
+  { name: 'REACT', icon: SiReact, version: '19.0' },
+  { name: 'TYPESCRIPT', icon: SiTypescript, version: '5.7' },
+  { name: 'FLUTTER', icon: SiFlutter, version: '3.27' },
+  { name: 'TAILWIND', icon: SiTailwindcss, version: '4.0' },
+  { name: 'REACT QUERY', icon: SiReactquery, version: '5.0' },
+  { name: 'FRAMER MOTION', icon: SiFramer, version: '11.0' },
 ];
 
 const backendItems: TechItem[] = [
-  { name: 'SPRING BOOT', icon: SiSpringboot },
-  { name: 'NESTJS', icon: SiNestjs },
-  { name: 'PYTHON', icon: SiPython },
-  { name: 'FASTAPI', icon: SiFastapi },
-  { name: 'JAVA', icon: FaJava },
-  { name: 'GEMINI AI', icon: SiGooglegemini },
+  { name: 'SPRING BOOT', icon: SiSpringboot, version: '3.4' },
+  { name: 'NESTJS', icon: SiNestjs, version: '11.0' },
+  { name: 'PYTHON', icon: SiPython, version: '3.13' },
+  { name: 'FASTAPI', icon: SiFastapi, version: '0.115' },
+  { name: 'JAVA', icon: FaJava, version: '21' },
+  { name: 'GEMINI AI', icon: SiGooglegemini, version: '1.5' },
 ];
 
 const infraItems: TechItem[] = [
-  { name: 'POSTGRESQL', icon: SiPostgresql },
-  { name: 'DOCKER', icon: SiDocker },
-  { name: 'PRISMA', icon: SiPrisma },
-  { name: 'REDIS', icon: SiRedis },
-  { name: 'VERCEL', icon: SiVercel },
-  { name: 'SUPABASE', icon: SiSupabase },
+  { name: 'POSTGRESQL', icon: SiPostgresql, version: '17' },
+  { name: 'DOCKER', icon: SiDocker, version: '27' },
+  { name: 'PRISMA', icon: SiPrisma, version: '6.0' },
+  { name: 'REDIS', icon: SiRedis, version: '7.4' },
+  { name: 'VERCEL', icon: SiVercel, version: 'LATEST' },
+  { name: 'SUPABASE', icon: SiSupabase, version: 'BaaS' },
 ];
 
 // 무한 티커 컴포넌트
-const TechTicker = ({ items, reverse = false, speed = 60 }: { items: TechItem[], reverse?: boolean, speed?: number }) => {
+const TechTicker = ({ items, reverse = false, speed = 60 }: { items: (TechItem & { version: string })[], reverse?: boolean, speed?: number }) => {
   const duplicatedItems = [...items, ...items, ...items, ...items];
 
   return (
@@ -56,10 +56,15 @@ const TechTicker = ({ items, reverse = false, speed = 60 }: { items: TechItem[],
         {duplicatedItems.map((item, idx) => (
           <div key={idx} className="flex items-center gap-8 group/item">
             <item.icon className="text-6xl md:text-8xl text-white opacity-80 group-hover/item:opacity-100 group-hover/item:scale-110 transition-all duration-500" />
-            <div className="flex flex-col gap-2">
-              <span className="text-base font-mono tracking-[0.3em] text-white/60 uppercase font-black group-hover/item:text-white transition-colors">
-                {item.name}
-              </span>
+            <div className="flex flex-col gap-1">
+              <div className="flex items-center gap-3">
+                <span className="text-base font-mono tracking-[0.3em] text-white/60 uppercase font-black group-hover/item:text-white transition-colors">
+                  {item.name}
+                </span>
+                <span className="text-[10px] font-mono text-white/20 group-hover/item:text-white/40 transition-colors">
+                  v.{item.version}
+                </span>
+              </div>
               <div className="w-0 group-hover/item:w-full h-0.5 bg-white transition-all duration-500 shadow-[0_0_8px_white]" />
             </div>
           </div>
@@ -92,7 +97,7 @@ export default function TechStackSection() {
             className="text-[clamp(4rem,12vw,10rem)] font-black uppercase text-white leading-none tracking-[-0.05em] drop-shadow-[0_0_30px_rgba(255,255,255,0.15)]"
             style={{ fontFamily: "'Saira Stencil One', sans-serif" }}
           >
-            TECK STACKS
+            TECH STACKS
           </h2>
         </motion.div>
       </div>

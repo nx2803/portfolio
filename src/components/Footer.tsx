@@ -3,8 +3,8 @@ import { SiGithub } from 'react-icons/si';
 
 export default function Footer() {
   return (
-    <footer className="w-full py-4 px-6 bg-transparent text-[#8b949e] border-t border-[#1a1a1a] flex justify-center z-10 relative mt-4 font-rock">
-      <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-16">
+    <footer className="w-full py-12 px-6 bg-transparent text-[#8b949e] flex justify-center z-10 relative font-sans">
+      <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-16 border-t border-white/5 pt-8 w-full max-w-4xl justify-center">
         <a 
           href="mailto:nx2803@gmail.com" 
           className="flex items-center gap-3 hover:text-white transition-colors duration-300 group"

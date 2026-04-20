@@ -4,6 +4,7 @@ import Header from '../components/Header.tsx';
 import TrilogyContainer from '../components/TrilogyContainer.tsx';
 import HeroSection from '../components/HeroSection.tsx';
 import TechStackSection from '../components/TechStackSection.tsx';
+import PhilosophySection from '../components/PhilosophySection.tsx';
 import PeecemakerSection from '../components/PeecemakerSection.tsx';
 import ForTheTeamSection from '../components/ForTheTeamSection.tsx';
 import UfcSection from '../components/UfcSection.tsx';
@@ -15,9 +16,10 @@ import Footer from '../components/Footer.tsx';
   <TrilogyContainer client:load>
     <HeroSection client:load />
     <TechStackSection client:visible />
+    <PhilosophySection client:visible />
     <PeecemakerSection client:visible />
     <ForTheTeamSection client:visible />
     <UfcSection client:visible />
+    <Footer client:visible />
   </TrilogyContainer>
-  <Footer client:visible />
 </Layout>

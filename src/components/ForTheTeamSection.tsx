@@ -12,7 +12,9 @@ export default function ForTheTeamSection() {
 
       {/* Kinetic Typography Background */}
       <div className="absolute inset-0 pointer-events-none z-0 select-none overflow-hidden opacity-[0.35]">
-        <div className="absolute w-[200vw] h-[200vh] top-[-50vh] left-[-50vw] flex flex-col justify-center">
+        <div
+          className="absolute w-[200vw] h-[200vh] top-[-50vh] left-[-50vw] flex flex-col justify-center"
+        >
           {Array.from({ length: 14 }).map((_, i) => (
             <motion.div
               key={i}
@@ -29,7 +31,7 @@ export default function ForTheTeamSection() {
                   key={j}
                   className="text-[14rem] font-bold italic uppercase tracking-tighter leading-[0.85] px-12 text-transparent"
                   style={{
-                    WebkitTextStroke: '2px var(--color-ftt)',
+                    WebkitTextStroke: '1.5px var(--color-ftt)',
                     opacity: 1
                   }}
                 >
@@ -64,33 +66,36 @@ export default function ForTheTeamSection() {
               <h3 className="text-[#dc3442] font-bold tracking-widest mb-2 uppercase text-sm">Enterprise-grade Sports Platform</h3>
               <h2 
                 className="text-4xl md:text-5xl font-bold uppercase italic tracking-tighter mb-4 text-white leading-none"
-                style={{ viewTransitionName: isTransitionTarget ? 'project-title' : 'none' }}
+                style={{ 
+                  viewTransitionName: isTransitionTarget ? 'project-title' : 'none',
+                  fontFamily: '"Oswald", sans-serif',
+                  letterSpacing: '-0.05em'
+                }}
               >
                 FOR THE <span className='text-[#dc3442]'>TEAM</span>
               </h2>
               <p className="text-sm md:text-base text-gray-400 font-sans mb-6 font-light leading-relaxed">
                 유럽 5대 리그부터 야구, 농구, e스포츠(LCK)까지 전 세계 스포츠 데이터를 실시간 통합 관리하는 통합 스포츠 일정 플랫폼입니다.<br className="hidden lg:block"/>
-                서로 다른 5개 이상의 외부 공급자 API 규격을 하나의 통합 도메인 모델(League, Team, Match)로 정규화(Normalization)하여 데이터 정합성을 완벽히 구현했습니다.
+                서로 다른 5개 이상의 외부 공급자 API 규격을 하나의 통합 도메인 모델로 정규화하여 데이터 정합성을 확보하고, API 장애 시에도 안정적인 서비스를 제공하는 Failover 메커니즘을 구축했습니다.
               </p>
               
               {/* Tech Stack Badges */}
-              <div className="flex flex-wrap gap-1.5 font-sans mb-6">
-                <span className="flex items-center gap-1.5 px-2 py-1 bg-red-950/30 text-[#e23645] border border-red-500/20 uppercase tracking-widest text-[0.6rem] font-bold"><SiNextdotjs /> Next.js 16</span>
-                <span className="flex items-center gap-1.5 px-2 py-1 bg-red-950/30 text-[#e23645] border border-red-500/20 uppercase tracking-widest text-[0.6rem] font-bold"><SiReact /> React 19</span>
-                <span className="flex items-center gap-1.5 px-2 py-1 bg-red-950/30 text-[#e23645] border border-red-500/20 uppercase tracking-widest text-[0.6rem] font-bold"><SiTailwindcss /> Tailwind 4</span>
-                <span className="flex items-center gap-1.5 px-2 py-1 bg-red-950/30 text-[#e23645] border border-red-500/20 uppercase tracking-widest text-[0.6rem] font-bold"><SiFramer /> Framer</span>
-                <span className="flex items-center gap-1.5 px-2 py-1 bg-red-950/30 text-[#e23645] border border-red-500/20 uppercase tracking-widest text-[0.6rem] font-bold"><SiNestjs /> NestJS</span>
-                <span className="flex items-center gap-1.5 px-2 py-1 bg-red-950/30 text-[#e23645] border border-red-500/20 uppercase tracking-widest text-[0.6rem] font-bold"><SiPrisma /> Prisma</span>
-                <span className="flex items-center gap-1.5 px-2 py-1 bg-red-950/30 text-[#e23645] border border-red-500/20 uppercase tracking-widest text-[0.6rem] font-bold"><SiSocketdotio /> WebSockets</span>
-                <span className="flex items-center gap-1.5 px-2 py-1 bg-red-950/30 text-[#e23645] border border-red-500/20 uppercase tracking-widest text-[0.6rem] font-bold"><SiOpentelemetry /> OTLP</span>
-                <span className="flex items-center gap-1.5 px-2 py-1 bg-red-950/30 text-[#e23645] border border-red-500/20 uppercase tracking-widest text-[0.6rem] font-bold"><SiRedis /> Redis</span>
+              <div className="flex flex-wrap gap-2.5 font-sans mb-8">
+                <span className="flex items-center gap-2 px-4 py-2 bg-red-950/30 text-[#e23645] border border-red-500/20 uppercase tracking-widest text-[0.8rem] font-bold transition-all hover:bg-red-500/10 hover:border-red-500/40"><SiNextdotjs className="text-xl" /> Next.js 16</span>
+                <span className="flex items-center gap-2 px-4 py-2 bg-red-950/30 text-[#e23645] border border-red-500/20 uppercase tracking-widest text-[0.8rem] font-bold transition-all hover:bg-red-500/10 hover:border-red-500/40"><SiReact className="text-xl" /> React 19</span>
+                <span className="flex items-center gap-2 px-4 py-2 bg-red-950/30 text-[#e23645] border border-red-500/20 uppercase tracking-widest text-[0.8rem] font-bold transition-all hover:bg-red-500/10 hover:border-red-500/40"><SiTailwindcss className="text-xl" /> Tailwind 4</span>
+                <span className="flex items-center gap-2 px-4 py-2 bg-red-950/30 text-[#e23645] border border-red-500/20 uppercase tracking-widest text-[0.8rem] font-bold transition-all hover:bg-red-500/10 hover:border-red-500/40"><SiFramer className="text-xl" /> Framer</span>
+                <span className="flex items-center gap-2 px-4 py-2 bg-red-950/30 text-[#e23645] border border-red-500/20 uppercase tracking-widest text-[0.8rem] font-bold transition-all hover:bg-red-500/10 hover:border-red-500/40"><SiNestjs className="text-xl" /> NestJS</span>
+                <span className="flex items-center gap-2 px-4 py-2 bg-red-950/30 text-[#e23645] border border-red-500/20 uppercase tracking-widest text-[0.8rem] font-bold transition-all hover:bg-red-500/10 hover:border-red-500/40"><SiPrisma className="text-xl" /> Prisma</span>
+                <span className="flex items-center gap-2 px-4 py-2 bg-red-950/30 text-[#e23645] border border-red-500/20 uppercase tracking-widest text-[0.8rem] font-bold transition-all hover:bg-red-500/10 hover:border-red-500/40"><SiSocketdotio className="text-xl" /> WebSockets</span>
+                <span className="flex items-center gap-2 px-4 py-2 bg-red-950/30 text-[#e23645] border border-red-500/20 uppercase tracking-widest text-[0.8rem] font-bold transition-all hover:bg-red-500/10 hover:border-red-500/40"><SiOpentelemetry className="text-xl" /> OTLP</span>
+                <span className="flex items-center gap-2 px-4 py-2 bg-red-950/30 text-[#e23645] border border-red-500/20 uppercase tracking-widest text-[0.8rem] font-bold transition-all hover:bg-red-500/10 hover:border-red-500/40"><SiRedis className="text-xl" /> Redis</span>
               </div>
             </div>
 
             <div className="mt-6 font-sans space-y-2">
-              <div className="bg-[#111111] p-3 border-l-2 border-[#e23645] flex flex-col xl:flex-row xl:items-center justify-between gap-1">
-                <span className="text-xs text-gray-400">Next.js 16 PPR(Partial Prerendering) 및 Socket.io 기반의 실시간 점수 push/sync 파이프라인 구축</span>
-                <span className="text-[#e23645] font-bold text-[0.6rem] uppercase tracking-widest hidden xl:block">Real-time Data</span>
+              <div className="bg-[#111111] p-3 text-xs text-gray-400">
+                Next.js 16 PPR(Partial Prerendering) 및 Socket.io 기반의 실시간 점수 push/sync 파이프라인 구축
               </div>
               <div className="bg-[#111111] p-3 text-xs text-gray-400">
                 OpenTelemetry 기반 전 구간 분산 트레이싱을 도입하여 외부 API 연동 및 DB 쿼리 간의 성능 병목 지점 정밀 모니터링 및 추적
@@ -100,9 +105,16 @@ export default function ForTheTeamSection() {
               </div>
             </div>
 
-            <button className="mt-8 self-start px-5 py-2.5 bg-[#e23645] text-white font-bold tracking-widest uppercase text-sm hover:bg-white hover:text-black hover:shadow-[0_0_20px_#e23645] transition-all duration-300">
-              View Calendar
-            </button>
+            <div className="mt-8">
+              <a 
+                href="https://for-the-team.vercel.app/" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="inline-block px-6 py-2.5 bg-[#dc3442] text-white font-bold uppercase tracking-widest text-xs hover:bg-white hover:text-[#dc3442] transition-all duration-300 shadow-[0_0_20px_rgba(226,54,69,0.2)]"
+              >
+                Explore Project
+              </a>
+            </div>
           </div>
 
           {/* Image/Mockup Block */}

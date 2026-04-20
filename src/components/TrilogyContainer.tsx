@@ -8,6 +8,7 @@ const bgColors: Record<string, string> = {
   intro: '#121214',       // Hero (Heavy Stealth Grey)
   about: '#f2f2f2',       // About (Light Grey)
   techstack: '#121214',   // Tech Stack (Consistent Stealth Grey)
+  philosophy: '#121214',  // Philosophy (Dark)
   peecemaker: '#fdfdfd',  // Peecemaker (White Contrast)
   fortheteam: '#0a0a0a',  // For The Team (Deep Black)
   ufc: '#16181c',         // UFC (Industrial Slate)
@@ -40,7 +41,7 @@ export default function TrilogyContainer({ children }: { children: ReactNode }) 
       }
     );
 
-    const sectionIds = ['intro', 'about', 'techstack', 'peecemaker', 'fortheteam', 'ufc'];
+    const sectionIds = ['intro', 'about', 'techstack', 'philosophy', 'peecemaker', 'fortheteam', 'ufc'];
     sectionIds.forEach((id) => {
       const element = document.getElementById(id);
       if (element) observer.observe(element);
