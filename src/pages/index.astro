@@ -8,6 +8,7 @@ import TechStackSection from '../components/TechStackSection.tsx';
 import PeecemakerSection from '../components/PeecemakerSection.tsx';
 import ForTheTeamSection from '../components/ForTheTeamSection.tsx';
 import UfcSection from '../components/UfcSection.tsx';
+import Footer from '../components/Footer.tsx';
 ---
 <Layout title="NX280 | Trilogy Portfolio">
   <Header client:load />
@@ -20,5 +21,6 @@ import UfcSection from '../components/UfcSection.tsx';
       <ForTheTeamSection client:visible />
       <UfcSection client:visible />
     </TrilogyContainer>
+    <Footer client:visible />
   </SmoothScroll>
 </Layout>
