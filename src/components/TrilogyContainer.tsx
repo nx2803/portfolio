@@ -6,9 +6,10 @@ import { $activeSection, updateActiveSection } from '../store/sectionStore';
 // 섹션별 배경색 통합 관리 (Heavy Stealth Grey 적용)
 const bgColors: Record<string, string> = {
   intro: '#121214',       // Hero (Heavy Stealth Grey)
-  about: '#f2f2f2',       // About (Light Grey)
+  about: '#0c0d0f',       // About (Match Deep Black)
   techstack: '#121214',   // Tech Stack (Consistent Stealth Grey)
   standards: '#121214',   // Standards (Dark)
+  trilogy_intro: '#0c0d0f', // Trilogy Intro (Deep Black)
   peecemaker: '#fdfdfd',  // Peecemaker (White Contrast)
   fortheteam: '#0a0a0a',  // For The Team (Deep Black)
   ufc: '#16181c',         // UFC (Industrial Slate)
@@ -61,7 +62,7 @@ export default function TrilogyContainer({ children }: { children: ReactNode }) 
       }
     );
 
-    const sectionIds = ['intro', 'about', 'techstack', 'standards', 'peecemaker', 'fortheteam', 'ufc', 'footer'];
+    const sectionIds = ['intro', 'about', 'techstack', 'standards', 'trilogy_intro', 'peecemaker', 'fortheteam', 'ufc', 'footer'];
     sectionIds.forEach((id) => {
       const element = document.getElementById(id);
       if (element) observer.observe(element);

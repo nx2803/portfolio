@@ -6,8 +6,10 @@ import { HiMenu, HiX } from 'react-icons/hi';
 
 const sections = [
   { id: 'intro', label: 'Intro', shortLabel: 'IN' },
+  { id: 'about', label: 'About', shortLabel: 'AB' },
   { id: 'techstack', label: 'Tech Stacks', shortLabel: 'TS' },
   { id: 'standards', label: 'Engineering Standards', shortLabel: 'STD' },
+  { id: 'trilogy_intro', label: 'Trilogy', shortLabel: 'TRI' },
   { id: 'peecemaker', label: 'Peecemaker', shortLabel: 'PM' },
   { id: 'fortheteam', label: 'For The Team', shortLabel: 'FTT' },
   { id: 'ufc', label: 'UFC', shortLabel: 'UFC' },
@@ -16,8 +18,10 @@ const sections = [
 
 const themeColors: Record<string, string> = {
   intro: '#ffffff',
+  about: '#ffffff',
   techstack: '#ffffff',
   standards: '#ffffff',
+  trilogy_intro: '#ffffff',
   peecemaker: '#fb923c',
   fortheteam: '#dc3442',
   ufc: '#00ff41',
@@ -57,9 +61,9 @@ export default function Header() {
       {/* ── PC HEADER (Desktop Only) ── */}
       <header className="hidden md:block fixed top-8 left-1/2 -translate-x-1/2 z-50 w-full max-w-fit px-6">
         <motion.nav 
-          initial={{ y: -50, opacity: 0 }}
+          initial={{ y: -120, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.8, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
+          transition={{ duration: 0.9, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
           className={`
             relative px-8 py-3.5 rounded-full border transition-all duration-500 flex items-center gap-8 whitespace-nowrap backdrop-blur-xl
             ${isLightSection 
@@ -109,9 +113,9 @@ export default function Header() {
 
       {/* ── MOBILE HEADER (Mobile Only) ── */}
       <motion.header 
-        initial={{ y: 100, x: "-50%", opacity: 0 }}
+        initial={{ y: 200, x: "-50%", opacity: 0 }}
         animate={{ y: 0, x: "-50%", opacity: 1 }}
-        transition={{ duration: 0.8, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
+        transition={{ duration: 0.9, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
         className="md:hidden fixed bottom-6 left-1/2 z-[210] w-full max-w-[90vw] px-4"
       >
         <div 
