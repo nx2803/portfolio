@@ -20,7 +20,7 @@ const progressColors: Record<string, string> = {
 
 export default function Header() {
   const activeSection = useStore($activeSection);
-  
+
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, {
     stiffness: 120,
@@ -31,7 +31,7 @@ export default function Header() {
   const currentColor = progressColors[activeSection] || '#ffffff';
 
   // 헤더 로고 박히는 애니메이션 설정
-  const logoText = "Trilogy";
+  const logoText = "PORTFOLIO";
   const container = {
     hidden: { opacity: 0 },
     visible: {
@@ -46,35 +46,35 @@ export default function Header() {
       opacity: 1,
       y: 0,
       scale: 1,
-      transition: { 
-        type: "spring" as const, 
-        stiffness: 400, 
-        damping: 25 
+      transition: {
+        type: "spring" as const,
+        stiffness: 400,
+        damping: 25
       }
     }
   };
 
   return (
     <>
-      <motion.div 
+      <motion.div
         className="fixed top-0 left-0 right-0 h-[2.5px] z-100 origin-left"
-        style={{ 
+        style={{
           scaleX,
           backgroundColor: currentColor,
           boxShadow: `0 0 20px ${currentColor}`
         }}
-        animate={{ 
+        animate={{
           backgroundColor: currentColor,
-          boxShadow: `0 0 20px ${currentColor}` 
+          boxShadow: `0 0 20px ${currentColor}`
         }}
-        transition={{ duration: 0.6, ease: "easeInOut" }}
+        transition={{ duration: 0.8, ease: "easeInOut" }}
       />
 
       <header className="fixed top-8 left-1/2 -translate-x-1/2 z-50 flex justify-center w-full max-w-7xl px-6">
         <nav className="bg-black/40 backdrop-blur-md px-12 py-4 flex justify-between items-center w-full border-b border-white/10 relative overflow-hidden">
-          
+
           {/* LOGO: STAMPED-IN REVEAL */}
-          <motion.div 
+          <motion.div
             variants={container}
             initial="hidden"
             animate="visible"
@@ -91,15 +91,14 @@ export default function Header() {
               </motion.span>
             ))}
           </motion.div>
-          
+
           <div className="flex gap-10">
             {sections.map(({ id, label }) => (
-              <a 
-                key={id} 
+              <a
+                key={id}
                 href={`#${id}`}
-                className={`relative py-1 text-xs uppercase tracking-[0.35em] transition-all duration-300 font-mono font-black flex items-center gap-3 ${
-                  activeSection === id ? 'text-white' : 'text-white/30 hover:text-white'
-                }`}
+                className={`relative py-1 text-xs uppercase tracking-[0.35em] transition-all duration-300 font-mono font-black flex items-center gap-3 ${activeSection === id ? 'text-white' : 'text-white/30 hover:text-white'
+                  }`}
               >
 
                 <span>{label}</span>

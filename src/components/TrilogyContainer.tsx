@@ -27,12 +27,17 @@ export default function TrilogyContainer({ children }: { children: ReactNode }) 
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting) {
+          // 확실하게 화면의 20% 이상을 차지할 때만 업데이트
+          if (entry.isIntersecting && entry.intersectionRatio >= 0.2) {
             syncSection(entry.target.id);
           }
         });
       },
-      { rootMargin: '-20% 0px -25% 0px', threshold: 0.01 }
+      { 
+        // 화면 중앙부를 기준으로 감지 (상하 25% 여백)
+        rootMargin: '-25% 0px -25% 0px', 
+        threshold: [0.2] 
+      }
     );
 
     const sectionIds = ['intro', 'about', 'techstack', 'peecemaker', 'fortheteam', 'ufc'];
@@ -44,10 +49,12 @@ export default function TrilogyContainer({ children }: { children: ReactNode }) 
     return () => observer.disconnect();
   }, []);
 
+  const transitionConfig = { duration: 0.8, ease: [0.22, 1, 0.36, 1] as any };
+
   return (
     <motion.main 
       animate={{ backgroundColor: bgColors[activeSection] || '#121214' }}
-      transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }} 
+      transition={transitionConfig} 
       className="w-full flex items-center flex-col min-h-screen relative"
     >
       {/* 글로벌 Peecemaker 그라데이션 (고정) */}
@@ -55,7 +62,7 @@ export default function TrilogyContainer({ children }: { children: ReactNode }) 
         className="fixed inset-0 bg-linear-to-tr from-[#e0f5ff] via-[#ffe9c5] to-[#e0f5ff] pointer-events-none"
         style={{ zIndex: 0 }}
         animate={{ opacity: activeSection === 'peecemaker' ? 1 : 0 }}
-        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+        transition={transitionConfig}
       />
       
       <div className="relative w-full z-10 flex flex-col items-center">

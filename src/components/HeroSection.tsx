@@ -21,7 +21,7 @@ export default function HeroSection() {
     return () => clearInterval(timer);
   }, []);
 
-  const logoText = "TRILOGY";
+  const logoText = "PORTFOLIO";
   const container = {
     hidden: { opacity: 0 },
     visible: {
@@ -125,7 +125,7 @@ export default function HeroSection() {
             transition={{ delay: 0.7, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
             className="text-sm md:text-base font-mono text-white uppercase font-black italic whitespace-nowrap tracking-[0.8em] will-change-transform"
           >
-            architect_of_logic
+            WEB_DEV_TRILOGY
           </motion.span>
 
           <div className="flex-1 flex items-center justify-start">
