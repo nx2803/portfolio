@@ -47,8 +47,6 @@ const TechTicker = ({ items, reverse = false, speed = 60 }: { items: TechItem[],
 
   return (
     <div className="flex overflow-hidden whitespace-nowrap border-y border-white/10 py-12 bg-transparent relative group">
-      <div className="absolute inset-y-0 left-0 w-32 bg-linear-to-r from-black to-transparent z-10" />
-      <div className="absolute inset-y-0 right-0 w-32 bg-linear-to-l from-black to-transparent z-10" />
 
       <motion.div
         className="flex items-center gap-32 pr-32"
@@ -149,19 +147,6 @@ export default function TechStackSection() {
 
       </div>
 
-      {/* ── FOOTER MARKING ── */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 0.3 }}
-        viewport={{ once: true }}
-        className="mt-40 w-full max-w-7xl px-20 flex justify-between items-center text-[10px] font-mono text-white tracking-[0.4em] uppercase font-black"
-      >
-        <span>NX280_SYSTEM_NODE</span>
-        <div className="flex gap-12">
-          <span>VER_2026.4</span>
-          <span>STABLE_STATE</span>
-        </div>
-      </motion.div>
 
     </section>
   );

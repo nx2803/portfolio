@@ -1,7 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.tsx';
-import SmoothScroll from '../components/SmoothScroll.tsx';
 import TrilogyContainer from '../components/TrilogyContainer.tsx';
 import HeroSection from '../components/HeroSection.tsx';
 import TechStackSection from '../components/TechStackSection.tsx';
@@ -12,15 +11,13 @@ import Footer from '../components/Footer.tsx';
 ---
 <Layout title="NX280 | Trilogy Portfolio">
   <Header client:load />
-  <!-- Lenis Scroll 적용 -->
-  <SmoothScroll client:load>
-    <TrilogyContainer client:load>
-      <HeroSection client:load />
-      <TechStackSection client:visible />
-      <PeecemakerSection client:visible />
-      <ForTheTeamSection client:visible />
-      <UfcSection client:visible />
-    </TrilogyContainer>
-    <Footer client:visible />
-  </SmoothScroll>
+  
+  <TrilogyContainer client:load>
+    <HeroSection client:load />
+    <TechStackSection client:visible />
+    <PeecemakerSection client:visible />
+    <ForTheTeamSection client:visible />
+    <UfcSection client:visible />
+  </TrilogyContainer>
+  <Footer client:visible />
 </Layout>
