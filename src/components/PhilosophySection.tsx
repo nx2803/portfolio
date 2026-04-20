@@ -27,7 +27,7 @@ export default function PhilosophySection() {
   ];
 
   return (
-    <section id="philosophy" className="relative w-full py-60 flex flex-col items-center justify-center bg-transparent overflow-hidden">
+    <section id="standards" className="relative w-full py-24 md:py-60 flex flex-col items-center justify-center bg-transparent overflow-hidden">
 
       {/* ── BACKGROUND DECORATION (Hero Style) ── */}
       <div className="absolute inset-0 pointer-events-none opacity-10">
@@ -37,7 +37,7 @@ export default function PhilosophySection() {
       <div className="w-full max-w-400 mx-auto px-6 md:px-20 relative z-10">
 
         {/* Header: Tactical Style matching Hero/TechStack */}
-        <div className="flex flex-col mb-40">
+        <div className="flex flex-col mb-20 md:mb-40">
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -46,7 +46,7 @@ export default function PhilosophySection() {
           >
             <div className="flex items-center gap-6">
               <span className="text-white font-mono text-xs tracking-[0.6em] uppercase font-black opacity-80">
-                CORE_PHILOSOPHY
+                ENGINEERING_STANDARDS
               </span>
               <div className="w-24 h-px bg-white opacity-40" />
             </div>
@@ -56,7 +56,7 @@ export default function PhilosophySection() {
                 className="text-[clamp(3rem,10vw,8rem)] font-black uppercase text-white leading-none tracking-[-0.04em]"
                 style={{ fontFamily: "'Saira Stencil One', sans-serif" }}
               >
-                ENGINEERING <br /> <span className="text-white/40">MANIFESTO</span>
+                ENGINEERING <br /> <span className="text-white/40">STANDARDS</span>
               </h2>
             </div>
           </motion.div>
@@ -71,12 +71,12 @@ export default function PhilosophySection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: idx * 0.2, duration: 0.8 }}
-              className="group relative flex flex-col md:flex-row items-start md:items-center py-20 border-t border-white/20 last:border-b last:border-white/20"
+              className="group relative flex flex-col md:flex-row items-start md:items-center py-12 md:py-20 border-t border-white/20 last:border-b last:border-white/20"
             >
               {/* Index Number (Hero Style Large Stencil) - Cleaned */}
-              <div className="relative mb-8 md:mb-0 md:w-1/4">
+              <div className="relative mb-4 md:mb-0 md:w-1/4 leading-none">
                 <span
-                  className="text-8xl md:text-[10rem] font-black text-white/15 group-hover:text-white/40 transition-colors duration-700 leading-none select-none"
+                  className="text-6xl md:text-[10rem] font-black text-white/15 group-hover:text-white/40 transition-colors duration-700 leading-none select-none"
                   style={{ fontFamily: "'Saira Stencil One', sans-serif" }}
                 >
                   0{idx + 1}
@@ -90,16 +90,16 @@ export default function PhilosophySection() {
                     <span className="text-[10px] font-mono text-white/60 tracking-[0.4em] uppercase">{item.label}</span>
                     <div className="w-8 h-px bg-white/30" />
                   </div>
-                  <h3 className="text-3xl md:text-4xl font-black text-white mb-2 uppercase tracking-tight leading-none" style={{ fontFamily: '"Geologica", sans-serif', fontFeatureSettings: '"cv02", "cv03", "cv04", "ss01"' }}>
+                  <h3 className="text-2xl md:text-4xl font-black text-white mb-2 uppercase tracking-tight leading-none" style={{ fontFamily: '"Geologica", sans-serif', fontFeatureSettings: '"cv02", "cv03", "cv04", "ss01"' }}>
                     {item.title}
                   </h3>
-                  <h4 className="text-sm text-white/60 font-medium tracking-tight uppercase">
+                  <h4 className="text-xs md:text-sm text-white/60 font-medium tracking-tight uppercase">
                     {item.titleKr}
                   </h4>
                 </div>
 
                 <div className="md:w-1/2 flex flex-col justify-between">
-                  <p className="text-base text-[#e1e4e8] leading-relaxed mb-8 font-light font-sans max-w-lg">
+                  <p className="text-sm md:text-base text-[#e1e4e8] leading-relaxed mb-8 font-light font-sans max-w-lg">
                     {item.desc}
                   </p>
                   <div className="flex flex-wrap gap-x-6 gap-y-2">

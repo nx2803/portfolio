@@ -8,10 +8,11 @@ const bgColors: Record<string, string> = {
   intro: '#121214',       // Hero (Heavy Stealth Grey)
   about: '#f2f2f2',       // About (Light Grey)
   techstack: '#121214',   // Tech Stack (Consistent Stealth Grey)
-  philosophy: '#121214',  // Philosophy (Dark)
+  standards: '#121214',   // Standards (Dark)
   peecemaker: '#fdfdfd',  // Peecemaker (White Contrast)
   fortheteam: '#0a0a0a',  // For The Team (Deep Black)
   ufc: '#16181c',         // UFC (Industrial Slate)
+  footer: '#08080a',      // Footer (Deep Tactical Black)
 };
 
 export default function TrilogyContainer({ children }: { children: ReactNode }) {
@@ -25,23 +26,42 @@ export default function TrilogyContainer({ children }: { children: ReactNode }) 
   };
 
   useEffect(() => {
+    // 모든 섹션의 노출 높이를 추적하기 위한 Map
+    const visibilityMap = new Map<string, number>();
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          // 확실하게 화면의 20% 이상을 차지할 때만 업데이트
-          if (entry.isIntersecting && entry.intersectionRatio >= 0.2) {
-            syncSection(entry.target.id);
+          // 각 섹션의 현재 노출 높이 업데이트
+          if (entry.isIntersecting) {
+            visibilityMap.set(entry.target.id, entry.intersectionRect.height);
+          } else {
+            visibilityMap.delete(entry.target.id);
           }
         });
+
+        // 현재 화면에서 가장 많이 보이는(높이가 가장 큰) 섹션 결정
+        let maxProject = "";
+        let maxHeight = -1;
+
+        visibilityMap.forEach((height, id) => {
+          if (height > maxHeight) {
+            maxHeight = height;
+            maxProject = id;
+          }
+        });
+
+        if (maxProject) {
+          syncSection(maxProject);
+        }
       },
       { 
-        // 화면 중앙부를 기준으로 감지 (상하 25% 여백)
-        rootMargin: '-25% 0px -25% 0px', 
-        threshold: [0.2] 
+        rootMargin: '0px', 
+        threshold: [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0] 
       }
     );
 
-    const sectionIds = ['intro', 'about', 'techstack', 'philosophy', 'peecemaker', 'fortheteam', 'ufc'];
+    const sectionIds = ['intro', 'about', 'techstack', 'standards', 'peecemaker', 'fortheteam', 'ufc', 'footer'];
     sectionIds.forEach((id) => {
       const element = document.getElementById(id);
       if (element) observer.observe(element);
@@ -62,6 +82,7 @@ export default function TrilogyContainer({ children }: { children: ReactNode }) 
       <motion.div 
         className="fixed inset-0 bg-linear-to-tr from-[#e0f5ff] via-[#ffe9c5] to-[#e0f5ff] pointer-events-none"
         style={{ zIndex: 0 }}
+        initial={{ opacity: 0 }}
         animate={{ opacity: activeSection === 'peecemaker' ? 1 : 0 }}
         transition={transitionConfig}
       />

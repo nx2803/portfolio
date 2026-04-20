@@ -62,10 +62,10 @@ export default function HeroSection() {
         initial={{ opacity: 0, x: -20 }}
         animate={{ opacity: 1, x: 0 }}
         transition={cornerAnim}
-        className="absolute top-16 left-16 flex flex-col"
+        className="absolute top-8 left-8 md:top-16 md:left-16 flex flex-col"
       >
         <span className={labelCls}>portfolio_system</span>
-        <span className="text-[14px] font-mono text-white/75 tracking-[0.3em] uppercase font-black leading-tight">NX2803</span>
+        <span className="text-[12px] md:text-[14px] font-mono text-white/75 tracking-[0.3em] uppercase font-black leading-tight">NX2803</span>
         <span className={textCls}>Full Stack Engineer</span>
       </motion.div>
 
@@ -74,12 +74,12 @@ export default function HeroSection() {
         initial={{ opacity: 0, x: 20 }}
         animate={{ opacity: 1, x: 0 }}
         transition={cornerAnim}
-        className="absolute top-16 right-16 flex flex-col items-end will-change-transform"
+        className="absolute top-8 right-8 md:top-16 md:right-16 flex flex-col items-end will-change-transform"
       >
         <span className={labelCls}>time</span>
         <div className="flex items-center gap-2">
           <div className="w-1.5 h-1.5 bg-white/60 animate-pulse" />
-          <span className="text-[14px] font-mono text-white/75 tracking-[0.2em] font-black leading-tight tabular-nums">
+          <span className="text-[12px] md:text-[14px] font-mono text-white/75 tracking-[0.2em] font-black leading-tight tabular-nums">
             {formattedTime || '00:00:00'}
           </span>
         </div>
@@ -106,13 +106,13 @@ export default function HeroSection() {
         </motion.div>
 
         {/* Subtitle: Tactical Slanted Lines (High-Contrast White) */}
-        <div className="mt-4 w-full max-w-6xl px-12 flex items-center gap-8 relative h-10">
+        <div className="mt-4 w-full max-w-6xl px-6 md:px-12 flex items-center gap-4 md:gap-8 relative h-10">
           <div className="flex-1 flex items-center justify-end">
             <motion.div
               initial={{ scaleX: 0 }}
               animate={{ scaleX: 1 }}
               transition={{ delay: 0.6, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-              className="w-full h-4 origin-right relative will-change-transform"
+              className="w-full h-2 md:h-4 origin-right relative will-change-transform"
               style={{
                 background: "repeating-linear-gradient(45deg, white, white 8px, transparent 8px, transparent 24px)"
               }}
@@ -123,7 +123,7 @@ export default function HeroSection() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.7, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-            className="text-sm md:text-base font-mono text-white uppercase font-black italic whitespace-nowrap tracking-[0.8em] will-change-transform"
+            className="text-[10px] md:text-base font-mono text-white uppercase font-black italic whitespace-nowrap tracking-[0.4em] md:tracking-[0.8em] will-change-transform"
           >
             WEB_DEV_TRILOGY
           </motion.span>
@@ -133,7 +133,7 @@ export default function HeroSection() {
               initial={{ scaleX: 0 }}
               animate={{ scaleX: 1 }}
               transition={{ delay: 0.6, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-              className="w-full h-4 origin-left relative will-change-transform"
+              className="w-full h-2 md:h-4 origin-left relative will-change-transform"
               style={{
                 background: "repeating-linear-gradient(45deg, white, white 8px, transparent 8px, transparent 24px)"
               }}
@@ -147,13 +147,13 @@ export default function HeroSection() {
         initial={{ opacity: 0, x: -20 }}
         animate={{ opacity: 1, x: 0 }}
         transition={cornerAnim}
-        className="absolute bottom-16 left-16 flex flex-col"
+        className="absolute bottom-8 left-8 md:bottom-16 md:left-16 hidden md:flex flex-col"
       >
         <span className={labelCls}>tech_stack</span>
         <div className="flex flex-col gap-1">
           {techStack.map(({ icon, label }) => (
             <div key={label} className="flex items-center gap-2">
-              <span className="text-white/60 text-[13px]">{icon}</span>
+              <span className="text-white/60 text-[11px] md:text-[13px]">{icon}</span>
               <span className={textCls}>{label}</span>
             </div>
           ))}
@@ -165,7 +165,7 @@ export default function HeroSection() {
         initial={{ opacity: 0, x: 20 }}
         animate={{ opacity: 1, x: 0 }}
         transition={cornerAnim}
-        className="absolute bottom-16 right-16 flex flex-col items-end"
+        className="absolute bottom-8 right-8 md:bottom-16 md:right-16 hidden md:flex flex-col items-end"
       >
         <span className={labelCls}>contact</span>
         <div className="flex flex-col items-end gap-1">
@@ -174,7 +174,7 @@ export default function HeroSection() {
             className="flex items-center gap-2 group"
           >
             <span className={`${textCls} group-hover:text-white/90 transition-colors duration-200`}>nx2803@gmail.com</span>
-            <MdEmail className="text-[11px] text-white/40 group-hover:text-white/80 transition-colors duration-200" />
+            <MdEmail className="text-[9px] md:text-[11px] text-white/40 group-hover:text-white/80 transition-colors duration-200" />
           </a>
           <a
             href="https://github.com/nx2803"
@@ -183,7 +183,7 @@ export default function HeroSection() {
             className="flex items-center gap-2 group"
           >
             <span className={`${textCls} group-hover:text-white/90 transition-colors duration-200`}>github.com/nx2803</span>
-            <SiGithub className="text-[11px] text-white/40 group-hover:text-white/80 transition-colors duration-200" />
+            <SiGithub className="text-[9px] md:text-[11px] text-white/40 group-hover:text-white/80 transition-colors duration-200" />
           </a>
         </div>
       </motion.div>
@@ -214,17 +214,17 @@ export default function HeroSection() {
 
       {/* ── CORNER MARKINGS ── */}
       {[
-        "absolute top-6 left-6 border-t-2 border-l-2",
-        "absolute top-6 right-6 border-t-2 border-r-2",
-        "absolute bottom-6 left-6 border-b-2 border-l-2",
-        "absolute bottom-6 right-6 border-b-2 border-r-2",
+        "absolute top-4 left-4 md:top-6 md:left-6 border-t-2 border-l-2",
+        "absolute top-4 right-4 md:top-6 md:right-6 border-t-2 border-r-2",
+        "absolute bottom-4 left-4 md:bottom-6 md:left-6 border-b-2 border-l-2",
+        "absolute bottom-4 right-4 md:bottom-6 md:right-6 border-b-2 border-r-2",
       ].map((cls, i) => (
         <motion.div
           key={i}
           initial={{ opacity: 0 }}
           animate={{ opacity: [0, 1, 0.4, 1] }}
           transition={{ delay: 1.5, duration: 0.4 }}
-          className={`${cls} w-10 h-10 border-white/20`}
+          className={`${cls} w-6 h-6 md:w-10 md:h-10 border-white/20`}
         />
       ))}
 

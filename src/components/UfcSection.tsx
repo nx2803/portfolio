@@ -10,10 +10,10 @@ export default function UfcSection() {
   const isTransitionTarget = activeSection === 'ufc';
 
   return (
-    <section id="ufc" className="relative w-full min-h-screen py-24 flex items-center justify-center text-[#e1e4e8] bg-transparent" style={{ fontFamily: 'var(--font-ufc)', backgroundImage: 'radial-gradient(at 0% 0%, rgba(255, 255, 255, 0.03) 0, transparent 50%), radial-gradient(at 100% 100%, rgba(255, 255, 255, 0.02) 0, transparent 50%)' }}>
+    <section id="ufc" className="relative w-full min-h-screen py-20 md:py-24 flex items-center justify-center text-[#e1e4e8] bg-transparent" style={{ fontFamily: 'var(--font-ufc)', backgroundImage: 'radial-gradient(at 0% 0%, rgba(255, 255, 255, 0.03) 0, transparent 50%), radial-gradient(at 100% 100%, rgba(255, 255, 255, 0.02) 0, transparent 50%)' }}>
 
       <div className="w-full  max-w-[1600px] mx-auto px-6 md:px-12">
-        <div className="flex justify-between items-end mb-16  border-[#747474] pb-4 corner-frame p-8">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 md:mb-16 border-[#747474] pb-4 corner-frame p-6 md:p-8 gap-8 md:gap-0">
           <div className="corner-top-left" />
           <div className="corner-top-right" />
           <div className="corner-bottom-left" />
@@ -22,8 +22,8 @@ export default function UfcSection() {
             <h3 className="text-xs tracking-widest text-[#6a737d] mb-2 uppercase">C:\UFC\SYSTEM\ANALYSIS_MODULE</h3>
 
             <h2
-              className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tighter text-white leading-[0.9] flex flex-col"
-              style={{ 
+              className="text-3xl md:text-5xl lg:text-6xl font-black tracking-tighter text-white leading-[0.9] flex flex-col"
+              style={{
                 viewTransitionName: isTransitionTarget ? 'project-title' : 'none',
                 fontFamily: '"Geologica", sans-serif',
                 fontFeatureSettings: '"cv02", "cv03", "cv04", "ss01"',
@@ -38,14 +38,14 @@ export default function UfcSection() {
             {/* 설명 문단 */}
             <div style={{ fontFamily: '"Geologica", sans-serif' }}>
               <TypewriterText
-                text="전 세계 방대한 프로그래밍 프레임워크와 기술 트렌드 지표를 실시간 수집·분석하여 시각화하는 오픈 테크 랭킹 플랫폼입니다. Spring Batch 6.x 기반의 고성능 배치 아키텍처와 AI(Gemini 3) 해설을 결합하여 데이터의 무결성과 고차원적인 인사이트를 동시에 제공합니다."
-                className="mt-6 text-sm md:text-base text-[#8b949e] font-sans max-w-2xl font-light"
+                text="대규모 기술 트렌드 데이터를 Java 21과 AI 에이전트를 통해 정밀 분석하여 시각화하는 고성능 랭킹 플랫폼입니다. Spring Batch 6.x 기반의 배치 아키텍처와 LLM 인퍼런스를 결합하여 기술 생태계의 동적 변화를 팩트 기반의 인사이트로 변환합니다."
+                className="mt-6 text-sm md:text-base text-white font-sans max-w-2xl font-light leading-relaxed"
                 delay={1.8}
                 speed={18}
               />
             </div>
           </div>
-          
+
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -53,7 +53,7 @@ export default function UfcSection() {
           {/* Card 1 - Data Pipeline */}
           <motion.div
             whileHover={{ backgroundColor: '#2d3139' }}
-            className=" p-8 corner-frame transition-colors duration-300 flex flex-col"
+            className="p-6 md:p-8 corner-frame transition-colors duration-300 flex flex-col"
             style={{ fontFeatureSettings: '"cv02", "cv03", "cv04", "ss01"' }}
           >
             <div className="corner-top-left" />
@@ -73,15 +73,15 @@ export default function UfcSection() {
               delay={0.4}
               speed={40}
             />
-            <div className="flex flex-wrap gap-2.5 mb-6">
-              <span className="flex items-center gap-2 text-sm px-4 py-2 bg-black/40 text-gray-200 border border-[#30363d] transition-all hover:border-[#00ff41]/50 hover:bg-[#00ff41]/5"><FaJava className="text-xl" /> Java 21</span>
-              <span className="flex items-center gap-2 text-sm px-4 py-2 bg-black/40 text-gray-200 border border-[#30363d] transition-all hover:border-[#00ff41]/50 hover:bg-[#00ff41]/5"><SiSpring className="text-xl" /> Spring Batch</span>
-              <span className="flex items-center gap-2 text-sm px-4 py-2 bg-black/40 text-gray-200 border border-[#30363d] transition-all hover:border-[#00ff41]/50 hover:bg-[#00ff41]/5"><SiPostgresql className="text-xl" /> PostgreSQL</span>
-              <span className="flex items-center gap-2 text-sm px-4 py-2 bg-black/40 text-gray-200 border border-[#30363d] transition-all hover:border-[#00ff41]/50 hover:bg-[#00ff41]/5"><SiRedis className="text-xl" /> Redis Cache</span>
+            <div className="flex flex-wrap gap-1.5 md:gap-2.5 mb-6">
+              <span className="flex items-center gap-2 text-xs md:text-sm px-3 py-1.5 md:px-4 md:py-2 bg-black/40 text-gray-200 border border-[#30363d] transition-all hover:border-[#00ff41]/50 hover:bg-[#00ff41]/5"><FaJava className="text-lg md:text-xl" /> Java 21</span>
+              <span className="flex items-center gap-2 text-xs md:text-sm px-3 py-1.5 md:px-4 md:py-2 bg-black/40 text-gray-200 border border-[#30363d] transition-all hover:border-[#00ff41]/50 hover:bg-[#00ff41]/5"><SiSpring className="text-lg md:text-xl" /> Spring Batch</span>
+              <span className="flex items-center gap-2 text-xs md:text-sm px-3 py-1.5 md:px-4 md:py-2 bg-black/40 text-gray-200 border border-[#30363d] transition-all hover:border-[#00ff41]/50 hover:bg-[#00ff41]/5"><SiPostgresql className="text-lg md:text-xl" /> PostgreSQL</span>
+              <span className="flex items-center gap-2 text-xs md:text-sm px-3 py-1.5 md:px-4 md:py-2 bg-black/40 text-gray-200 border border-[#30363d] transition-all hover:border-[#00ff41]/50 hover:bg-[#00ff41]/5"><SiRedis className="text-lg md:text-xl" /> Redis Cache</span>
             </div>
             <TypewriterText
-              text="Java 21 Virtual Threads를 도입해 OS 스레드 고갈 문제를 해결하고 I/O 효율을 극대화했습니다. Spring Batch 6.x로 수만 건의 지표를 안전하게 처리하며, 매일 자정 노후 데이터를 자동 정리하는 Maintenance 데몬으로 DB 성능을 일정하게 유지합니다."
-              className="font-light text-[#e1e4e8] font-sans text-sm"
+              text="Java 21 Virtual Threads를 도입하여 I/O 블로킹 문제를 해결하고 처리량을 극대화했습니다. Spring Batch 6.x 기반의 데이터 정제 파이프라인을 구축하여 대규모 지표를 안정적으로 수집하며, 최적화된 DB 인덱싱을 통해 쿼리 성능을 보호합니다."
+              className="font-light text-[#e1e4e8] font-sans text-xs md:text-sm leading-relaxed"
               delay={0.5}
               speed={18}
             />
@@ -90,7 +90,7 @@ export default function UfcSection() {
           {/* Card 2 - Analyzed Insight */}
           <motion.div
             whileHover={{ backgroundColor: '#2d3139' }}
-            className=" p-8 corner-frame transition-colors duration-300 md:col-span-1 flex flex-col"
+            className="p-6 md:p-8 corner-frame transition-colors duration-300 md:col-span-1 flex flex-col"
             style={{ fontFeatureSettings: '"cv02", "cv03", "cv04", "ss01"' }}
           >
             <div className="corner-top-left" />
@@ -105,7 +105,7 @@ export default function UfcSection() {
                 delay={0.2}
                 speed={45}
               />
-              
+
             </div>
 
             <TypewriterText
@@ -131,7 +131,7 @@ export default function UfcSection() {
           {/* Card 3 - Frontend Dashboard */}
           <motion.div
             whileHover={{ backgroundColor: '#2d3139' }}
-            className="p-8 corner-frame transition-colors duration-300 md:col-span-2 flex flex-col md:flex-row gap-8 relative group"
+            className="p-6 md:p-8 corner-frame transition-colors duration-300 md:col-span-2 flex flex-col md:flex-row gap-8 relative group"
             style={{ fontFeatureSettings: '"cv02", "cv03", "cv04", "ss01"' }}
           >
             <div className="corner-top-left" />
@@ -168,9 +168,9 @@ export default function UfcSection() {
                 />
               </div>
 
-              <a 
-                href="https://ultimate-framework-championship.vercel.app/" 
-                target="_blank" 
+              <a
+                href="https://ultimate-framework-championship.vercel.app/"
+                target="_blank"
                 rel="noopener noreferrer"
                 className="mt-8 self-start text-sm uppercase tracking-widest hover:text-white transition-colors flex items-center gap-2 drop-shadow-md group/btn"
               >
@@ -179,7 +179,7 @@ export default function UfcSection() {
             </div>
 
             {/* Image */}
-            <div className="relative z-10 w-full md:w-1/2 min-h-75 flex items-center justify-center mt-6 md:mt-0 bg-[#0c0d0f] rounded-xl border border-[#30363d] p-4">
+            <div className="relative z-10 w-full md:w-1/2 min-h-[200px] md:min-h-75 flex items-center justify-center mt-6 md:mt-0 bg-[#0c0d0f] rounded-xl border border-[#30363d] p-4">
               <img src="/projects/ufc.png" alt="UFC Dashboard" className="w-full h-full object-contain rounded" />
             </div>
           </motion.div>

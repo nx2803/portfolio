@@ -48,42 +48,35 @@ const infraItems: TechItem[] = [
   { name: 'HUGGING FACE', icon: SiHuggingface },
 ];
 
-// 무한 티커 컴포넌트
-const TechTicker = ({ items, reverse = false, speed = 60 }: { items: TechItem[], reverse?: boolean, speed?: number }) => {
-  const duplicatedItems = [...items, ...items, ...items, ...items];
-
+// 개별 기술 타일 컴포넌트
+const TechTile = ({ item, idx }: { item: TechItem, idx: number }) => {
   return (
-    <div className="flex overflow-hidden whitespace-nowrap border-y border-white/10 py-12 bg-transparent relative group">
-
-      <motion.div
-        className="flex items-center gap-32 pr-32"
-        animate={{ x: reverse ? ["-50%", "0%"] : ["0%", "-50%"] }}
-        transition={{ duration: speed, repeat: Infinity, ease: "linear" }}
-      >
-        {duplicatedItems.map((item, idx) => (
-          <div key={idx} className="flex items-center gap-8 group/item">
-            <item.icon className="text-6xl md:text-8xl text-white opacity-80 group-hover/item:opacity-100 group-hover/item:scale-110 transition-all duration-500" />
-            <div className="flex flex-col gap-1">
-              <div className="flex items-center gap-3">
-                <span className="text-base font-mono tracking-[0.3em] text-white/60 uppercase font-black group-hover/item:text-white transition-colors">
-                  {item.name}
-                </span>
-              </div>
-              <div className="w-0 group-hover/item:w-full h-0.5 bg-white transition-all duration-500 shadow-[0_0_8px_white]" />
-            </div>
-          </div>
-        ))}
-      </motion.div>
-    </div>
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{
+        delay: idx * 0.05,
+        duration: 0.5,
+        ease: [0.16, 1, 0.3, 1]
+      }}
+      whileHover={{ y: -5 }}
+      className="relative flex flex-col items-center justify-center py-6 md:py-10 group"
+    >
+      <item.icon className="text-4xl md:text-6xl text-white/80 group-hover:text-white transition-all duration-500" />
+      <span className="mt-4 text-[9px] md:text-[11px] font-mono text-white/60 group-hover:text-white tracking-[0.2em] uppercase transition-all duration-500">
+        {item.name}
+      </span>
+    </motion.div>
   );
 };
 
 export default function TechStackSection() {
   return (
-    <section id="techstack" className="relative w-full min-h-screen py-40 flex flex-col items-center justify-center bg-transparent overflow-hidden">
+    <section id="techstack" className="relative w-full py-24 md:py-40 flex flex-col items-center bg-transparent overflow-hidden">
 
-      {/* ── SECTION HEADER: 중앙 정렬 복구 ── */}
-      <div className="relative z-10 w-full px-6 md:px-20 mb-40 flex flex-col items-center text-center">
+      {/* ── SECTION HEADER ── */}
+      <div className="relative z-10 w-full px-6 md:px-20 mb-20 md:mb-32 flex flex-col items-center text-center">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -98,7 +91,7 @@ export default function TechStackSection() {
             <div className="w-16 h-px bg-white opacity-20" />
           </div>
           <h2
-            className="text-[clamp(4rem,12vw,10rem)] font-black uppercase text-white leading-none tracking-[-0.05em] drop-shadow-[0_0_30px_rgba(255,255,255,0.15)]"
+            className="text-[clamp(2.5rem,10vw,8rem)] font-black uppercase text-white leading-none tracking-[-0.05em]"
             style={{ fontFamily: "'Saira Stencil One', sans-serif" }}
           >
             TECH STACKS
@@ -106,56 +99,61 @@ export default function TechStackSection() {
         </motion.div>
       </div>
 
-      {/* ── TICKER DATA STREAM ── */}
-      <div className="w-full flex flex-col gap-16 relative z-10">
+      {/* ── SPONSOR WALL GRID ── */}
+      <div className="w-full max-w-[1400px] mx-auto px-4 md:px-20 relative z-10 flex flex-col gap-24">
 
         {/* TIER 01: FRONTEND */}
-        <div className="flex flex-col gap-6">
-          <div className="px-6 md:px-20 flex items-end gap-6">
-            <span className="text-4xl md:text-6xl font-mono text-white opacity-20 font-black">01</span>
-            <h3
-              className="text-5xl md:text-7xl font-black uppercase text-white tracking-tighter"
-              style={{ fontFamily: "'Saira Stencil One', sans-serif" }}
-            >
-              FRONTEND
+        <div className="flex flex-col gap-8">
+          <div className="flex items-center gap-4">
+            <span className="text-xl md:text-2xl font-mono text-white/20 font-black">01</span>
+            <h3 className="text-xl md:text-3xl font-black text-white tracking-tighter uppercase" style={{ fontFamily: "'Saira Stencil One', sans-serif" }}>
+              FRONTEND_ENGINEERING
             </h3>
-            <div className="flex-1 h-px bg-white opacity-10 mb-4" />
+            <div className="flex-1 h-px bg-white/10" />
           </div>
-          <TechTicker items={frontendItems} speed={60} />
+          <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8">
+            {frontendItems.map((item, idx) => (
+              <TechTile key={idx} item={item} idx={idx} />
+            ))}
+          </div>
         </div>
 
         {/* TIER 02: BACKEND */}
-        <div className="flex flex-col gap-6">
-          <div className="px-6 md:px-20 flex items-end gap-6">
-            <span className="text-4xl md:text-6xl font-mono text-white opacity-20 font-black">02</span>
-            <h3
-              className="text-5xl md:text-7xl font-black uppercase text-white tracking-tighter"
-              style={{ fontFamily: "'Saira Stencil One', sans-serif" }}
-            >
-              BACKEND
+        <div className="flex flex-col gap-8">
+          <div className="flex items-center gap-4">
+            <span className="text-xl md:text-2xl font-mono text-white/20 font-black">02</span>
+            <h3 className="text-xl md:text-3xl font-black text-white tracking-tighter uppercase" style={{ fontFamily: "'Saira Stencil One', sans-serif" }}>
+              BACKEND_INFRASTRUCTURE
             </h3>
-            <div className="flex-1 h-px bg-white opacity-10 mb-4" />
+            <div className="flex-1 h-px bg-white/10" />
           </div>
-          <TechTicker items={backendItems} reverse speed={75} />
+          <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8">
+            {backendItems.map((item, idx) => (
+              <TechTile key={idx} item={item} idx={idx} />
+            ))}
+          </div>
         </div>
 
-        {/* TIER 03: INFRA */}
-        <div className="flex flex-col gap-6">
-          <div className="px-6 md:px-20 flex items-end gap-6">
-            <span className="text-4xl md:text-6xl font-mono text-white opacity-20 font-black">03</span>
-            <h3
-              className="text-5xl md:text-7xl font-black uppercase text-white tracking-tighter"
-              style={{ fontFamily: "'Saira Stencil One', sans-serif" }}
-            >
-              INFRASTRUCTURE
+        {/* TIER 03: INFRA & DATA */}
+        <div className="flex flex-col gap-8">
+          <div className="flex items-center gap-4">
+            <span className="text-xl md:text-2xl font-mono text-white/20 font-black">03</span>
+            <h3 className="text-xl md:text-3xl font-black text-white tracking-tighter uppercase" style={{ fontFamily: "'Saira Stencil One', sans-serif" }}>
+              DEVOPS_DATABASE
             </h3>
-            <div className="flex-1 h-px bg-white opacity-10 mb-4" />
+            <div className="flex-1 h-px bg-white/10" />
           </div>
-          <TechTicker items={infraItems} speed={65} />
+          <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8">
+            {infraItems.map((item, idx) => (
+              <TechTile key={idx} item={item} idx={idx} />
+            ))}
+          </div>
         </div>
 
       </div>
 
+      {/* Decorative Grid Lines */}
+      <div className="absolute inset-0 pointer-events-none opacity-[0.03]" style={{ backgroundImage: 'radial-gradient(circle, white 1px, transparent 0)', backgroundSize: '40px 40px' }} />
 
     </section>
   );

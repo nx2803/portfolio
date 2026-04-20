@@ -8,9 +8,9 @@ export default function PeecemakerSection() {
   const isTransitionTarget = activeSection === 'peecemaker';
 
   return (
-    <section id="peecemaker" className="relative w-full min-h-screen py-24 flex items-center justify-center font-peecemaker" style={{ color: '#171717', fontFamily: 'var(--font-peecemaker)' }}>
+    <section id="peecemaker" className="relative w-full min-h-screen py-20 md:py-24 flex items-center justify-center font-peecemaker" style={{ color: '#171717', fontFamily: 'var(--font-peecemaker)' }}>
 
-      <div className="relative z-10 w-full max-w-[1600px] mx-auto px-6 md:px-12 flex flex-col md:flex-row gap-12 xl:gap-16 items-center">
+      <div className="relative z-10 w-full max-w-[1600px] mx-auto px-6 md:px-12 flex flex-col md:flex-row gap-8 md:gap-12 xl:gap-16 items-center">
 
         {/* Left: Glass Card Info */}
         <motion.div
@@ -23,7 +23,7 @@ export default function PeecemakerSection() {
           <div className="bg-white/10 backdrop-blur-xl border border-white/20 shadow-[0_8px_32px_rgba(0,0,0,0.1)] rounded-3xl p-8 md:p-10 relative overflow-hidden">
 
             <h1
-              className="text-4xl md:text-5xl mb-4 font-black tracking-widest uppercase font-peecemaker leading-none"
+              className="text-3xl md:text-5xl mb-4 font-black tracking-widest uppercase font-peecemaker leading-none"
               style={{ 
                 viewTransitionName: isTransitionTarget ? 'project-title' : 'none',
                 fontFamily: "'Chiron GoRound TC', sans-serif"
@@ -31,33 +31,33 @@ export default function PeecemakerSection() {
             >
               <span className="text-[#fb923c]">PEECE</span><span className="text-gray-700">MAKER</span>
             </h1>
-            <p className="text-lg md:text-xl text-gray-700 font-medium mb-6 leading-relaxed">
-              제주시를 방문하는 여행객과 도민을 위한 공중화장실 위치 탐색 및 커뮤니티 플랫폼입니다. <br className="hidden lg:block" />
-              공공데이터를 기반으로 실시간 안심시설 필터링과 Recharts를 활용한 통계 대시보드를 제공합니다.
+            <p className="text-base md:text-xl text-gray-700 font-medium mb-6 leading-relaxed">
+              공공데이터의 기술적 무결성을 확보하여 시민에게 도달하는 정보의 가치를 극대화하는 공중화장실 탐색 플랫폼입니다. <br className="hidden lg:block" />
+              정밀한 데이터 필터링 알고리즘과 시각화 엔진을 통해 공공 서비스의 사용자 경험을 엔지니어링 관점에서 재정의했습니다.
             </p>
 
             {/* Tech Stack Badges */}
-            <div className="flex flex-wrap gap-2.5 mb-8 max-w-2xl">
-              <span className="flex items-center gap-2 px-4 py-2 bg-black/5 rounded-full text-sm font-bold text-[#fb923c] border border-white/50 shadow-sm transition-transform hover:scale-105"><SiNextdotjs className="text-xl" /> Next.js 16</span>
-              <span className="flex items-center gap-2 px-4 py-2 bg-black/5 rounded-full text-sm font-bold text-[#fb923c] border border-white/50 shadow-sm transition-transform hover:scale-105"><SiReact className="text-xl" /> React 19</span>
-              <span className="flex items-center gap-2 px-4 py-2 bg-black/5 rounded-full text-sm font-bold text-[#fb923c] border border-white/50 shadow-sm transition-transform hover:scale-105"><SiTailwindcss className="text-xl" /> Tailwind 4</span>
-              <span className="flex items-center gap-2 px-4 py-2 bg-black/5 rounded-full text-sm font-bold text-[#fb923c] border border-white/50 shadow-sm transition-transform hover:scale-105"><SiReactquery className="text-xl" /> React Query</span>
-              <span className="flex items-center gap-2 px-4 py-2 bg-black/5 rounded-full text-sm font-bold text-[#fb923c] border border-white/50 shadow-sm transition-transform hover:scale-105"><SiFramer className="text-xl" /> Framer Motion</span>
-              <span className="flex items-center gap-2 px-4 py-2 bg-black/5 rounded-full text-sm font-bold text-[#fb923c] border border-white/50 shadow-sm transition-transform hover:scale-105"><SiSupabase className="text-xl" /> Supabase</span>
+            <div className="flex flex-wrap gap-1.5 md:gap-2.5 mb-8 max-w-2xl">
+              <span className="flex items-center gap-2 px-3 py-1.5 md:px-4 md:py-2 bg-black/5 rounded-full text-xs md:text-sm font-bold text-[#fb923c] border border-white/50 shadow-sm transition-transform hover:scale-105"><SiNextdotjs className="text-lg md:text-xl" /> Next.js 16</span>
+              <span className="flex items-center gap-2 px-3 py-1.5 md:px-4 md:py-2 bg-black/5 rounded-full text-xs md:text-sm font-bold text-[#fb923c] border border-white/50 shadow-sm transition-transform hover:scale-105"><SiReact className="text-lg md:text-xl" /> React 19</span>
+              <span className="flex items-center gap-2 px-3 py-1.5 md:px-4 md:py-2 bg-black/5 rounded-full text-xs md:text-sm font-bold text-[#fb923c] border border-white/50 shadow-sm transition-transform hover:scale-105"><SiTailwindcss className="text-lg md:text-xl" /> Tailwind 4</span>
+              <span className="flex items-center gap-2 px-3 py-1.5 md:px-4 md:py-2 bg-black/5 rounded-full text-xs md:text-sm font-bold text-[#fb923c] border border-white/50 shadow-sm transition-transform hover:scale-105"><SiReactquery className="text-lg md:text-xl" /> React Query</span>
+              <span className="flex items-center gap-2 px-3 py-1.5 md:px-4 md:py-2 bg-black/5 rounded-full text-xs md:text-sm font-bold text-[#fb923c] border border-white/50 shadow-sm transition-transform hover:scale-105"><SiFramer className="text-lg md:text-xl" /> Framer Motion</span>
+              <span className="flex items-center gap-2 px-3 py-1.5 md:px-4 md:py-2 bg-black/5 rounded-full text-xs md:text-sm font-bold text-[#fb923c] border border-white/50 shadow-sm transition-transform hover:scale-105"><SiSupabase className="text-lg md:text-xl" /> Supabase</span>
             </div>
 
             <ul className="space-y-4 text-gray-700 mb-8">
               <li className="flex items-start gap-3">
                 <div className="w-2 h-2 rounded-full bg-orange-400 mt-2 shrink-0" />
-                <span className="font-medium text-[0.95rem] md:text-base">Next.js 16 + Supabase BaaS를 결합한 기민한 서버리스 아키텍처로 인프라 비용 및 운영 오버헤드 최적화</span>
+                <span className="font-medium text-[0.9rem] md:text-base leading-tight md:leading-normal">Next.js 16 + Supabase BaaS를 결합한 기민한 서버리스 아키텍처로 인프라 비용 및 데이터 파이프라인 복원력(Resilience) 확보</span>
               </li>
               <li className="flex items-start gap-3">
                 <div className="w-2 h-2 rounded-full bg-orange-400 mt-2 shrink-0" />
-                <span className="font-medium text-[0.95rem] md:text-base">MarkerClusterer와 최적화 알고리즘을 도입해 수천 개의 위치 데이터를 브라우저 부하 없이 렌더링하여 성능 병목 문제 해결</span>
+                <span className="font-medium text-[0.9rem] md:text-base leading-tight md:leading-normal">MarkerClusterer와 휘도 기반 Contrast Engine을 도입하여 수천 개의 위치 데이터를 가독성 저해 없이 렌더링하는 성능 최적화 달성</span>
               </li>
               <li className="flex items-start gap-3">
                 <div className="w-2 h-2 rounded-full bg-orange-400 mt-2 shrink-0" />
-                <span className="font-medium text-[0.95rem] md:text-base">Recharts 기반의 데이터 시각화로 지역별 화장실 분포 및 편의시설 수용 현황을 직관적인 대시보드로 구현</span>
+                <span className="font-medium text-[0.9rem] md:text-base leading-tight md:leading-normal">공공데이터의 정합성 문제를 해결하기 위해 런타임 데이터 검증 파이프라인을 구축하여 사용자에게 신뢰할 수 있는 정보를 제공</span>
               </li>
             </ul>
 
@@ -80,9 +80,9 @@ export default function PeecemakerSection() {
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true, margin: "-20%" }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="w-full md:w-7/12 lg:w-2/3 h-[400px] md:h-[600px] flex items-center justify-center p-0"
+          className="w-full md:w-7/12 lg:w-2/3 h-[300px] sm:h-[400px] md:h-[600px] flex items-center justify-center p-0"
         >
-          <div className="w-full h-full bg-white/10 backdrop-blur-xl border border-white/20 shadow-[0_8px_32px_rgba(0,0,0,0.1)] rounded-3xl overflow-hidden relative flex items-center justify-center p-4 md:p-8">
+          <div className="w-full h-full bg-white/10 backdrop-blur-xl border border-white/20 shadow-[0_8px_32px_rgba(0,0,0,0.1)] rounded-3xl overflow-hidden relative flex items-center justify-center p-2 md:p-8">
             <img src="/projects/peecemaker.png" alt="Peecemaker UI Screenshot" className="w-full h-full object-contain drop-shadow-2xl" />
           </div>
         </motion.div>
