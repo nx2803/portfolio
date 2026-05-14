@@ -3,9 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.tsx';
 import TrilogyContainer from '../components/TrilogyContainer.tsx';
 import HeroSection from '../components/HeroSection.tsx';
-import AboutSection from '../components/AboutSection.tsx';
 import TechStackSection from '../components/TechStackSection.tsx';
-import PhilosophySection from '../components/PhilosophySection.tsx';
 import ProjectTrilogySection from '../components/ProjectTrilogySection.tsx';
 import PeecemakerSection from '../components/PeecemakerSection.tsx';
 import ForTheTeamSection from '../components/ForTheTeamSection.tsx';
@@ -17,9 +15,7 @@ import Footer from '../components/Footer.tsx';
   
   <TrilogyContainer client:load>
     <HeroSection client:load />
-    <AboutSection client:visible />
     <TechStackSection client:visible />
-    <PhilosophySection client:visible />
     <ProjectTrilogySection client:visible />
     <PeecemakerSection client:visible />
     <ForTheTeamSection client:visible />

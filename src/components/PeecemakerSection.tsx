@@ -1,11 +1,20 @@
+import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { SiNextdotjs, SiReact, SiTailwindcss, SiSupabase, SiPostgresql, SiReactquery, SiFramer, SiGoogle, SiGithub, SiVercel } from 'react-icons/si';
+import { SiNextdotjs, SiReact, SiTailwindcss, SiSupabase, SiReactquery, SiFramer } from 'react-icons/si';
 import { useStore } from '@nanostores/react';
 import { $activeSection } from '../store/sectionStore';
 
 export default function PeecemakerSection() {
+  const [mounted, setMounted] = useState(false);
   const activeSection = useStore($activeSection);
   const isTransitionTarget = activeSection === 'peecemaker';
+  const easing = [0.16, 1, 0.3, 1] as any;
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) return <section id="peecemaker" className="min-h-screen" />;
 
   return (
     <section id="peecemaker" className="relative w-full min-h-screen py-20 md:py-24 flex items-center justify-center font-peecemaker" style={{ color: '#171717', fontFamily: 'var(--font-peecemaker)' }}>
@@ -14,16 +23,16 @@ export default function PeecemakerSection() {
 
         {/* Left: Glass Card Info */}
         <motion.div
-          initial={{ opacity: 0, x: -50 }}
+          initial={{ opacity: 0, x: -30 }}
           whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true, margin: "-20%" }}
-          transition={{ duration: 0.8 }}
+          viewport={{ once: true, margin: "-10%" }}
+          transition={{ duration: 1.2, ease: easing }}
           className="w-full md:w-5/12 lg:w-1/3 shrink-0"
         >
-          <div className="bg-white/10 backdrop-blur-xl border border-white/20 shadow-[0_8px_32px_rgba(0,0,0,0.1)] rounded-3xl p-8 md:p-10 relative overflow-hidden">
+          <div className="bg-white/10 backdrop-blur-xl border border-white/20 shadow-[0_8px_32px_rgba(0,0,0,0.05)] rounded-3xl p-8 md:p-10 relative overflow-hidden">
 
             <h1
-              className="text-3xl md:text-5xl mb-4 font-black tracking-widest uppercase font-peecemaker leading-none"
+              className="text-3xl md:text-5xl mb-4 font-black tracking-widest uppercase leading-none"
               style={{ 
                 viewTransitionName: isTransitionTarget ? 'project-title' : 'none',
                 fontFamily: "'Chiron GoRound TC', sans-serif"
@@ -38,27 +47,31 @@ export default function PeecemakerSection() {
 
             {/* Tech Stack Badges */}
             <div className="flex flex-wrap gap-1.5 md:gap-2.5 mb-8 max-w-2xl">
-              <span className="flex items-center gap-2 px-3 py-1.5 md:px-4 md:py-2 bg-black/5 rounded-full text-xs md:text-sm font-bold text-[#fb923c] border border-white/50 shadow-sm transition-transform hover:scale-105"><SiNextdotjs className="text-lg md:text-xl" /> Next.js 16</span>
-              <span className="flex items-center gap-2 px-3 py-1.5 md:px-4 md:py-2 bg-black/5 rounded-full text-xs md:text-sm font-bold text-[#fb923c] border border-white/50 shadow-sm transition-transform hover:scale-105"><SiReact className="text-lg md:text-xl" /> React 19</span>
-              <span className="flex items-center gap-2 px-3 py-1.5 md:px-4 md:py-2 bg-black/5 rounded-full text-xs md:text-sm font-bold text-[#fb923c] border border-white/50 shadow-sm transition-transform hover:scale-105"><SiTailwindcss className="text-lg md:text-xl" /> Tailwind 4</span>
-              <span className="flex items-center gap-2 px-3 py-1.5 md:px-4 md:py-2 bg-black/5 rounded-full text-xs md:text-sm font-bold text-[#fb923c] border border-white/50 shadow-sm transition-transform hover:scale-105"><SiReactquery className="text-lg md:text-xl" /> React Query</span>
-              <span className="flex items-center gap-2 px-3 py-1.5 md:px-4 md:py-2 bg-black/5 rounded-full text-xs md:text-sm font-bold text-[#fb923c] border border-white/50 shadow-sm transition-transform hover:scale-105"><SiFramer className="text-lg md:text-xl" /> Framer Motion</span>
-              <span className="flex items-center gap-2 px-3 py-1.5 md:px-4 md:py-2 bg-black/5 rounded-full text-xs md:text-sm font-bold text-[#fb923c] border border-white/50 shadow-sm transition-transform hover:scale-105"><SiSupabase className="text-lg md:text-xl" /> Supabase</span>
+              {[
+                { Icon: SiNextdotjs, name: 'Next.js 16' },
+                { Icon: SiReact, name: 'React 19' },
+                { Icon: SiTailwindcss, name: 'Tailwind 4' },
+                { Icon: SiReactquery, name: 'React Query' },
+                { Icon: SiFramer, name: 'Framer Motion' },
+                { Icon: SiSupabase, name: 'Supabase' },
+              ].map((tech, i) => (
+                <span key={i} className="flex items-center gap-2 px-3 py-1.5 md:px-4 md:py-2 bg-black/5 rounded-full text-xs md:text-sm font-bold text-[#fb923c] border border-white/50 shadow-sm transition-all hover:bg-black/10">
+                  <tech.Icon className="text-lg md:text-xl" /> {tech.name}
+                </span>
+              ))}
             </div>
 
             <ul className="space-y-4 text-gray-700 mb-8">
-              <li className="flex items-start gap-3">
-                <div className="w-2 h-2 rounded-full bg-orange-400 mt-2 shrink-0" />
-                <span className="font-medium text-[0.9rem] md:text-base leading-tight md:leading-normal">Next.js 16 + Supabase BaaS를 결합한 기민한 서버리스 아키텍처로 인프라 비용 및 데이터 파이프라인 복원력(Resilience) 확보</span>
-              </li>
-              <li className="flex items-start gap-3">
-                <div className="w-2 h-2 rounded-full bg-orange-400 mt-2 shrink-0" />
-                <span className="font-medium text-[0.9rem] md:text-base leading-tight md:leading-normal">MarkerClusterer와 휘도 기반 Contrast Engine을 도입하여 수천 개의 위치 데이터를 가독성 저해 없이 렌더링하는 성능 최적화 달성</span>
-              </li>
-              <li className="flex items-start gap-3">
-                <div className="w-2 h-2 rounded-full bg-orange-400 mt-2 shrink-0" />
-                <span className="font-medium text-[0.9rem] md:text-base leading-tight md:leading-normal">공공데이터의 정합성 문제를 해결하기 위해 런타임 데이터 검증 파이프라인을 구축하여 사용자에게 신뢰할 수 있는 정보를 제공</span>
-              </li>
+              {[
+                "Next.js 16 + Supabase BaaS를 결합한 기민한 서버리스 아키텍처로 인프라 비용 및 데이터 파이프라인 복원력 확보",
+                "MarkerClusterer와 휘도 기반 Contrast Engine을 도입하여 수천 개의 위치 데이터를 가독성 저해 없이 렌더링하는 성능 최적화 달성",
+                "공공데이터의 정합성 문제를 해결하기 위해 런타임 데이터 검증 파이프라인을 구축하여 사용자에게 신뢰할 수 있는 정보를 제공"
+              ].map((text, i) => (
+                <li key={i} className="flex items-start gap-3">
+                  <div className="w-2 h-2 rounded-full bg-orange-400 mt-2 shrink-0" />
+                  <span className="font-medium text-[0.9rem] md:text-base leading-tight md:leading-normal">{text}</span>
+                </li>
+              ))}
             </ul>
 
             <div className="mt-8">
@@ -76,13 +89,13 @@ export default function PeecemakerSection() {
 
         {/* Right: Mockup / Visual */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
+          initial={{ opacity: 0, scale: 0.98 }}
           whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true, margin: "-20%" }}
-          transition={{ duration: 0.8, delay: 0.2 }}
+          viewport={{ once: true, margin: "-10%" }}
+          transition={{ duration: 1.5, ease: easing, delay: 0.2 }}
           className="w-full md:w-7/12 lg:w-2/3 h-[300px] sm:h-[400px] md:h-[600px] flex items-center justify-center p-0"
         >
-          <div className="w-full h-full bg-white/10 backdrop-blur-xl border border-white/20 shadow-[0_8px_32px_rgba(0,0,0,0.1)] rounded-3xl overflow-hidden relative flex items-center justify-center p-2 md:p-8">
+          <div className="w-full h-full bg-white/10 backdrop-blur-xl border border-white/20 shadow-[0_8px_32px_rgba(0,0,0,0.05)] rounded-3xl overflow-hidden relative flex items-center justify-center p-2 md:p-8">
             <img src="/projects/peecemaker.png" alt="Peecemaker UI Screenshot" className="w-full h-full object-contain drop-shadow-2xl" />
           </div>
         </motion.div>

@@ -2,22 +2,56 @@ import { useEffect, type ReactNode } from 'react';
 import { motion } from 'framer-motion';
 import { useStore } from '@nanostores/react';
 import { $activeSection, updateActiveSection } from '../store/sectionStore';
+import { $theme } from '../store/themeStore';
 
-// 섹션별 배경색 통합 관리 (Heavy Stealth Grey 적용)
-const bgColors: Record<string, string> = {
-  intro: '#121214',       // Hero (Heavy Stealth Grey)
-  about: '#0c0d0f',       // About (Match Deep Black)
-  techstack: '#121214',   // Tech Stack (Consistent Stealth Grey)
-  standards: '#121214',   // Standards (Dark)
-  trilogy_intro: '#0c0d0f', // Trilogy Intro (Deep Black)
-  peecemaker: '#fdfdfd',  // Peecemaker (White Contrast)
-  fortheteam: '#0a0a0a',  // For The Team (Deep Black)
-  ufc: '#16181c',         // UFC (Industrial Slate)
-  footer: '#08080a',      // Footer (Deep Tactical Black)
+// 섹션별 배경색 통합 관리
+const getBgColors = (theme: 'light' | 'dark'): Record<string, string> => {
+  const isDark = theme === 'dark';
+  const metallicSilver = '#e5e5e5';
+  const gunmetalSteel = '#161618';
+
+  return {
+    intro: isDark ? gunmetalSteel : metallicSilver,
+    techstack: isDark ? gunmetalSteel : metallicSilver,
+    trilogy_intro: isDark ? gunmetalSteel : metallicSilver,
+    peecemaker: '#fdfdfd', 
+    fortheteam: '#0a0a0a',  
+    ufc: '#16181c',         
+    footer: isDark ? gunmetalSteel : metallicSilver,
+  };
+};
+
+// 섹션별 실제 적용되어야 할 전경색(텍스트) 결정
+const getFgColors = (theme: 'light' | 'dark'): Record<string, string> => {
+  const isDark = theme === 'dark';
+  const offWhite = '#f4f4f2';
+  const deepBlack = '#0a0a0a';
+
+  return {
+    intro: isDark ? offWhite : deepBlack,
+    techstack: isDark ? offWhite : deepBlack,
+    trilogy_intro: isDark ? offWhite : deepBlack,
+    peecemaker: deepBlack,  
+    fortheteam: offWhite,   
+    ufc: offWhite,          
+    footer: isDark ? offWhite : deepBlack,
+  };
 };
 
 export default function TrilogyContainer({ children }: { children: ReactNode }) {
   const activeSection = useStore($activeSection);
+  const theme = useStore($theme);
+  const bgColors = getBgColors(theme);
+  const fgColors = getFgColors(theme);
+
+  // 테마 변경 시 클래스 및 스토리지 동기화
+  useEffect(() => {
+    if (theme === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }, [theme]);
 
   // 섹션 변경 시 전역 스토어 업데이트
   const syncSection = (id: string) => {
@@ -62,7 +96,7 @@ export default function TrilogyContainer({ children }: { children: ReactNode }) 
       }
     );
 
-    const sectionIds = ['intro', 'about', 'techstack', 'standards', 'trilogy_intro', 'peecemaker', 'fortheteam', 'ufc', 'footer'];
+    const sectionIds = ['intro', 'techstack', 'trilogy_intro', 'peecemaker', 'fortheteam', 'ufc', 'footer'];
     sectionIds.forEach((id) => {
       const element = document.getElementById(id);
       if (element) observer.observe(element);
@@ -71,11 +105,16 @@ export default function TrilogyContainer({ children }: { children: ReactNode }) 
     return () => observer.disconnect();
   }, []);
 
-  const transitionConfig = { duration: 0.8, ease: [0.22, 1, 0.36, 1] as any };
+  const transitionConfig = { duration: 1.2, ease: [0.16, 1, 0.3, 1] as any };
 
   return (
     <motion.main 
-      animate={{ backgroundColor: bgColors[activeSection] || '#121214' }}
+      animate={{ 
+        backgroundColor: bgColors[activeSection] || '#f4f4f2',
+        color: fgColors[activeSection] || (theme === 'dark' ? '#f4f4f2' : '#0a0a0a'),
+        '--foreground': fgColors[activeSection] || (theme === 'dark' ? '#f4f4f2' : '#0a0a0a'),
+        '--background': bgColors[activeSection] || (theme === 'dark' ? '#0a0a0a' : '#f4f4f2')
+      } as any}
       transition={transitionConfig} 
       className="w-full flex items-center flex-col min-h-screen relative"
     >

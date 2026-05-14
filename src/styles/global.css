@@ -8,139 +8,135 @@
   --font-peecemaker: "Chiron GoRound TC", "Noto Sans KR", sans-serif;
   --font-ftt: "Oswald", "Noto Sans KR", sans-serif;
   --font-ufc: "Geologica", "Noto Sans KR", sans-serif;
+  --font-stencil: "Saira Stencil One", sans-serif;
 
   --color-pm: var(--pm-accent);
   --color-ftt: var(--ftt-accent);
 }
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-
-  /* [1] PEECE MAKER */
+  --background: #e5e5e5; /* Metallic Silver */
+  --foreground: #0a0a0a;
+  
   --pm-accent: #fb923c;
-
-  /* [2] FOR THE TEAM */
   --ftt-accent: #e23645;
-  --font-ftt-title: "Oswald", sans-serif;
-
-  /* [3] UFC */
   --ufc-accent: #00ff41;
+}
+
+:root.dark {
+  --background: #161618; /* Gunmetal Steel */
+  --foreground: #f4f4f2;
 }
 
 body {
   background-color: var(--background);
   color: var(--foreground);
   font-family: var(--font-main);
-  transition: background-color 0.8s cubic-bezier(0.4, 0, 0.2, 1),
-    color 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  /* Smoother, more sophisticated transition */
+  transition: background-color 1.2s cubic-bezier(0.2, 1, 0.3, 1),
+    color 1.2s cubic-bezier(0.2, 1, 0.3, 1);
   overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
 }
 
 /* ================== */
-/* Custom UI Utilities*/
+/* Bold Retro-Futurism Utilities */
 /* ================== */
 
-/* Peecemaker: Glassmorphism */
+.font-stencil {
+  font-family: var(--font-stencil);
+}
+
+.massive-text {
+  font-size: clamp(4rem, 15vw, 18rem);
+  font-weight: 900;
+  line-height: 0.85;
+  letter-spacing: -0.04em;
+}
+
+.bold-slants {
+  background: repeating-linear-gradient(
+    45deg,
+    currentColor,
+    currentColor 40px,
+    transparent 40px,
+    transparent 80px
+  );
+}
+
+.bold-linear-border {
+  border: 12px solid currentColor;
+}
+
+ .text-micro {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  font-weight: 800;
+}
+
+/* Glassmorphism (Modified for light theme) */
 .glass-panel {
   position: relative;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
-  border-radius: 1.5rem;
-  z-index: 1;
+  background: rgba(0, 0, 0, 0.02);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  backdrop-filter: blur(20px);
 }
 
-.glass-panel::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  z-index: -1;
-  transform: translate3d(0, 0, 0);
-  clip-path: inset(0 round 1.5rem);
-  contain: paint;
-}
-
-/* For The Team: Neon Sport Glow */
-.ftt-glow {
-  box-shadow: 0 0 15px var(--ftt-accent),
-    inset 0 0 5px rgba(226, 54, 69, 0.5);
-}
-
-/* UFC: Corner Frame UI (ㄱ자 마크) */
+/* Corner Frame Decorations */
 .corner-frame {
   position: relative;
 }
 
-.corner-top-left,
-.corner-top-right,
-.corner-bottom-left,
-.corner-bottom-right {
+.corner-top-left, .corner-top-right, .corner-bottom-left, .corner-bottom-right {
   position: absolute;
   width: 16px;
   height: 16px;
-  pointer-events: none;
+  border-color: currentColor;
   z-index: 10;
-  opacity: 0.7;
+  pointer-events: none;
 }
 
 .corner-top-left {
-  top: -1px;
-  left: -1px;
-  border-top: 1.5px solid currentColor;
-  border-left: 1.5px solid currentColor;
+  top: -2px;
+  left: -2px;
+  border-top-width: 4px;
+  border-left-width: 4px;
 }
 
 .corner-top-right {
-  top: -1px;
-  right: -1px;
-  border-top: 1.5px solid currentColor;
-  border-right: 1.5px solid currentColor;
+  top: -2px;
+  right: -2px;
+  border-top-width: 4px;
+  border-right-width: 4px;
 }
 
 .corner-bottom-left {
-  bottom: -1px;
-  left: -1px;
-  border-bottom: 1.5px solid currentColor;
-  border-left: 1.5px solid currentColor;
+  bottom: -2px;
+  left: -2px;
+  border-bottom-width: 4px;
+  border-left-width: 4px;
 }
 
 .corner-bottom-right {
-  bottom: -1px;
-  right: -1px;
-  border-bottom: 1.5px solid currentColor;
-  border-right: 1.5px solid currentColor;
+  bottom: -2px;
+  right: -2px;
+  border-bottom-width: 4px;
+  border-right-width: 4px;
 }
 
-/* Hide scrollbars completely for aesthetic purposes */
+/* Hide scrollbars */
 ::-webkit-scrollbar {
   width: 0px;
   background: transparent;
 }
 
-/* ================== */
-/* LENIS SMOOTH SCROLL*/
-/* ================== */
-html,
-body {
-  height: auto;
-}
-
-.lenis.lenis-smooth {
-  scroll-behavior: auto !important;
-}
-
-.lenis.lenis-smooth [data-lenis-prevent] {
-  overscroll-behavior: contain;
-}
-
-.lenis.lenis-stopped {
-  overflow: hidden;
-}
+/* LENIS */
+html, body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-stopped { overflow: hidden; }
 
 .lenis.lenis-scrolling iframe {
   pointer-events: none;
-}
+}
