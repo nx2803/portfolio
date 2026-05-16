@@ -37,10 +37,10 @@ export default function TechStackSection() {
   if (!mounted) return <section id="techstack" className="min-h-[40vh]" />;
 
   return (
-    <section id="techstack" className="relative w-full py-40 md:py-56 flex flex-col items-center bg-transparent overflow-hidden">
+    <section id="techstack" className="relative w-full py-10 md:py-16 flex flex-col items-center bg-transparent overflow-hidden">
       
       {/* ── SECTION HEADER ── */}
-      <div className="relative z-10 w-full px-6 md:px-20 mb-24 flex flex-col items-center text-center">
+      <div className="relative z-10 w-full px-6 md:px-20 mb-16 flex flex-col items-center text-center">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}

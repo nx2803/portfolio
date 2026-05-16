@@ -19,15 +19,15 @@ export default function UfcSection() {
   if (!mounted) return <section id="ufc" className="min-h-screen" />;
 
   return (
-    <section id="ufc" className="relative w-full min-h-screen py-20 md:py-24 flex items-center justify-center text-[#e1e4e8] bg-transparent" style={{ fontFamily: 'var(--font-ufc)', backgroundImage: 'radial-gradient(at 0% 0%, rgba(255, 255, 255, 0.03) 0, transparent 50%), radial-gradient(at 100% 100%, rgba(255, 255, 255, 0.02) 0, transparent 50%)' }}>
+    <section id="ufc" className="relative w-full h-screen flex items-center justify-center text-[#e1e4e8] bg-transparent overflow-hidden" style={{ fontFamily: 'var(--font-ufc)', backgroundImage: 'radial-gradient(at 0% 0%, rgba(255, 255, 255, 0.03) 0, transparent 50%), radial-gradient(at 100% 100%, rgba(255, 255, 255, 0.02) 0, transparent 50%)' }}>
 
-      <div className="w-full max-w-[1600px] mx-auto px-6 md:px-12">
+      <div className="w-full max-w-[1400px] mx-auto px-6 md:px-12">
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-10%" }}
           transition={{ duration: 1.2, ease: easing }}
-          className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 md:mb-16 border-[#747474] pb-4 corner-frame p-6 md:p-8 gap-8 md:gap-0"
+          className="flex flex-col md:flex-row justify-between items-start md:items-end mb-6 md:mb-8 border-[#747474] pb-4 corner-frame p-6 md:p-6 gap-8 md:gap-0"
         >
           <div className="corner-top-left" />
           <div className="corner-top-right" />
@@ -52,8 +52,8 @@ export default function UfcSection() {
 
             <div className="w-full" style={{ fontFamily: '"Geologica", sans-serif' }}>
               <TypewriterText
-                text="대규모 기술 트렌드 데이터를 Java 21과 AI 에이전트를 통해 정밀 분석하여 시각화하는 고성능 랭킹 플랫폼입니다. Spring Batch 6.x 기반의 배치 아키텍처와 LLM 인퍼런스를 결합하여 기술 생태계의 동적 변화를 팩트 기반의 인사이트로 변환합니다."
-                className="mt-6 text-sm md:text-base text-white/80 font-sans max-w-2xl font-light leading-relaxed"
+                text="대규모 기술 트렌드 데이터를 Java 21과 AI 에이전트를 통해 정밀 분석하여 시각화하는 고성능 랭킹 플랫폼입니다."
+                className="mt-4 text-xs md:text-sm text-white/80 font-sans max-w-2xl font-light leading-relaxed"
                 delay={1.2}
                 speed={15}
               />
@@ -61,7 +61,7 @@ export default function UfcSection() {
           </div>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
 
           {/* Card 1 - Data Pipeline */}
           <motion.div

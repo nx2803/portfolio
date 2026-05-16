@@ -17,9 +17,9 @@ export default function PeecemakerSection() {
   if (!mounted) return <section id="peecemaker" className="min-h-screen" />;
 
   return (
-    <section id="peecemaker" className="relative w-full min-h-screen py-20 md:py-24 flex items-center justify-center font-peecemaker" style={{ color: '#171717', fontFamily: 'var(--font-peecemaker)' }}>
+    <section id="peecemaker" className="relative w-full h-screen flex items-center justify-center font-peecemaker overflow-hidden" style={{ color: '#171717', fontFamily: 'var(--font-peecemaker)' }}>
 
-      <div className="relative z-10 w-full max-w-[1600px] mx-auto px-6 md:px-12 flex flex-col md:flex-row gap-8 md:gap-12 xl:gap-16 items-center">
+      <div className="relative z-10 w-full max-w-[1400px] mx-auto px-6 md:px-12 flex flex-col md:flex-row gap-6 md:gap-8 lg:gap-12 items-center">
 
         {/* Left: Glass Card Info */}
         <motion.div

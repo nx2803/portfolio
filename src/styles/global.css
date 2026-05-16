@@ -28,14 +28,15 @@
   --foreground: #f4f4f2;
 }
 
-body {
+html, body {
+  height: 100%;
+  overflow: hidden;
   background-color: var(--background);
   color: var(--foreground);
   font-family: var(--font-main);
   /* Smoother, more sophisticated transition */
   transition: background-color 1.2s cubic-bezier(0.2, 1, 0.3, 1),
     color 1.2s cubic-bezier(0.2, 1, 0.3, 1);
-  overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -139,4 +140,21 @@ html, body { height: auto; }
 
 .lenis.lenis-scrolling iframe {
   pointer-events: none;
-}
+}
+
+/* ================== */
+/* PORTAL / DETAIL TRANSITION UTILS */
+/* ================== */
+
+/* Ensure sections take up minimum height to avoid layout jumps */
+section {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+#footer {
+  min-height: auto;
+}
+

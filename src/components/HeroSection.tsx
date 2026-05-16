@@ -86,8 +86,8 @@ export default function HeroSection() {
         </div>
       </div>
 
-      {/* ── FOOTER DATA ── */}
-      <div className="absolute bottom-12 left-12 right-12 flex justify-between items-center">
+      {/* ── FOOTER DATA (Adjusted for screen fit) ── */}
+      <div className="absolute bottom-16 left-12 right-12 flex justify-between items-center">
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}

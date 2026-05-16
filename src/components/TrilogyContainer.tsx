@@ -1,8 +1,17 @@
-import { useEffect, type ReactNode } from 'react';
-import { motion } from 'framer-motion';
+import { useEffect, useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useStore } from '@nanostores/react';
 import { $activeSection, updateActiveSection } from '../store/sectionStore';
 import { $theme } from '../store/themeStore';
+
+// 섹션 컴포넌트 직접 임포트
+import HeroSection from './HeroSection';
+import TechStackSection from './TechStackSection';
+import ProjectTrilogySection from './ProjectTrilogySection';
+import PeecemakerSection from './PeecemakerSection';
+import ForTheTeamSection from './ForTheTeamSection';
+import UfcSection from './UfcSection';
+import Footer from './Footer';
 
 // 섹션별 배경색 통합 관리
 const getBgColors = (theme: 'light' | 'dark'): Record<string, string> => {
@@ -17,11 +26,10 @@ const getBgColors = (theme: 'light' | 'dark'): Record<string, string> => {
     peecemaker: '#fdfdfd', 
     fortheteam: '#0a0a0a',  
     ufc: '#16181c',         
-    footer: isDark ? gunmetalSteel : metallicSilver,
+    contact: isDark ? gunmetalSteel : metallicSilver,
   };
 };
 
-// 섹션별 실제 적용되어야 할 전경색(텍스트) 결정
 const getFgColors = (theme: 'light' | 'dark'): Record<string, string> => {
   const isDark = theme === 'dark';
   const offWhite = '#f4f4f2';
@@ -34,17 +42,22 @@ const getFgColors = (theme: 'light' | 'dark'): Record<string, string> => {
     peecemaker: deepBlack,  
     fortheteam: offWhite,   
     ufc: offWhite,          
-    footer: isDark ? offWhite : deepBlack,
+    contact: isDark ? offWhite : deepBlack,
   };
 };
 
-export default function TrilogyContainer({ children }: { children: ReactNode }) {
+export default function TrilogyContainer() {
   const activeSection = useStore($activeSection);
   const theme = useStore($theme);
   const bgColors = getBgColors(theme);
   const fgColors = getFgColors(theme);
+  const [mounted, setMounted] = useState(false);
 
-  // 테마 변경 시 클래스 및 스토리지 동기화
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // 테마 변경 시 클래스 동기화
   useEffect(() => {
     if (theme === 'dark') {
       document.documentElement.classList.add('dark');
@@ -53,59 +66,28 @@ export default function TrilogyContainer({ children }: { children: ReactNode }) 
     }
   }, [theme]);
 
-  // 섹션 변경 시 전역 스토어 업데이트
-  const syncSection = (id: string) => {
-    if ($activeSection.get() !== id) {
-      updateActiveSection(id);
-    }
+  const transitionConfig = { 
+    duration: 0.8, 
+    ease: [0.16, 1, 0.3, 1] as any 
   };
 
-  useEffect(() => {
-    // 모든 섹션의 노출 높이를 추적하기 위한 Map
-    const visibilityMap = new Map<string, number>();
+  if (!mounted) return <main className="min-h-screen bg-[#161618]" />;
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          // 각 섹션의 현재 노출 높이 업데이트
-          if (entry.isIntersecting) {
-            visibilityMap.set(entry.target.id, entry.intersectionRect.height);
-          } else {
-            visibilityMap.delete(entry.target.id);
-          }
-        });
+  const isDetail = ['peecemaker', 'fortheteam', 'ufc'].includes(activeSection);
 
-        // 현재 화면에서 가장 많이 보이는(높이가 가장 큰) 섹션 결정
-        let maxProject = "";
-        let maxHeight = -1;
-
-        visibilityMap.forEach((height, id) => {
-          if (height > maxHeight) {
-            maxHeight = height;
-            maxProject = id;
-          }
-        });
-
-        if (maxProject) {
-          syncSection(maxProject);
-        }
-      },
-      { 
-        rootMargin: '0px', 
-        threshold: [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0] 
-      }
-    );
-
-    const sectionIds = ['intro', 'techstack', 'trilogy_intro', 'peecemaker', 'fortheteam', 'ufc', 'footer'];
-    sectionIds.forEach((id) => {
-      const element = document.getElementById(id);
-      if (element) observer.observe(element);
-    });
-
-    return () => observer.disconnect();
-  }, []);
-
-  const transitionConfig = { duration: 1.2, ease: [0.16, 1, 0.3, 1] as any };
+  // 현재 활성화된 섹션 컴포넌트 결정
+  const renderActiveSection = () => {
+    switch (activeSection) {
+      case 'intro': return <HeroSection />;
+      case 'techstack': return <TechStackSection />;
+      case 'trilogy_intro': return <ProjectTrilogySection />;
+      case 'peecemaker': return <PeecemakerSection />;
+      case 'fortheteam': return <ForTheTeamSection />;
+      case 'ufc': return <UfcSection />;
+      case 'contact': return <Footer />;
+      default: return <HeroSection />;
+    }
+  };
 
   return (
     <motion.main 
@@ -113,22 +95,36 @@ export default function TrilogyContainer({ children }: { children: ReactNode }) 
         backgroundColor: bgColors[activeSection] || '#f4f4f2',
         color: fgColors[activeSection] || (theme === 'dark' ? '#f4f4f2' : '#0a0a0a'),
         '--foreground': fgColors[activeSection] || (theme === 'dark' ? '#f4f4f2' : '#0a0a0a'),
-        '--background': bgColors[activeSection] || (theme === 'dark' ? '#0a0a0a' : '#f4f4f2')
+        '--background': bgColors[activeSection] || (theme === 'dark' ? '#0a0a0a' : '#f4f4f2'),
+        '--accent': activeSection === 'peecemaker' ? '#fb923c' : activeSection === 'fortheteam' ? '#e23645' : activeSection === 'ufc' ? '#00ff41' : '#ffffff'
       } as any}
       transition={transitionConfig} 
-      className="w-full flex items-center flex-col min-h-screen relative"
+      className="w-full min-h-screen flex items-center flex-col relative overflow-x-hidden"
     >
-      {/* 글로벌 Peecemaker 그라데이션 (고정) */}
+      {/* 글로벌 Peecemaker 그라데이션 */}
       <motion.div 
-        className="fixed inset-0 bg-linear-to-tr from-[#e0f5ff] via-[#ffe9c5] to-[#e0f5ff] pointer-events-none"
-        style={{ zIndex: 0 }}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: activeSection === 'peecemaker' ? 1 : 0 }}
-        transition={transitionConfig}
+        className="fixed inset-0 bg-linear-to-tr from-[#e0f5ff] via-[#ffe9c5] to-[#e0f5ff] pointer-events-none transition-opacity duration-1000"
+        style={{ zIndex: 0, opacity: activeSection === 'peecemaker' ? 1 : 0 }}
       />
       
       <div className="relative w-full z-10 flex flex-col items-center">
-        {children}
+        <AnimatePresence mode="wait" initial={false}>
+          <motion.div
+            key={activeSection}
+            initial={{ opacity: 0, scale: 0.98, filter: 'blur(10px)' }}
+            animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
+            exit={{ opacity: 0, scale: 1.02, filter: 'blur(10px)' }}
+            transition={transitionConfig}
+            className="w-full h-screen flex flex-col items-center justify-center relative overflow-hidden"
+          >
+            {/* 현재 섹션 렌더링 */}
+            <div className="w-full h-full flex flex-col justify-center overflow-hidden">
+              {renderActiveSection()}
+            </div>
+
+            {/* 상세 프로젝트 페이지인 경우 뒤로가기 버튼 제거됨 (헤더 이용) */}
+          </motion.div>
+        </AnimatePresence>
       </div>
     </motion.main>
   );
