@@ -53,11 +53,15 @@ export default function ForTheTeamSection() {
       <div className="relative z-10 w-full max-w-[1400px] mx-auto px-6 md:px-12">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-10%" }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1.2, ease: easing }}
-          className="flex flex-col md:flex-row shadow-2xl bg-[#0a0a0a] border border-[#1a1a1a]"
+          className="flex flex-col md:flex-row shadow-2xl bg-[#0a0a0a] border border-[#1a1a1a] relative"
         >
+          {/* Corner Brackets */}
+          <div className="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-[#e23645] z-20" />
+          <div className="absolute top-0 right-0 w-4 h-4 border-t-2 border-r-2 border-[#e23645] z-20" />
+          <div className="absolute bottom-0 left-0 w-4 h-4 border-b-2 border-l-2 border-[#e23645] z-20" />
+          <div className="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-[#e23645] z-20" />
           {/* Content Block */}
           <div className="w-full md:w-5/12 lg:w-1/3 p-8 md:p-12 flex flex-col justify-between relative overflow-hidden shrink-0">
             <div className="absolute top-0 right-0 w-2 h-full bg-[#e23645] ftt-glow" />

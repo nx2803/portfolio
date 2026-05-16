@@ -99,7 +99,28 @@ export default function TrilogyContainer() {
       {/* ── COSMIC BACKGROUND LAYER ── */}
       <CosmicBackground activeSection={activeSection} />
 
-      {/* 글로벌 Peecemaker 그라데이션 (우주 배경과 공존) */}
+      {/* ── GLOBAL HUD FRAME (Slants & Ticks) ── */}
+      <div 
+        className="fixed top-0 left-0 w-full h-6 bold-slants opacity-70 z-20 pointer-events-none transition-colors duration-700" 
+        style={{ color: 'var(--accent)' }}
+      />
+      <div 
+        className="fixed bottom-0 left-0 w-full h-6 bold-slants opacity-70 z-20 pointer-events-none transition-colors duration-700" 
+        style={{ color: 'var(--accent)' }}
+      />
+
+      <div className="fixed left-6 top-0 h-full flex flex-col items-center justify-center gap-10 opacity-50 z-20 pointer-events-none transition-colors duration-700" style={{ color: 'var(--accent)' }}>
+        {[...Array(8)].map((_, i) => (
+          <div key={i} className="w-4 h-px bg-current" />
+        ))}
+      </div>
+      <div className="fixed right-6 top-0 h-full flex flex-col items-center justify-center gap-10 opacity-50 z-20 pointer-events-none transition-colors duration-700" style={{ color: 'var(--accent)' }}>
+        {[...Array(8)].map((_, i) => (
+          <div key={i} className="w-4 h-px bg-current" />
+        ))}
+      </div>
+
+      {/* 글로벌 Peecemaker 그라데이션 */}
       <motion.div 
         className="fixed inset-0 bg-linear-to-tr from-[#e0f5ff]/20 via-[#ffe9c5]/20 to-[#e0f5ff]/20 pointer-events-none transition-opacity duration-1000"
         style={{ zIndex: 1, opacity: activeSection === 'peecemaker' ? 1 : 0 }}
@@ -124,8 +145,6 @@ export default function TrilogyContainer() {
             <div className="w-full h-full flex flex-col justify-center overflow-hidden">
               {renderActiveSection()}
             </div>
-
-            {/* 상세 프로젝트 페이지인 경우 뒤로가기 버튼 제거됨 (헤더 이용) */}
           </motion.div>
         </AnimatePresence>
       </div>

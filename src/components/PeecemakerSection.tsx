@@ -24,8 +24,7 @@ export default function PeecemakerSection() {
         {/* Left: Glass Card Info */}
         <motion.div
           initial={{ opacity: 0, x: -30 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true, margin: "-10%" }}
+          animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 1.2, ease: easing }}
           className="w-full md:w-5/12 lg:w-1/3 shrink-0"
         >
@@ -35,7 +34,7 @@ export default function PeecemakerSection() {
               className="text-3xl md:text-5xl mb-4 font-black tracking-widest uppercase leading-none"
               style={{ 
                 viewTransitionName: isTransitionTarget ? 'project-title' : 'none',
-                fontFamily: "'Chiron GoRound TC', sans-serif"
+                fontFamily: "var(--font-peecemaker)"
               }}
             >
               <span className="text-[#fb923c]">PEECE</span><span className="text-current opacity-80">MAKER</span>
@@ -90,8 +89,7 @@ export default function PeecemakerSection() {
         {/* Right: Mockup / Visual */}
         <motion.div
           initial={{ opacity: 0, scale: 0.98 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true, margin: "-10%" }}
+          animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1.5, ease: easing, delay: 0.2 }}
           className="w-full md:w-7/12 lg:w-2/3 h-[300px] sm:h-[400px] md:h-[600px] flex items-center justify-center p-0"
         >

@@ -1,29 +1,40 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import {
-  SiNextdotjs, SiReact, SiTypescript, SiFlutter, SiTailwindcss,
-  SiReactquery, SiFramer, SiSpringboot, SiNestjs,
-  SiPython, SiFastapi, SiGooglegemini, SiPostgresql, SiRedis,
-  SiPrisma, SiDocker, SiVercel, SiHuggingface
+  SiNextdotjs, SiReact, SiTypescript, SiTailwindcss,
+  SiNestjs, SiPython, SiFastapi, SiPostgresql, SiRedis,
+  SiPrisma, SiDocker, SiFlutter, SiSpringboot
 } from 'react-icons/si';
 import { FaJava } from 'react-icons/fa';
 
-interface TechItem {
-  name: string;
-  icon: any;
-}
-
-const allTechs: TechItem[] = [
-  { name: 'TYPESCRIPT', icon: SiTypescript },
-  { name: 'NEXT.JS', icon: SiNextdotjs },
-  { name: 'REACT', icon: SiReact },
-  { name: 'NESTJS', icon: SiNestjs },
-  { name: 'FLUTTER', icon: SiFlutter },
-  { name: 'JAVA', icon: FaJava },
-  { name: 'SPRING BOOT', icon: SiSpringboot },
-  { name: 'PYTHON', icon: SiPython },
-  { name: 'FASTAPI', icon: SiFastapi },
-  { name: 'POSTGRESQL', icon: SiPostgresql },
+const techGroups = [
+  {
+    category: "FRONTEND_CORE",
+    items: [
+      { name: 'TYPESCRIPT', icon: SiTypescript },
+      { name: 'NEXT.JS', icon: SiNextdotjs },
+      { name: 'REACT', icon: SiReact },
+      { name: 'FLUTTER', icon: SiFlutter },
+    ]
+  },
+  {
+    category: "BACKEND_INFRA",
+    items: [
+      { name: 'JAVA', icon: FaJava },
+      { name: 'SPRING BOOT', icon: SiSpringboot },
+      { name: 'NESTJS', icon: SiNestjs },
+      { name: 'PYTHON', icon: SiPython },
+    ]
+  },
+  {
+    category: "DATA_LAYER",
+    items: [
+      { name: 'FASTAPI', icon: SiFastapi },
+      { name: 'POSTGRESQL', icon: SiPostgresql },
+      { name: 'PRISMA', icon: SiPrisma },
+      { name: 'DOCKER', icon: SiDocker },
+    ]
+  }
 ];
 
 export default function TechStackSection() {
@@ -34,58 +45,127 @@ export default function TechStackSection() {
     setMounted(true);
   }, []);
 
-  if (!mounted) return <section id="techstack" className="min-h-[40vh]" />;
+  if (!mounted) return <section id="techstack" className="h-screen" />;
 
   return (
-    <section id="techstack" className="relative w-full py-10 md:py-16 flex flex-col items-center bg-transparent overflow-hidden">
+    <section id="techstack" className="w-full h-screen relative flex flex-col justify-center items-center px-6 md:px-16 lg:px-24 overflow-hidden bg-transparent text-(--foreground)">
       
-      {/* ── SECTION HEADER ── */}
-      <div className="relative z-10 w-full px-6 md:px-20 mb-16 flex flex-col items-center text-center">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 1.2, ease: easing }}
-          className="flex flex-col items-center gap-4"
-        >
-          <span className="text-(--foreground) font-mono text-[10px] tracking-[0.5em] uppercase font-black opacity-30">
-            SYSTEM_ARCHITECTURE_CORE // 2026
-          </span>
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-black uppercase leading-none tracking-tighter opacity-80">
-            CORE ENGINE INTEGRATION
-          </h2>
-        </motion.div>
-      </div>
+      <div className="w-full max-w-[1800px] flex flex-col justify-center relative z-10">
+        
+        {/* ── HEADER ── */}
+        <div className="mb-10 md:mb-16 flex items-center gap-10 relative overflow-hidden">
+          <motion.h2 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8, delay: 0 }}
+            className="text-3xl md:text-6xl font-black uppercase tracking-tighter shrink-0"
+          >
+            TECH_STACK
+          </motion.h2>
+          <motion.div 
+            initial={{ scaleX: 0 }}
+            animate={{ scaleX: 1 }}
+            transition={{ duration: 1.8, ease: easing, delay: 0.3 }}
+            className="h-1.5 bg-current opacity-40 flex-1 origin-left"
+          />
+        </div>
 
-      {/* ── BOLD LOGO GRID ── */}
-      <div className="w-full max-w-350 mx-auto px-6 md:px-20 relative z-10">
-        <div className="grid grid-cols-2 sm:grid-cols-5 gap-y-24 gap-x-12 md:gap-x-20">
-          {allTechs.map((item, idx) => (
-            <motion.div
-              key={idx}
-              initial={{ opacity: 0, scale: 0.95 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: idx * 0.05, duration: 1, ease: easing }}
-              className="flex flex-col items-center justify-center gap-8 group"
-            >
-              <div className="relative">
-                <item.icon className="text-6xl md:text-8xl lg:text-[100px] text-current opacity-90 group-hover:opacity-100 group-hover:scale-110 transition-all duration-700" />
-                
-                {/* Sharp Underline on Hover */}
-                <div 
-                  className="absolute -bottom-4 left-0 w-full h-1 bg-current scale-x-0 group-hover:scale-x-100 transition-transform duration-700 origin-left"
+        {/* ── ROWS ── */}
+        <div className="flex flex-col relative border-t-2 border-current/10">
+          {techGroups.map((group, groupIdx) => (
+            <div key={group.category} className="group relative w-full py-10 md:py-14 border-b-2 border-current/10">
+              
+              <motion.div 
+                initial={{ scaleX: 0 }}
+                animate={{ scaleX: 1 }}
+                transition={{ duration: 1.2, ease: easing, delay: groupIdx * 0.15 + 0.5 }}
+                className="absolute top-0 left-0 w-full h-px bg-current opacity-20 origin-left"
+              />
+
+              {/* Category Label (Tightened //) */}
+              <div className="flex items-center gap-6 mb-8">
+                <motion.span 
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 0.4 }}
+                  transition={{ duration: 0.8, delay: groupIdx * 0.2 + 1.2 }}
+                  className="text-xs md:text-sm font-mono tracking-[0.5em] font-black text-(--accent)"
+                >
+                  {group.category}//
+                </motion.span>
+                <motion.div 
+                  initial={{ scaleX: 0 }}
+                  animate={{ scaleX: 1 }}
+                  transition={{ delay: groupIdx * 0.2 + 0.6, duration: 0.8 }}
+                  className="h-0.5 w-16 bg-(--accent) origin-left" 
                 />
               </div>
-              
-              <span className="text-[10px] md:text-[12px] font-black font-mono tracking-[0.3em] opacity-40 group-hover:opacity-100 transition-all duration-700 text-center uppercase whitespace-nowrap">
-                {item.name}
-              </span>
-            </motion.div>
+
+              {/* Items Grid */}
+              <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-12 md:gap-x-24 gap-y-10">
+                {group.items.map((tech, techIdx) => (
+                  <div key={tech.name} className="flex items-center gap-6 md:gap-10 group/item cursor-crosshair min-w-0">
+                    <div className="relative shrink-0">
+                      <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 0.9 }}
+                        transition={{ duration: 1, delay: 1.5 + techIdx * 0.05 }}
+                      >
+                        <tech.icon className="text-5xl md:text-7xl lg:text-[90px] text-white group-hover/item:text-(--accent) group-hover/item:scale-110 transition-all duration-700 drop-shadow-[0_0_25px_rgba(255,255,255,0.2)]" />
+                      </motion.div>
+                      
+                      <motion.div 
+                        initial={{ scaleY: 0 }}
+                        animate={{ scaleY: 1 }}
+                        transition={{ delay: 0.8 + techIdx * 0.05, duration: 1 }}
+                        className="absolute -left-4 top-0 w-1 h-full bg-(--accent) opacity-60 origin-top"
+                      />
+                    </div>
+
+                    <div className="flex flex-col flex-1 min-w-0">
+                      <motion.span 
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ duration: 1, delay: 1.6 + techIdx * 0.05 }}
+                        className="text-2xl md:text-4xl font-black tracking-tighter leading-none uppercase text-white group-hover/item:text-(--accent) transition-colors truncate"
+                      >
+                        {tech.name}
+                      </motion.span>
+                      
+                      <div className="h-2 bg-white/10 mt-3 relative overflow-hidden">
+                        <motion.div 
+                          initial={{ scaleX: 0 }}
+                          animate={{ scaleX: 1 }}
+                          transition={{ delay: 1 + techIdx * 0.05, duration: 1.5, ease: easing }}
+                          className="absolute inset-y-0 left-0 w-full bg-(--accent) shadow-[0_0_20px_var(--accent)] origin-left" 
+                        />
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
           ))}
         </div>
-      </div>
 
+        {/* ── FOOTER SYSTEM LOG ── */}
+        <motion.div 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 0.4 }}
+          transition={{ duration: 1, delay: 2.2 }}
+          className="mt-12 flex justify-between items-center text-xs font-mono"
+        >
+          <div className="flex items-center gap-10">
+            <span className="font-black tracking-widest text-(--accent)">INTEGRITY_CHECK: PASSED//</span>
+            <div className="flex gap-2">
+              {[...Array(10)].map((_, i) => (
+                <div key={i} className="w-8 h-2 bg-(--accent)" />
+              ))}
+            </div>
+          </div>
+          <span className="hidden md:block tracking-[0.4em]">SYSTEM_READY_OPERATIONAL//</span>
+        </motion.div>
+
+      </div>
     </section>
   );
 }

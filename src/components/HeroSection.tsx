@@ -14,21 +14,9 @@ export default function HeroSection() {
   return (
     <section id="intro" className="relative w-full h-screen flex flex-col justify-center items-center overflow-hidden bg-transparent text-(--foreground)">
 
-      {/* ── BOLD DECORATIVE SLANTS (Background Layer) ── */}
-      <div className="absolute top-0 left-0 w-full h-8 bold-slants opacity-40 pointer-events-none" />
-      <div className="absolute bottom-0 left-0 w-full h-8 bold-slants opacity-40 pointer-events-none" />
+      {/* ── BOLD DECORATIVE SLANTS (Removed - Moved to Global Container) ── */}
 
-      {/* ── FLOATING TICKS (Repetitive Geometric) ── */}
-      <div className="absolute left-6 top-0 h-full flex flex-col items-center justify-center gap-6 opacity-30 pointer-events-none">
-        {[...Array(12)].map((_, i) => (
-          <div key={i} className="w-4 h-0.5 bg-current" />
-        ))}
-      </div>
-      <div className="absolute right-6 top-0 h-full flex flex-col items-center justify-center gap-6 opacity-30 pointer-events-none">
-        {[...Array(12)].map((_, i) => (
-          <div key={i} className="w-4 h-0.5 bg-current" />
-        ))}
-      </div>
+      {/* ── FLOATING TICKS (Removed - Moved to Global) ── */}
 
       {/* ── MAIN CONTENT ── */}
       <div className="relative z-10 w-full px-12 md:px-24 flex flex-col items-start">

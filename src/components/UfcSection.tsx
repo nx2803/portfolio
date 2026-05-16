@@ -24,8 +24,7 @@ export default function UfcSection() {
       <div className="w-full max-w-[1400px] mx-auto px-6 md:px-12">
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-10%" }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1.2, ease: easing }}
           className="flex flex-col md:flex-row justify-between items-start md:items-end mb-6 md:mb-8 border-[#747474] pb-4 corner-frame p-6 md:p-6 gap-8 md:gap-0"
         >
@@ -66,8 +65,7 @@ export default function UfcSection() {
           {/* Card 1 - Data Pipeline */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-10%" }}
+            animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 1, ease: easing, delay: 0.1 }}
             whileHover={{ backgroundColor: '#2d3139' }}
             className="p-6 md:p-8 corner-frame transition-colors duration-300 flex flex-col"
@@ -113,8 +111,7 @@ export default function UfcSection() {
           {/* Card 2 - Analyzed Insight */}
           <motion.div
             initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-10%" }}
+            animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 1, ease: easing, delay: 0.2 }}
             whileHover={{ backgroundColor: '#2d3139' }}
             className="p-6 md:p-8 corner-frame transition-colors duration-300 md:col-span-1 flex flex-col"
@@ -163,8 +160,7 @@ export default function UfcSection() {
           {/* Card 3 - Frontend Dashboard */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-10%" }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.2, ease: easing, delay: 0.3 }}
             whileHover={{ backgroundColor: '#2d3139' }}
             className="p-6 md:p-8 corner-frame transition-colors duration-300 md:col-span-2 flex flex-col md:flex-row gap-8 relative group"

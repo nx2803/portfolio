@@ -40,7 +40,6 @@ export default function ProjectTrilogySection() {
   const handleProjectClick = (sectionId: string) => {
     updateActiveSection(sectionId);
     updateViewMode('detail');
-    // Scroll to top when entering detail view
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -51,50 +50,74 @@ export default function ProjectTrilogySection() {
 
       {/* ── HEADER AREA ── */}
       <div className="w-full px-6 md:px-10 mb-20 md:mb-32 relative z-10">
-        <motion.div
-          initial={{ opacity: 0, x: -10 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 1.2, ease: easing }}
-          className="flex flex-col gap-8"
-        >
-          <div className="flex items-center gap-10">
-            <h2 className="text-6xl md:text-[8vw] font-stencil leading-none tracking-tighter select-none uppercase">
+        <div className="flex flex-col gap-4">
+          {/* Subtitle with Tight // Decoration */}
+          <motion.span 
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 0.6, x: 0 }}
+            transition={{ duration: 1, delay: 0.2 }}
+            className="text-xs md:text-sm font-mono tracking-[0.5em] font-black text-(--accent) uppercase"
+          >
+            PROJECT_INDEX_MAPPING//
+          </motion.span>
+          
+          <div className="flex items-center gap-10 relative overflow-hidden">
+            <motion.h2 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.8, delay: 0 }}
+              className="text-6xl md:text-[8vw] font-stencil leading-none tracking-tighter select-none uppercase shrink-0"
+            >
               THE_TRILOGY
-            </h2>
-            <div className="h-px flex-1 bg-current opacity-40" />
+            </motion.h2>
+            <motion.div 
+              initial={{ scaleX: 0 }}
+              animate={{ scaleX: 1 }}
+              transition={{ duration: 1.5, ease: easing, delay: 0.3 }}
+              className="h-1.5 bg-current opacity-40 flex-1 origin-left"
+            />
           </div>
-        </motion.div>
+        </div>
       </div>
 
       {/* ── ROADMAP GRID ── */}
       <div className="w-full px-4 md:px-8 relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-3 border-t border-b border-current/20 divide-y md:divide-y-0 md:divide-x divide-current/20">
+        <div className="relative grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-current/20">
+          
+          <motion.div 
+            initial={{ scaleX: 0 }}
+            animate={{ scaleX: 1 }}
+            transition={{ duration: 1.5, ease: easing, delay: 0.5 }}
+            className="absolute top-0 left-0 w-full h-px bg-current opacity-20 origin-left"
+          />
+
+          <motion.div 
+            initial={{ scaleX: 0 }}
+            animate={{ scaleX: 1 }}
+            transition={{ duration: 1.5, ease: easing, delay: 0.55 }}
+            className="absolute bottom-0 left-0 w-full h-px bg-current opacity-20 origin-left"
+          />
+
           {phases.map((phase, idx) => (
-            <motion.div
+            <div
               key={phase.id}
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.1, margin: "-50px" }}
-              transition={{ delay: idx * 0.12, duration: 1, ease: easing }}
               onClick={() => handleProjectClick(phase.sectionId)}
               className="relative group p-10 md:p-16 flex flex-col gap-16 transition-all duration-700 overflow-hidden cursor-pointer hover:bg-current/5"
               style={{ '--accent': phase.accent } as any}
             >
-              {/* Corner Brackets */}
-              <div className="absolute top-8 left-8 w-6 h-6 border-t-2 border-l-2 border-(--accent) opacity-0 group-hover:opacity-100 transition-all duration-500" />
-              <div className="absolute top-8 right-8 w-6 h-6 border-t-2 border-r-2 border-(--accent) opacity-0 group-hover:opacity-100 transition-all duration-500" />
-              <div className="absolute bottom-8 left-8 w-6 h-6 border-b-2 border-l-2 border-(--accent) opacity-0 group-hover:opacity-100 transition-all duration-500" />
-              <div className="absolute bottom-8 right-8 w-6 h-6 border-b-2 border-r-2 border-(--accent) opacity-0 group-hover:opacity-100 transition-all duration-500" />
-
-              <div className="relative z-10 flex flex-col gap-12">
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 1, delay: 1.5 + idx * 0.1 }}
+                className="relative z-10 flex flex-col gap-12"
+              >
                 <div className="flex justify-between items-start">
                   <span className="text-7xl md:text-9xl font-stencil opacity-15 group-hover:opacity-30 group-hover:text-[var(--accent)] transition-all leading-none duration-700">
                     {phase.id}
                   </span>
                   <div className="flex flex-col items-end gap-2">
                     <span className="text-[10px] font-bold border border-current/20 px-4 py-1 transition-all group-hover:border-(--accent) group-hover:bg-(--accent) group-hover:text-(--background)">
-                      {phase.tag}
+                      {phase.tag}//
                     </span>
                     <span className="text-[10px] font-bold opacity-0 group-hover:opacity-100 transition-all text-(--accent) animate-pulse">
                       VIEW PROJECT →
@@ -107,30 +130,26 @@ export default function ProjectTrilogySection() {
                     {phase.project}
                   </h3>
 
-                  <div className="h-1 w-12 bg-current opacity-40 transition-all duration-700 group-hover:w-full group-hover:bg-(--accent) group-hover:opacity-100" />
+                  <div className="h-1.5 w-full bg-current/10 relative overflow-hidden">
+                    <motion.div 
+                      initial={{ scaleX: 0 }}
+                      animate={{ scaleX: 0.15 }}
+                      whileHover={{ scaleX: 1 }}
+                      transition={{ delay: 1 + idx * 0.1, duration: 1.2, ease: easing }}
+                      className="absolute inset-y-0 left-0 w-full bg-current opacity-40 group-hover:bg-(--accent) group-hover:opacity-100 origin-left transition-colors duration-500"
+                    />
+                  </div>
 
                   <p className="text-base md:text-2xl font-medium leading-relaxed break-keep group-hover:opacity-100 opacity-60 transition-opacity duration-700">
                     {phase.description}
                   </p>
                 </div>
-              </div>
+              </motion.div>
 
-              {/* PIXEL GRID OVERLAY */}
               <div className="absolute inset-0 bold-slants opacity-0 group-hover:opacity-5 transition-opacity duration-700 pointer-events-none" />
-            </motion.div>
+            </div>
           ))}
         </div>
-
-        {/* NARRATIVE (Simplified for screen fit) */}
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 1.2, ease: easing }}
-          className="mt-16 md:mt-24 px-4 md:px-2 flex flex-col md:flex-row items-end justify-between gap-8"
-        >
-
-        </motion.div>
       </div>
     </section>
   );

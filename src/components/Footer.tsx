@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { SiGithub } from 'react-icons/si';
-import { MdEmail } from 'react-icons/md';
 import { motion } from 'framer-motion';
+import { SiGithub } from 'react-icons/si';
+import { MdEmail, MdArrowForward } from 'react-icons/md';
 
 export default function Footer() {
   const [mounted, setMounted] = useState(false);
@@ -11,100 +11,120 @@ export default function Footer() {
     setMounted(true);
   }, []);
 
-  if (!mounted) return <section id="contact" className="min-h-screen" />;
+  if (!mounted) return <section id="contact" className="h-screen" />;
 
   return (
-    <section id="contact" className="w-full h-screen py-24 md:py-32 px-6 md:px-20 bg-transparent text-(--foreground) relative flex flex-col justify-center overflow-hidden">
+    <section id="contact" className="w-full h-screen relative flex flex-col items-center px-6 md:px-16 lg:px-24 overflow-hidden bg-transparent text-(--foreground) pt-32 md:pt-40">
       
-      {/* ── BOLD DECORATION ── */}
-      <div className="absolute top-0 left-0 w-full h-8 bold-slants opacity-40" />
-      <div className="absolute bottom-0 left-0 w-full h-8 bold-slants opacity-40" />
-
-      <div className="w-full max-w-7xl mx-auto relative z-10 flex flex-col gap-24 md:gap-40">
+      <div className="w-full max-w-[1800px] flex flex-col items-center relative z-10 flex-1 justify-center">
         
-        {/* ── MAIN CONTACT AREA ── */}
-        <div className="flex flex-col gap-12 items-start">
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 1.2, ease: easing }}
+        {/* ── HEADER (Clean Title) ── */}
+        <div className="mb-24 md:mb-36 flex items-center gap-10 w-full overflow-hidden">
+          <motion.h1 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8, delay: 0 }}
+            className="text-4xl md:text-8xl font-black uppercase tracking-tighter shrink-0 whitespace-nowrap"
           >
-            <span className="text-xl md:text-3xl font-black uppercase tracking-tighter mb-8 block bg-(--foreground) text-(--background) px-4 py-1">
-              Let's build the system //
-            </span>
-          </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 w-full">
-            <motion.a 
-              href="mailto:nx2803@gmail.com" 
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 1, ease: easing, delay: 0.1 }}
-              className="group relative flex flex-col gap-6 p-10 md:p-16 border border-current/20 transition-all duration-700 overflow-hidden hover:border-current/40 bg-current/5"
-            >
-              {/* Brackets */}
-              <div className="absolute top-4 left-4 w-6 h-6 border-t-2 border-l-2 border-current opacity-0 group-hover:opacity-100 transition-all duration-500" />
-              <div className="absolute top-4 right-4 w-6 h-6 border-t-2 border-r-2 border-current opacity-0 group-hover:opacity-100 transition-all duration-500" />
-              <div className="absolute bottom-4 left-4 w-6 h-6 border-b-2 border-l-2 border-current opacity-0 group-hover:opacity-100 transition-all duration-500" />
-              <div className="absolute bottom-4 right-4 w-6 h-6 border-b-2 border-r-2 border-current opacity-0 group-hover:opacity-100 transition-all duration-500" />
-
-              <div className="flex justify-between items-center relative z-10">
-                <span className="text-[10px] font-bold uppercase tracking-[0.4em] opacity-40 group-hover:opacity-100 transition-opacity duration-500">Email_Connection</span>
-                <div className="relative">
-                  <MdEmail className="text-5xl md:text-8xl opacity-10 group-hover:opacity-100 transition-all duration-700" />
-                </div>
-              </div>
-              <span className="text-2xl md:text-5xl lg:text-6xl font-stencil uppercase tracking-tight relative z-10 transition-colors duration-700 break-all">
-                nx2803@gmail.com
-              </span>
-            </motion.a>
-
-            <motion.a 
-              href="https://github.com/nx2803" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 1, ease: easing, delay: 0.2 }}
-              className="group relative flex flex-col gap-6 p-10 md:p-16 border border-current/20 transition-all duration-700 overflow-hidden hover:border-current/40 bg-current/5"
-            >
-              <div className="absolute top-4 left-4 w-6 h-6 border-t-2 border-l-2 border-current opacity-0 group-hover:opacity-100 transition-all duration-500" />
-              <div className="absolute top-4 right-4 w-6 h-6 border-t-2 border-r-2 border-current opacity-0 group-hover:opacity-100 transition-all duration-500" />
-              <div className="absolute bottom-4 left-4 w-6 h-6 border-b-2 border-l-2 border-current opacity-0 group-hover:opacity-100 transition-all duration-500" />
-              <div className="absolute bottom-4 right-4 w-6 h-6 border-b-2 border-r-2 border-current opacity-0 group-hover:opacity-100 transition-all duration-500" />
-
-              <div className="flex justify-between items-center relative z-10">
-                <span className="text-[10px] font-bold uppercase tracking-[0.4em] opacity-40 group-hover:opacity-100 transition-opacity duration-500">Github_Repository</span>
-                <div className="relative">
-                  <SiGithub className="text-5xl md:text-8xl opacity-10 group-hover:opacity-100 transition-all duration-700" />
-                </div>
-              </div>
-              <span className="text-2xl md:text-5xl lg:text-6xl font-stencil uppercase tracking-tight relative z-10 transition-colors duration-700 break-all">
-                github.com/nx2803
-              </span>
-            </motion.a>
-          </div>
+            CONTACT
+          </motion.h1>
+          <motion.div 
+            initial={{ scaleX: 0 }}
+            animate={{ scaleX: 1 }}
+            transition={{ duration: 1.5, ease: easing, delay: 0.3 }}
+            className="h-2 md:h-4 bg-current opacity-40 flex-1 origin-left mt-2"
+          />
         </div>
 
-        {/* ── BOTTOM INFO ── */}
-        <div className="flex flex-col md:flex-row justify-between items-end gap-16 pt-16 border-t border-current/30">
-          <div className="flex flex-col gap-6">
-            <div className="flex flex-col gap-1">
-              <span className="text-2xl font-black uppercase tracking-tighter">NX2803 // ARCHITECT</span>
-              <span className="text-xs font-bold opacity-40 tracking-[0.3em] uppercase">&copy; 2026_SYSTEM_OPERATIONAL</span>
-            </div>
+        {/* ── SYMMETRIC CONTACT GRID ── */}
+        <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-0 relative">
+          
+          <motion.div 
+            initial={{ scaleY: 0 }}
+            animate={{ scaleY: 1 }}
+            transition={{ duration: 1.5, ease: easing, delay: 0.4 }}
+            className="absolute left-1/2 top-0 w-px h-full bg-current opacity-20 hidden md:block origin-top" 
+          />
+
+          {/* EMAIL PORT */}
+          <div className="relative flex flex-col items-center gap-12 p-12 md:p-16 lg:p-24 group">
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 1, delay: 1.2 }}
+              className="flex flex-col items-center gap-12 w-full"
+            >
+              <MdEmail className="text-9xl md:text-[180px] text-white opacity-90 group-hover:text-(--accent) transition-all duration-700 group-hover:scale-105 drop-shadow-[0_0_20px_rgba(255,255,255,0.1)]" />
+              
+              <div className="flex flex-col items-center gap-8 w-full max-w-lg">
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-1 bg-(--accent) shadow-[0_0_15px_var(--accent)]" />
+                  <span className="text-xs font-mono tracking-[0.5em] text-(--accent) font-black uppercase">
+                    SMTP_LINK//
+                  </span>
+                </div>
+                <a href="mailto:nx2803@gmail.com" className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-black tracking-tighter uppercase leading-none group-hover:text-(--accent) transition-colors text-center whitespace-nowrap">
+                  nx2803@gmail.com
+                </a>
+                
+                <div className="h-4 w-full bg-white/10 relative overflow-hidden mt-4">
+                  <motion.div 
+                    initial={{ scaleX: 0 }}
+                    animate={{ scaleX: 1 }}
+                    transition={{ delay: 1.8, duration: 1.5, ease: easing }}
+                    className="absolute inset-y-0 left-0 w-full bg-(--accent) shadow-[0_0_30px_var(--accent)] origin-left" 
+                  />
+                </div>
+              </div>
+            </motion.div>
           </div>
 
-          <div className="flex flex-col items-end opacity-10">
-            <h2 className="text-6xl md:text-[12vw] font-stencil leading-none tracking-tighter select-none uppercase">
-              CONTACT
-            </h2>
+          {/* GITHUB PORT */}
+          <div className="relative flex flex-col items-center gap-12 p-12 md:p-16 lg:p-24 group">
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 1, delay: 1.4 }}
+              className="flex flex-col items-center gap-12 w-full"
+            >
+              <SiGithub className="text-9xl md:text-[180px] text-white opacity-90 group-hover:text-(--accent) transition-all duration-700 group-hover:scale-105 drop-shadow-[0_0_20px_rgba(255,255,255,0.1)]" />
+              
+              <div className="flex flex-col items-center gap-8 w-full max-w-lg">
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-1 bg-(--accent) shadow-[0_0_15px_var(--accent)]" />
+                  <span className="text-xs font-mono tracking-[0.5em] text-(--accent) font-black uppercase">
+                    GIT_NODE//
+                  </span>
+                </div>
+                <a href="https://github.com/nx2803" target="_blank" rel="noopener noreferrer" className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-black tracking-tighter uppercase leading-none group-hover:text-(--accent) transition-colors text-center whitespace-nowrap">
+                  github.com/nx2803
+                </a>
+                
+                <div className="h-4 w-full bg-white/10 relative overflow-hidden mt-4">
+                  <motion.div 
+                    initial={{ scaleX: 0 }}
+                    animate={{ scaleX: 1 }}
+                    transition={{ delay: 2.0, duration: 1.5, ease: easing }}
+                    className="absolute inset-y-0 left-0 w-full bg-(--accent) shadow-[0_0_30px_var(--accent)] origin-left" 
+                  />
+                </div>
+              </div>
+            </motion.div>
           </div>
+
         </div>
+
+        {/* ── SIMPLE SYSTEM FOOTER ── */}
+        <div className="w-full flex flex-col md:flex-row justify-between items-end pt-20 pb-12 opacity-50 font-mono text-[10px] tracking-[0.4em] uppercase border-t-2 border-current/10 mt-auto">
+          <div className="flex flex-col gap-2">
+            <span className="font-black text-(--accent)">TERMINAL_HALT: SUCCESS//</span>
+            <span>SEOUL_HQ / EST_2026</span>
+          </div>
+          <span className="font-black">&copy; 2026_NX2803_ARCHIVE_SECURED</span>
+        </div>
+
       </div>
+
     </section>
   );
 }
