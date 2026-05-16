@@ -15,16 +15,16 @@ export default function HeroSection() {
     <section id="intro" className="relative w-full h-screen flex flex-col justify-center items-center overflow-hidden bg-transparent text-(--foreground)">
 
       {/* ── BOLD DECORATIVE SLANTS (Background Layer) ── */}
-      <div className="absolute top-0 left-0 w-full h-24 bold-slants opacity-5 pointer-events-none" />
-      <div className="absolute bottom-0 left-0 w-full h-24 bold-slants opacity-5 pointer-events-none" />
+      <div className="absolute top-0 left-0 w-full h-8 bold-slants opacity-40 pointer-events-none" />
+      <div className="absolute bottom-0 left-0 w-full h-8 bold-slants opacity-40 pointer-events-none" />
 
       {/* ── FLOATING TICKS (Repetitive Geometric) ── */}
-      <div className="absolute left-6 top-0 h-full flex flex-col items-center justify-center gap-6 opacity-10 pointer-events-none">
+      <div className="absolute left-6 top-0 h-full flex flex-col items-center justify-center gap-6 opacity-30 pointer-events-none">
         {[...Array(12)].map((_, i) => (
           <div key={i} className="w-4 h-0.5 bg-current" />
         ))}
       </div>
-      <div className="absolute right-6 top-0 h-full flex flex-col items-center justify-center gap-6 opacity-10 pointer-events-none">
+      <div className="absolute right-6 top-0 h-full flex flex-col items-center justify-center gap-6 opacity-30 pointer-events-none">
         {[...Array(12)].map((_, i) => (
           <div key={i} className="w-4 h-0.5 bg-current" />
         ))}
@@ -35,7 +35,7 @@ export default function HeroSection() {
 
         <div className="flex flex-col gap-0 relative">
           {/* Refined Vertical Guide */}
-          <div className="absolute -left-8 top-0 w-px h-full bg-current opacity-20" />
+          <div className="absolute -left-8 top-0 w-px h-full bg-current opacity-40" />
 
           <motion.div
             initial={{ opacity: 0, x: -30 }}

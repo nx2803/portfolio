@@ -17,7 +17,7 @@ export default function PeecemakerSection() {
   if (!mounted) return <section id="peecemaker" className="min-h-screen" />;
 
   return (
-    <section id="peecemaker" className="relative w-full h-screen flex items-center justify-center font-peecemaker overflow-hidden" style={{ color: '#171717', fontFamily: 'var(--font-peecemaker)' }}>
+    <section id="peecemaker" className="relative w-full h-screen flex items-center justify-center font-peecemaker overflow-hidden" style={{ color: 'inherit', fontFamily: 'var(--font-peecemaker)' }}>
 
       <div className="relative z-10 w-full max-w-[1400px] mx-auto px-6 md:px-12 flex flex-col md:flex-row gap-6 md:gap-8 lg:gap-12 items-center">
 
@@ -29,7 +29,7 @@ export default function PeecemakerSection() {
           transition={{ duration: 1.2, ease: easing }}
           className="w-full md:w-5/12 lg:w-1/3 shrink-0"
         >
-          <div className="bg-white/10 backdrop-blur-xl border border-white/20 shadow-[0_8px_32px_rgba(0,0,0,0.05)] rounded-3xl p-8 md:p-10 relative overflow-hidden">
+          <div className="bg-white/5 backdrop-blur-2xl border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.2)] rounded-3xl p-8 md:p-10 relative overflow-hidden">
 
             <h1
               className="text-3xl md:text-5xl mb-4 font-black tracking-widest uppercase leading-none"
@@ -38,9 +38,9 @@ export default function PeecemakerSection() {
                 fontFamily: "'Chiron GoRound TC', sans-serif"
               }}
             >
-              <span className="text-[#fb923c]">PEECE</span><span className="text-gray-700">MAKER</span>
+              <span className="text-[#fb923c]">PEECE</span><span className="text-current opacity-80">MAKER</span>
             </h1>
-            <p className="text-base md:text-xl text-gray-700 font-medium mb-6 leading-relaxed">
+            <p className="text-base md:text-xl text-current/70 font-medium mb-6 leading-relaxed">
               공공데이터의 기술적 무결성을 확보하여 시민에게 도달하는 정보의 가치를 극대화하는 공중화장실 탐색 플랫폼입니다. <br className="hidden lg:block" />
               정밀한 데이터 필터링 알고리즘과 시각화 엔진을 통해 공공 서비스의 사용자 경험을 엔지니어링 관점에서 재정의했습니다.
             </p>
@@ -55,13 +55,13 @@ export default function PeecemakerSection() {
                 { Icon: SiFramer, name: 'Framer Motion' },
                 { Icon: SiSupabase, name: 'Supabase' },
               ].map((tech, i) => (
-                <span key={i} className="flex items-center gap-2 px-3 py-1.5 md:px-4 md:py-2 bg-black/5 rounded-full text-xs md:text-sm font-bold text-[#fb923c] border border-white/50 shadow-sm transition-all hover:bg-black/10">
+                <span key={i} className="flex items-center gap-2 px-3 py-1.5 md:px-4 md:py-2 bg-white/10 rounded-full text-xs md:text-sm font-bold text-[#fb923c] border border-white/10 shadow-sm transition-all hover:bg-white/20">
                   <tech.Icon className="text-lg md:text-xl" /> {tech.name}
                 </span>
               ))}
             </div>
 
-            <ul className="space-y-4 text-gray-700 mb-8">
+            <ul className="space-y-4 text-current/60 mb-8">
               {[
                 "Next.js 16 + Supabase BaaS를 결합한 기민한 서버리스 아키텍처로 인프라 비용 및 데이터 파이프라인 복원력 확보",
                 "MarkerClusterer와 휘도 기반 Contrast Engine을 도입하여 수천 개의 위치 데이터를 가독성 저해 없이 렌더링하는 성능 최적화 달성",
@@ -95,7 +95,7 @@ export default function PeecemakerSection() {
           transition={{ duration: 1.5, ease: easing, delay: 0.2 }}
           className="w-full md:w-7/12 lg:w-2/3 h-[300px] sm:h-[400px] md:h-[600px] flex items-center justify-center p-0"
         >
-          <div className="w-full h-full bg-white/10 backdrop-blur-xl border border-white/20 shadow-[0_8px_32px_rgba(0,0,0,0.05)] rounded-3xl overflow-hidden relative flex items-center justify-center p-2 md:p-8">
+          <div className="w-full h-full bg-white/5 backdrop-blur-2xl border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.2)] rounded-3xl overflow-hidden relative flex items-center justify-center p-2 md:p-8">
             <img src="/projects/peecemaker.png" alt="Peecemaker UI Screenshot" className="w-full h-full object-contain drop-shadow-2xl" />
           </div>
         </motion.div>

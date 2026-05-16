@@ -62,7 +62,7 @@ export default function ProjectTrilogySection() {
             <h2 className="text-6xl md:text-[8vw] font-stencil leading-none tracking-tighter select-none uppercase">
               THE_TRILOGY
             </h2>
-            <div className="h-px flex-1 bg-current opacity-20" />
+            <div className="h-px flex-1 bg-current opacity-40" />
           </div>
         </motion.div>
       </div>
@@ -89,7 +89,7 @@ export default function ProjectTrilogySection() {
 
               <div className="relative z-10 flex flex-col gap-12">
                 <div className="flex justify-between items-start">
-                  <span className="text-7xl md:text-9xl font-stencil opacity-5 group-hover:opacity-20 group-hover:text-[var(--accent)] transition-all leading-none duration-700">
+                  <span className="text-7xl md:text-9xl font-stencil opacity-15 group-hover:opacity-30 group-hover:text-[var(--accent)] transition-all leading-none duration-700">
                     {phase.id}
                   </span>
                   <div className="flex flex-col items-end gap-2">
@@ -107,9 +107,9 @@ export default function ProjectTrilogySection() {
                     {phase.project}
                   </h3>
 
-                  <div className="h-1 w-12 bg-current opacity-20 transition-all duration-700 group-hover:w-full group-hover:bg-(--accent) group-hover:opacity-100" />
+                  <div className="h-1 w-12 bg-current opacity-40 transition-all duration-700 group-hover:w-full group-hover:bg-(--accent) group-hover:opacity-100" />
 
-                  <p className="text-base md:text-2xl font-medium leading-relaxed break-keep group-hover:opacity-100 opacity-40 transition-opacity duration-700">
+                  <p className="text-base md:text-2xl font-medium leading-relaxed break-keep group-hover:opacity-100 opacity-60 transition-opacity duration-700">
                     {phase.description}
                   </p>
                 </div>

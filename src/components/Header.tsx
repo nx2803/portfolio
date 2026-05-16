@@ -1,9 +1,8 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { useStore } from '@nanostores/react';
 import { $activeSection, updateActiveSection, $viewMode, updateViewMode, type ViewMode } from '../store/sectionStore';
-import { $theme, toggleTheme } from '../store/themeStore';
 import { useState, useEffect } from 'react';
-import { HiMenu, HiX, HiMoon, HiSun } from 'react-icons/hi';
+import { HiMenu, HiX } from 'react-icons/hi';
 
 const sections = [
   { id: 'intro', label: 'Intro', mode: 'portal' as ViewMode },
@@ -23,8 +22,6 @@ const themeColors: Record<string, string> = {
 
 export default function Header() {
   const activeSection = useStore($activeSection);
-  const viewMode = useStore($viewMode);
-  const theme = useStore($theme);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
 
@@ -32,10 +29,8 @@ export default function Header() {
     setMounted(true);
   }, []);
 
-  const isEffectiveLight = mounted && (
-    (activeSection === 'peecemaker') ||
-    (theme === 'light' && ['intro', 'techstack', 'trilogy_intro', 'contact'].includes(activeSection))
-  );
+  // Peecemaker is the only "light" background section in the cosmic journey
+  const isEffectiveLight = false;
 
   const currentColor = themeColors[activeSection] || (isEffectiveLight ? '#000000' : '#ffffff');
 
@@ -65,7 +60,7 @@ export default function Header() {
             relative px-8 py-3.5 rounded-full border transition-all duration-500 flex items-center gap-8 whitespace-nowrap backdrop-blur-xl
             ${isEffectiveLight
               ? 'bg-[#e5e5e5]/80 border-black shadow-[0_8px_32px_rgba(0,0,0,0.05)] text-black'
-              : 'bg-[#161618]/60 border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.3)] text-white'
+              : 'bg-[#000000]/60 border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.3)] text-white'
             }
           `}
         >
@@ -105,15 +100,6 @@ export default function Header() {
               </button>
             ))}
           </div>
-
-          <div className={`h-5 w-px shrink-0 ${isEffectiveLight ? 'bg-black/20' : 'bg-white/10'}`} />
-
-          <button
-            onClick={toggleTheme}
-            className="p-1 hover:opacity-60 transition-opacity"
-          >
-            {theme === 'light' ? <HiMoon className="text-xl" /> : <HiSun className="text-xl" />}
-          </button>
         </motion.nav>
       </header>
 
@@ -129,18 +115,11 @@ export default function Header() {
             relative px-6 py-3 rounded-full border flex items-center justify-between backdrop-blur-xl transition-all duration-500
             ${isEffectiveLight && !isMenuOpen
               ? 'bg-[#e5e5e5]/80 border-black shadow-lg text-black'
-              : 'bg-[#161618]/80 border-white/10 shadow-2xl text-white'
+              : 'bg-[#000000]/80 border-white/10 shadow-2xl text-white'
             }
           `}
         >
-          <button
-            onClick={toggleTheme}
-            className="p-1 hover:opacity-60 transition-opacity shrink-0"
-          >
-            {theme === 'light' ? <HiMoon className="text-lg" /> : <HiSun className="text-lg" />}
-          </button>
-
-          <div className="flex-1 flex items-center justify-center px-2 overflow-hidden">
+          <div className="flex-1 flex items-center justify-start px-2 overflow-hidden">
             <span className="text-[9px] font-mono font-black uppercase tracking-widest opacity-60 truncate">
               {isMenuOpen ? 'CLOSE_MENU' : activeLabel}
             </span>
@@ -148,9 +127,11 @@ export default function Header() {
 
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="p-1 hover:opacity-60 transition-opacity shrink-0"
+            className="p-2 transition-transform active:scale-90"
+            style={{ color: currentColor }}
+            aria-label="Toggle Menu"
           >
-            {isMenuOpen ? <HiX className="text-xl" /> : <HiMenu className="text-xl" />}
+            {isMenuOpen ? <HiX className="text-2xl" /> : <HiMenu className="text-2xl" />}
           </button>
         </div>
       </motion.header>
@@ -162,12 +143,15 @@ export default function Header() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 20 }}
-            className="fixed inset-0 z-200 bg-[#e5e5e5] text-black flex flex-col p-8 pt-12 overflow-y-auto"
+            className="fixed inset-0 z-200 bg-[#050505] text-white flex flex-col p-8 pt-12 overflow-y-auto"
           >
-            <div className="mb-12">
+            <div className="mb-12 flex justify-between items-center">
               <span className="text-2xl font-black font-stencil">
                 MENU_SYSTEM
               </span>
+              <button onClick={() => setIsMenuOpen(false)} className="p-2">
+                <HiX className="text-3xl" />
+              </button>
             </div>
 
             <div className="flex flex-col gap-6">
@@ -180,12 +164,12 @@ export default function Header() {
                   transition={{ delay: idx * 0.05 }}
                   className="flex items-end group text-left"
                 >
-                  <span className="text-4xl md:text-5xl font-black text-black/10 group-hover:text-black/40 transition-colors w-16 shrink-0 font-stencil">
+                  <span className="text-4xl md:text-5xl font-black text-white/5 group-hover:text-white/20 transition-colors w-16 shrink-0 font-stencil">
                     0{idx + 1}
                   </span>
                   <div className="flex flex-col pb-1">
-                    <span className="text-[8px] font-mono text-black/30 tracking-[0.4em] uppercase">section_id: {id}</span>
-                    <span className="text-xl md:text-2xl font-black uppercase tracking-tighter leading-none">{label}</span>
+                    <span className="text-[8px] font-mono text-white/20 tracking-[0.4em] uppercase">section_id: {id}</span>
+                    <span className="text-xl md:text-2xl font-black uppercase tracking-tighter leading-none group-hover:text-[var(--accent)] transition-colors">{label}</span>
                   </div>
                 </motion.button>
               ))}
