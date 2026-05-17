@@ -70,20 +70,6 @@ export default function TrilogyContainer() {
 
   const isDetail = ['peecemaker', 'fortheteam', 'ufc'].includes(activeSection);
 
-  // 현재 활성화된 섹션 컴포넌트 결정
-  const renderActiveSection = () => {
-    switch (activeSection) {
-      case 'intro': return <HeroSection />;
-      case 'techstack': return <TechStackSection />;
-      case 'trilogy_intro': return <ProjectTrilogySection />;
-      case 'peecemaker': return <PeecemakerSection />;
-      case 'fortheteam': return <ForTheTeamSection />;
-      case 'ufc': return <UfcSection />;
-      case 'contact': return <Footer />;
-      default: return <HeroSection />;
-    }
-  };
-
   return (
     <motion.main 
       animate={{ 
@@ -127,25 +113,111 @@ export default function TrilogyContainer() {
       />
       
       <div className="relative w-full z-10 flex flex-col items-center">
-        <AnimatePresence mode="wait" initial={false}>
-          <motion.div
-            key={activeSection}
-            initial={{ opacity: 0, scale: 1, filter: 'blur(5px)', y: 0 }}
-            animate={{ 
-              opacity: 1, 
-              scale: 1, 
-              filter: 'blur(0px)', 
-              y: 0
-            }}
-            exit={{ opacity: 0, scale: 1, filter: 'blur(5px)', y: 0 }}
-            transition={transitionConfig}
-            className="w-full h-screen flex flex-col items-center justify-center relative overflow-hidden"
-          >
-            {/* 현재 섹션 렌더링 */}
-            <div className="w-full h-full flex flex-col justify-center overflow-hidden">
-              {renderActiveSection()}
-            </div>
-          </motion.div>
+        <AnimatePresence mode="wait" initial={true}>
+          {activeSection === 'intro' && (
+            <motion.div
+              key="intro"
+              initial={{ opacity: 0, scale: 1, filter: 'blur(5px)', y: 0 }}
+              animate={{ opacity: 1, scale: 1, filter: 'blur(0px)', y: 0 }}
+              exit={{ opacity: 0, scale: 1, filter: 'blur(5px)', y: 0 }}
+              transition={transitionConfig}
+              className="w-full h-screen flex flex-col items-center justify-center relative overflow-hidden"
+            >
+              <div className="w-full h-full flex flex-col justify-center overflow-hidden">
+                <HeroSection />
+              </div>
+            </motion.div>
+          )}
+
+          {activeSection === 'techstack' && (
+            <motion.div
+              key="techstack"
+              initial={{ opacity: 0, scale: 1, filter: 'blur(5px)', y: 0 }}
+              animate={{ opacity: 1, scale: 1, filter: 'blur(0px)', y: 0 }}
+              exit={{ opacity: 0, scale: 1, filter: 'blur(5px)', y: 0 }}
+              transition={transitionConfig}
+              className="w-full h-screen flex flex-col items-center justify-center relative overflow-hidden"
+            >
+              <div className="w-full h-full flex flex-col justify-center overflow-hidden">
+                <TechStackSection />
+              </div>
+            </motion.div>
+          )}
+
+          {activeSection === 'trilogy_intro' && (
+            <motion.div
+              key="trilogy_intro"
+              initial={{ opacity: 0, scale: 1, filter: 'blur(5px)', y: 0 }}
+              animate={{ opacity: 1, scale: 1, filter: 'blur(0px)', y: 0 }}
+              exit={{ opacity: 0, scale: 1, filter: 'blur(5px)', y: 0 }}
+              transition={transitionConfig}
+              className="w-full h-screen flex flex-col items-center justify-center relative overflow-hidden"
+            >
+              <div className="w-full h-full flex flex-col justify-center overflow-hidden">
+                <ProjectTrilogySection />
+              </div>
+            </motion.div>
+          )}
+
+          {activeSection === 'peecemaker' && (
+            <motion.div
+              key="peecemaker"
+              initial={{ opacity: 0, scale: 1, filter: 'blur(5px)', y: 0 }}
+              animate={{ opacity: 1, scale: 1, filter: 'blur(0px)', y: 0 }}
+              exit={{ opacity: 0, scale: 1, filter: 'blur(5px)', y: 0 }}
+              transition={transitionConfig}
+              className="w-full h-screen flex flex-col items-center justify-center relative overflow-hidden"
+            >
+              <div className="w-full h-full flex flex-col justify-center overflow-hidden">
+                <PeecemakerSection />
+              </div>
+            </motion.div>
+          )}
+
+          {activeSection === 'fortheteam' && (
+            <motion.div
+              key="fortheteam"
+              initial={{ opacity: 0, scale: 1, filter: 'blur(5px)', y: 0 }}
+              animate={{ opacity: 1, scale: 1, filter: 'blur(0px)', y: 0 }}
+              exit={{ opacity: 0, scale: 1, filter: 'blur(5px)', y: 0 }}
+              transition={transitionConfig}
+              className="w-full h-screen flex flex-col items-center justify-center relative overflow-hidden"
+            >
+              <div className="w-full h-full flex flex-col justify-center overflow-hidden">
+                <ForTheTeamSection />
+              </div>
+            </motion.div>
+          )}
+
+          {activeSection === 'ufc' && (
+            <motion.div
+              key="ufc"
+              initial={{ opacity: 0, scale: 1, filter: 'blur(5px)', y: 0 }}
+              animate={{ opacity: 1, scale: 1, filter: 'blur(0px)', y: 0 }}
+              exit={{ opacity: 0, scale: 1, filter: 'blur(5px)', y: 0 }}
+              transition={transitionConfig}
+              className="w-full h-screen flex flex-col items-center justify-center relative overflow-hidden"
+            >
+              <div className="w-full h-full flex flex-col justify-center overflow-hidden">
+                <UfcSection />
+              </div>
+            </motion.div>
+          )}
+
+          {activeSection === 'contact' && (
+            <motion.div
+              key="contact"
+              initial={{ opacity: 0, scale: 1, filter: 'blur(5px)', y: 0 }}
+              animate={{ opacity: 1, scale: 1, filter: 'blur(0px)', y: 0 }}
+              exit={{ opacity: 0, scale: 1, filter: 'blur(5px)', y: 0 }}
+              transition={transitionConfig}
+              className="w-full h-screen flex flex-col items-center justify-center relative overflow-hidden"
+            >
+              <div className="w-full h-full flex flex-col justify-center overflow-hidden">
+                <Footer />
+              </div>
+            </motion.div>
+          )}
         </AnimatePresence>
       </div>
     </motion.main>

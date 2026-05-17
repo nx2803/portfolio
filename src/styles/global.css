@@ -156,4 +156,65 @@ section {
 #footer {
   min-height: auto;
 }
+
+/* ================== */
+/* FOR THE TEAM KEYFRAMES & ACCELERATED CLASSES (GPU) */
+/* ================== */
+
+/* 배경 무한 루프 최적화 (단순 50% 이동 기법으로 DOM 개수 파괴) */
+@keyframes tickerLeft {
+  0% { transform: translate3d(0, 0, 0); }
+  100% { transform: translate3d(-50%, 0, 0); }
+}
+@keyframes tickerRight {
+  0% { transform: translate3d(-50%, 0, 0); }
+  100% { transform: translate3d(0, 0, 0); }
+}
+@keyframes tickerFadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 0.25; }
+}
+.animate-ticker-left {
+  animation: tickerLeft linear infinite;
+  will-change: transform;
+}
+.animate-ticker-right {
+  animation: tickerRight linear infinite;
+  will-change: transform;
+}
+.animate-ticker-fade {
+  animation: tickerFadeIn 2.5s cubic-bezier(0.1, 0.9, 0.2, 1) forwards;
+}
+
+/* 본문 진입 양방향 수렴 슬라이드 (더욱 타이트하고 우아해진 25px offset) */
+@keyframes cubicSlideInLeft {
+  0% { opacity: 0; transform: translate3d(-25px, 0, 0); }
+  100% { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+@keyframes cubicSlideInRight {
+  0% { opacity: 0; transform: translate3d(30px, 0, 0) scale(0.98); }
+  100% { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
+}
+.animate-entrance-left {
+  opacity: 0;
+  animation: cubicSlideInLeft 1.2s cubic-bezier(0.1, 0.9, 0.2, 1) forwards;
+  will-change: transform, opacity;
+}
+.animate-entrance-right {
+  opacity: 0;
+  animation: cubicSlideInRight 1.4s cubic-bezier(0.1, 0.9, 0.2, 1) 0.1s forwards;
+  will-change: transform, opacity;
+}
+
+/* 카드 내부 콘텐츠 순차적 블루밍 스태거 (CSS GPU 가속 가동) */
+@keyframes contentBloom {
+  0% { opacity: 0; transform: translate3d(0, 12px, 0); }
+  100% { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+.stagger-item {
+  opacity: 0;
+  animation: contentBloom 1.0s cubic-bezier(0.1, 0.9, 0.2, 1) forwards;
+  will-change: transform, opacity;
+}
+
 

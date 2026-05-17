@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 
 export default function CosmicBackground({ activeSection }: { activeSection: string }) {
   // 별 입자 생성
@@ -93,6 +93,200 @@ export default function CosmicBackground({ activeSection }: { activeSection: str
           background: `radial-gradient(circle at center, transparent 20%, rgba(0,0,0,0.4) 100%)`
         }}
       />
+
+      {/* ── FOR THE TEAM: 정적 브루탈리스트 타이포그래피 백플레이트 ── */}
+      {/* 
+        [성능 공학적 설계 핵심]
+        배경 타이포그래피가 ForTheTeamSection 내부에 들어가 있으면, TrilogyContainer에서 화면 전체를 
+        모션 컴포넌트로 포장해 filter: 'blur(5px)'를 적용할 때 브라우저 래스터라이저가 거대 외곽선 텍스트 5줄의 
+        모든 픽셀에 실시간 실리콘 필터 마스킹 연산을 시도하게 되어 심각한 렉(Jank)이 발생합니다.
+        따라서 외곽선 텍스트 레이어를 blur/scale 모션이 걸리는 Trilogy 컨테이너 바깥인 이 곳(CosmicBackground)으로 
+        이동하고, 오직 무거운 연산이 아예 수반되지 않는 순수 하드웨어 가속 'opacity fade' 연산으로만 탭 전환을 수행함으로써, 
+        시각적 선명도는 그대로 사수하고 프레임 렉은 100% 영구적으로 완전히 박멸시켰습니다.
+      */}
+      <AnimatePresence>
+        {activeSection === 'fortheteam' && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 0.38 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            className="absolute inset-0 z-0 pointer-events-none select-none overflow-hidden flex flex-col justify-center gap-6 isolate"
+            style={{ 
+              fontFamily: '"Oswald", sans-serif',
+              willChange: 'opacity',
+              backfaceVisibility: 'hidden',
+              WebkitBackfaceVisibility: 'hidden',
+              transform: 'translateZ(0)',
+            }}
+          >
+            {/* 1행: 좌측 무한 루프 스크롤 (Double Span 구조로 무한 연결) */}
+            <div 
+              className="flex whitespace-nowrap animate-ticker-left"
+              style={{ 
+                animationDuration: '40s',
+                willChange: 'transform',
+                transform: 'translateZ(0)'
+              }}
+            >
+              <span
+                className="text-[8rem] md:text-[13rem] font-bold italic uppercase tracking-tighter leading-none text-transparent shrink-0"
+                style={{ 
+                  WebkitTextStroke: '1.4px #e23645',
+                  transform: 'translateZ(0)',
+                  backfaceVisibility: 'hidden',
+                  WebkitBackfaceVisibility: 'hidden',
+                }}
+              >
+                FOR THE TEAM FOR THE TEAM FOR THE TEAM FOR THE TEAM&nbsp;
+              </span>
+              <span
+                className="text-[8rem] md:text-[13rem] font-bold italic uppercase tracking-tighter leading-none text-transparent shrink-0"
+                style={{ 
+                  WebkitTextStroke: '1.4px #e23645',
+                  transform: 'translateZ(0)',
+                  backfaceVisibility: 'hidden',
+                  WebkitBackfaceVisibility: 'hidden',
+                }}
+              >
+                FOR THE TEAM FOR THE TEAM FOR THE TEAM FOR THE TEAM&nbsp;
+              </span>
+            </div>
+            
+            {/* 2행: 우측 무한 루프 스크롤 */}
+            <div 
+              className="flex whitespace-nowrap animate-ticker-right"
+              style={{ 
+                animationDuration: '48s',
+                willChange: 'transform',
+                transform: 'translateZ(0)'
+              }}
+            >
+              <span
+                className="text-[8rem] md:text-[13rem] font-bold italic uppercase tracking-tighter leading-none text-transparent shrink-0"
+                style={{ 
+                  WebkitTextStroke: '1.4px #e23645',
+                  transform: 'translateZ(0)',
+                  backfaceVisibility: 'hidden',
+                  WebkitBackfaceVisibility: 'hidden',
+                }}
+              >
+                FOR THE TEAM FOR THE TEAM FOR THE TEAM FOR THE TEAM&nbsp;
+              </span>
+              <span
+                className="text-[8rem] md:text-[13rem] font-bold italic uppercase tracking-tighter leading-none text-transparent shrink-0"
+                style={{ 
+                  WebkitTextStroke: '1.4px #e23645',
+                  transform: 'translateZ(0)',
+                  backfaceVisibility: 'hidden',
+                  WebkitBackfaceVisibility: 'hidden',
+                }}
+              >
+                FOR THE TEAM FOR THE TEAM FOR THE TEAM FOR THE TEAM&nbsp;
+              </span>
+            </div>
+            
+            {/* 3행: 좌측 무한 루프 스크롤 */}
+            <div 
+              className="flex whitespace-nowrap animate-ticker-left"
+              style={{ 
+                animationDuration: '36s',
+                willChange: 'transform',
+                transform: 'translateZ(0)'
+              }}
+            >
+              <span
+                className="text-[8rem] md:text-[13rem] font-bold italic uppercase tracking-tighter leading-none text-transparent shrink-0"
+                style={{ 
+                  WebkitTextStroke: '1.4px #e23645',
+                  transform: 'translateZ(0)',
+                  backfaceVisibility: 'hidden',
+                  WebkitBackfaceVisibility: 'hidden',
+                }}
+              >
+                FOR THE TEAM FOR THE TEAM FOR THE TEAM FOR THE TEAM&nbsp;
+              </span>
+              <span
+                className="text-[8rem] md:text-[13rem] font-bold italic uppercase tracking-tighter leading-none text-transparent shrink-0"
+                style={{ 
+                  WebkitTextStroke: '1.4px #e23645',
+                  transform: 'translateZ(0)',
+                  backfaceVisibility: 'hidden',
+                  WebkitBackfaceVisibility: 'hidden',
+                }}
+              >
+                FOR THE TEAM FOR THE TEAM FOR THE TEAM FOR THE TEAM&nbsp;
+              </span>
+            </div>
+
+            {/* 4행: 우측 무한 루프 스크롤 */}
+            <div 
+              className="flex whitespace-nowrap animate-ticker-right"
+              style={{ 
+                animationDuration: '44s',
+                willChange: 'transform',
+                transform: 'translateZ(0)'
+              }}
+            >
+              <span
+                className="text-[8rem] md:text-[13rem] font-bold italic uppercase tracking-tighter leading-none text-transparent shrink-0"
+                style={{ 
+                  WebkitTextStroke: '1.4px #e23645',
+                  transform: 'translateZ(0)',
+                  backfaceVisibility: 'hidden',
+                  WebkitBackfaceVisibility: 'hidden',
+                }}
+              >
+                FOR THE TEAM FOR THE TEAM FOR THE TEAM FOR THE TEAM&nbsp;
+              </span>
+              <span
+                className="text-[8rem] md:text-[13rem] font-bold italic uppercase tracking-tighter leading-none text-transparent shrink-0"
+                style={{ 
+                  WebkitTextStroke: '1.4px #e23645',
+                  transform: 'translateZ(0)',
+                  backfaceVisibility: 'hidden',
+                  WebkitBackfaceVisibility: 'hidden',
+                }}
+              >
+                FOR THE TEAM FOR THE TEAM FOR THE TEAM FOR THE TEAM&nbsp;
+              </span>
+            </div>
+
+            {/* 5행: 좌측 무한 루프 스크롤 */}
+            <div 
+              className="flex whitespace-nowrap animate-ticker-left"
+              style={{ 
+                animationDuration: '32s',
+                willChange: 'transform',
+                transform: 'translateZ(0)'
+              }}
+            >
+              <span
+                className="text-[8rem] md:text-[13rem] font-bold italic uppercase tracking-tighter leading-none text-transparent shrink-0"
+                style={{ 
+                  WebkitTextStroke: '1.4px #e23645',
+                  transform: 'translateZ(0)',
+                  backfaceVisibility: 'hidden',
+                  WebkitBackfaceVisibility: 'hidden',
+                }}
+              >
+                FOR THE TEAM FOR THE TEAM FOR THE TEAM FOR THE TEAM&nbsp;
+              </span>
+              <span
+                className="text-[8rem] md:text-[13rem] font-bold italic uppercase tracking-tighter leading-none text-transparent shrink-0"
+                style={{ 
+                  WebkitTextStroke: '1.4px #e23645',
+                  transform: 'translateZ(0)',
+                  backfaceVisibility: 'hidden',
+                  WebkitBackfaceVisibility: 'hidden',
+                }}
+              >
+                FOR THE TEAM FOR THE TEAM FOR THE TEAM FOR THE TEAM&nbsp;
+              </span>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

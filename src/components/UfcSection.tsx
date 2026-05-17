@@ -1,10 +1,182 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { SiSpring, SiFastapi, SiHuggingface, SiPython, SiPostgresql, SiRedis, SiNextdotjs, SiReact, SiTailwindcss, SiFramer, SiGoogle } from 'react-icons/si';
+import { SiSpring, SiFastapi, SiPython, SiPostgresql, SiNextdotjs } from 'react-icons/si';
 import { FaJava } from 'react-icons/fa';
 import { useStore } from '@nanostores/react';
 import { $activeSection } from '../store/sectionStore';
-import TypewriterText from './TypewriterText';
+
+/**
+ * 100% 안전한 인라인 Typewriter 커스텀 훅
+ * absolute 포지셔닝이나 감춰진 Spacer 없이, 표준 HTML inline-level span으로
+ * 텍스트를 타이핑하여 레이아웃 깨짐을 원천 차단합니다.
+ */
+function useTypewriter(text: string, delay: number, speed: number, active: boolean) {
+  const [displayed, setDisplayed] = useState('');
+
+  useEffect(() => {
+    if (!active) return;
+    let timer: ReturnType<typeof setTimeout>;
+    let current = 0;
+    setDisplayed('');
+
+    const start = setTimeout(() => {
+      const type = () => {
+        if (current < text.length) {
+          current++;
+          setDisplayed(text.substring(0, current));
+          timer = setTimeout(type, speed);
+        }
+      };
+      type();
+    }, delay * 1000);
+
+    return () => {
+      clearTimeout(start);
+      clearTimeout(timer);
+    };
+  }, [text, delay, speed, active]);
+
+  return displayed;
+}
+
+/** 인라인 타이핑 컴포넌트 — 텍스트 흐름을 방해하지 않고 레이아웃을 백퍼센트 보존 */
+function InlineTypewriter({
+  text,
+  delay,
+  speed,
+  active,
+  className = '',
+  style,
+  cursor = true,
+  cursorColor = '#00ff41',
+  as: Component = 'span',
+}: {
+  text: string;
+  delay: number;
+  speed: number;
+  active: boolean;
+  className?: string;
+  style?: React.CSSProperties;
+  cursor?: boolean;
+  cursorColor?: string;
+  as?: any;
+}) {
+  const typed = useTypewriter(text, delay, speed, active);
+  return (
+    <Component className={`${className} relative`} style={style}>
+      {/* 텍스트 크기 공간을 100% 예약하는 투명 스페이서 */}
+      <span className="invisible whitespace-pre-line block w-full">{text}</span>
+      
+      {/* 절대 좌표로 위에 얹어지는 타이핑 영역 */}
+      <span className="absolute inset-0 whitespace-pre-line block w-full">
+        {typed}
+        {cursor && typed.length < text.length && (
+          <span
+            className="inline-block w-1.5 h-[0.85em] ml-1 align-middle animate-pulse shrink-0"
+            style={{ backgroundColor: cursorColor }}
+          />
+        )}
+      </span>
+    </Component>
+  );
+}
+
+/**
+ * 선형으로 드로잉되는 UFC 스타일 타겟 프레임
+ * 4개의 ㄱ자 브래킷이 지정된 딜레이에 따라 라인을 길게 그리는 애니메이션 효과
+ */
+function CornerFrame({
+  size = 20,
+  thickness = 2,
+  color = 'rgba(255,255,255,0.45)',
+  offset = 8,
+  delay = 0,
+}: {
+  size?: number;
+  thickness?: number;
+  color?: string;
+  offset?: number;
+  delay?: number;
+}) {
+  const o = -offset;
+  const easing = [0.16, 1, 0.3, 1] as any;
+
+  return (
+    <>
+      {/* Top Left */}
+      <div style={{ position: 'absolute', top: `${o}px`, left: `${o}px`, width: `${size}px`, height: `${size}px`, pointerEvents: 'none' }}>
+        {/* Horizontal */}
+        <motion.div
+          initial={{ scaleX: 0 }}
+          animate={{ scaleX: 1 }}
+          transition={{ duration: 0.7, ease: easing, delay }}
+          style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: `${thickness}px`, backgroundColor: color, originX: 0 }}
+        />
+        {/* Vertical */}
+        <motion.div
+          initial={{ scaleY: 0 }}
+          animate={{ scaleY: 1 }}
+          transition={{ duration: 0.7, ease: easing, delay }}
+          style={{ position: 'absolute', top: 0, left: 0, width: `${thickness}px`, height: '100%', backgroundColor: color, originY: 0 }}
+        />
+      </div>
+
+      {/* Top Right */}
+      <div style={{ position: 'absolute', top: `${o}px`, right: `${o}px`, width: `${size}px`, height: `${size}px`, pointerEvents: 'none' }}>
+        {/* Horizontal */}
+        <motion.div
+          initial={{ scaleX: 0 }}
+          animate={{ scaleX: 1 }}
+          transition={{ duration: 0.7, ease: easing, delay }}
+          style={{ position: 'absolute', top: 0, right: 0, width: '100%', height: `${thickness}px`, backgroundColor: color, originX: 1 }}
+        />
+        {/* Vertical */}
+        <motion.div
+          initial={{ scaleY: 0 }}
+          animate={{ scaleY: 1 }}
+          transition={{ duration: 0.7, ease: easing, delay }}
+          style={{ position: 'absolute', top: 0, right: 0, width: `${thickness}px`, height: '100%', backgroundColor: color, originY: 0 }}
+        />
+      </div>
+
+      {/* Bottom Left */}
+      <div style={{ position: 'absolute', bottom: `${o}px`, left: `${o}px`, width: `${size}px`, height: `${size}px`, pointerEvents: 'none' }}>
+        {/* Horizontal */}
+        <motion.div
+          initial={{ scaleX: 0 }}
+          animate={{ scaleX: 1 }}
+          transition={{ duration: 0.7, ease: easing, delay }}
+          style={{ position: 'absolute', bottom: 0, left: 0, width: '100%', height: `${thickness}px`, backgroundColor: color, originX: 0 }}
+        />
+        {/* Vertical */}
+        <motion.div
+          initial={{ scaleY: 0 }}
+          animate={{ scaleY: 1 }}
+          transition={{ duration: 0.7, ease: easing, delay }}
+          style={{ position: 'absolute', bottom: 0, left: 0, width: `${thickness}px`, height: '100%', backgroundColor: color, originY: 1 }}
+        />
+      </div>
+
+      {/* Bottom Right */}
+      <div style={{ position: 'absolute', bottom: `${o}px`, right: `${o}px`, width: `${size}px`, height: `${size}px`, pointerEvents: 'none' }}>
+        {/* Horizontal */}
+        <motion.div
+          initial={{ scaleX: 0 }}
+          animate={{ scaleX: 1 }}
+          transition={{ duration: 0.7, ease: easing, delay }}
+          style={{ position: 'absolute', bottom: 0, right: 0, width: '100%', height: `${thickness}px`, backgroundColor: color, originX: 1 }}
+        />
+        {/* Vertical */}
+        <motion.div
+          initial={{ scaleY: 0 }}
+          animate={{ scaleY: 1 }}
+          transition={{ duration: 0.7, ease: easing, delay }}
+          style={{ position: 'absolute', bottom: 0, right: 0, width: `${thickness}px`, height: '100%', backgroundColor: color, originY: 1 }}
+        />
+      </div>
+    </>
+  );
+}
 
 export default function UfcSection() {
   const [mounted, setMounted] = useState(false);
@@ -12,217 +184,246 @@ export default function UfcSection() {
   const isTransitionTarget = activeSection === 'ufc';
   const easing = [0.16, 1, 0.3, 1] as any;
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
+  useEffect(() => { setMounted(true); }, []);
   if (!mounted) return <section id="ufc" className="min-h-screen" />;
 
+  const stacks = [
+    { Icon: FaJava, name: 'JAVA 21', desc: 'Virtual Threads Core' },
+    { Icon: SiSpring, name: 'SPRING BATCH 6', desc: 'Chunk Processing' },
+    { Icon: SiPython, name: 'PYTHON 3.12', desc: 'Data Analytics' },
+    { Icon: SiFastapi, name: 'FASTAPI', desc: 'LLM Agent Orchestration' },
+    { Icon: SiNextdotjs, name: 'NEXT.JS 15', desc: 'RSC Streaming' },
+    { Icon: SiPostgresql, name: 'POSTGRESQL', desc: 'Relational Store' },
+  ];
+
+  const highlights = [
+    {
+      title: "Java 21 Virtual Threads — 고성능 병렬 수집",
+      desc: "Java 21 가상 스레드를 통해 외부 API I/O 병목과 무거운 OS 스레드 비용을 블로킹 없이 해소합니다. Spring Batch 6의 Chunk Processing 트랜잭션으로 코퍼스 데이터 적재 무결성을 전면 보장합니다.",
+    },
+    {
+      title: "Gemini AI — 실시간 기술 트렌드 해설 에이전트",
+      desc: "FastAPI와 google-genai SDK를 조율하여 매일 누적 지표를 분석하고, 2차 데이터 완결성 사전 검증 필터로 할루시네이션을 방지하며 스포츠 중계 톤의 한글 해설을 자동 생성합니다.",
+    },
+    {
+      title: "Next.js 15 RSC & 대비 보정 UI 알고리즘",
+      desc: "React 19 서버 컴포넌트로 데이터를 지연 없이 스트리밍하며, 브랜드 컬러와 배경색 간의 가독성 간섭을 막기 위해 HSL 명도를 자동 연산 보정하는 logoUtils 알고리즘을 이식했습니다.",
+    },
+  ];
+
   return (
-    <section id="ufc" className="relative w-full h-screen flex items-center justify-center text-[#e1e4e8] bg-transparent overflow-hidden" style={{ fontFamily: 'var(--font-ufc)', backgroundImage: 'radial-gradient(at 0% 0%, rgba(255, 255, 255, 0.03) 0, transparent 50%), radial-gradient(at 100% 100%, rgba(255, 255, 255, 0.02) 0, transparent 50%)' }}>
+    <section
+      id="ufc"
+      className="relative w-full h-screen flex items-center justify-center text-[#e1e4e8] bg-transparent overflow-hidden"
+      style={{ fontFamily: 'var(--font-ufc)' }}
+    >
+      {/* Subtle bg */}
+      <div className="absolute inset-0 pointer-events-none z-0">
+        <div className="absolute top-0 right-0 w-150 h-150 bg-white/[0.012] blur-[100px]" />
+      </div>
 
-      <div className="w-full max-w-[1400px] mx-auto px-6 md:px-12">
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1.2, ease: easing }}
-          className="flex flex-col md:flex-row justify-between items-start md:items-end mb-6 md:mb-8 border-[#747474] pb-4 corner-frame p-6 md:p-6 gap-8 md:gap-0"
-        >
-          <div className="corner-top-left" />
-          <div className="corner-top-right" />
-          <div className="corner-bottom-left" />
-          <div className="corner-bottom-right" />
-          <div className="w-full">
-            <h3 className="text-xs tracking-widest text-[#6a737d] mb-2 uppercase font-mono">C:\UFC\SYSTEM\ANALYSIS_MODULE</h3>
+      <div className="relative z-10 w-full max-w-[1800px] mx-auto px-8 xl:px-16 grid grid-cols-1 lg:grid-cols-[5fr_7fr] gap-10 xl:gap-14 items-center">
 
-            <h2
-              className="text-[clamp(1.5rem,8vw,3.75rem)] md:text-5xl lg:text-6xl font-black tracking-tighter text-white leading-[0.9] flex flex-col"
-              style={{
-                viewTransitionName: isTransitionTarget ? 'project-title' : 'none',
-                fontFamily: '"Geologica", sans-serif',
-                fontFeatureSettings: '"cv02", "cv03", "cv04", "ss01"',
-                letterSpacing: '-0.04em'
-              }}
-            >
-              <span>ULTIMATE</span>
-              <span>FRAMEWORK</span>
-              <span>CHAMPIONSHIP</span>
-            </h2>
+        {/* ── LEFT: Content — 전체를 4-corner 타겟 프레임으로 감쌈 ── */}
+        <div className="flex flex-col gap-7 relative">
+          {/* 좌측 콘텐츠 전체를 감싸는 4개 ㄱ자 UFC 타겟 프레임 */}
+          <CornerFrame size={24} thickness={2} color="rgba(255,255,255,1)" offset={12} delay={0} />
 
-            <div className="w-full" style={{ fontFamily: '"Geologica", sans-serif' }}>
-              <TypewriterText
-                text="대규모 기술 트렌드 데이터를 Java 21과 AI 에이전트를 통해 정밀 분석하여 시각화하는 고성능 랭킹 플랫폼입니다."
-                className="mt-4 text-xs md:text-sm text-white/80 font-sans max-w-2xl font-light leading-relaxed"
-                delay={1.2}
-                speed={15}
+          {/* Header */}
+          <div>
+            <div className="flex items-center gap-2 mb-4">
+              <span className="w-2 h-2 bg-[#00ff41] shadow-[0_0_8px_#00ff41] animate-pulse inline-block shrink-0" />
+              <InlineTypewriter
+                text="C:\UFC\SYSTEM\ANALYSIS_MODULE//"
+                className="text-[#6a737d] font-mono text-xs tracking-[0.4em] uppercase font-bold"
+                delay={0.1}
+                speed={20}
+                active={isTransitionTarget}
               />
             </div>
+            
+            <InlineTypewriter
+              text={"ULTIMATE\nFRAMEWORK\nCHAMPIONSHIP"}
+              className="font-black leading-[0.82] text-white mb-5 block whitespace-pre-line"
+              style={{
+                fontSize: 'clamp(3rem, 5vw, 5rem)',
+                letterSpacing: '-0.04em',
+                fontFamily: '"Geologica", sans-serif',
+                viewTransitionName: isTransitionTarget ? 'project-title' : 'none',
+              }}
+              delay={0.3}
+              speed={25}
+              active={isTransitionTarget}
+              as="h2"
+            />
+
+            {/* 소개 */}
+            <InlineTypewriter
+              text="대규모 기술 트렌드 코퍼스를 Java 21과 AI 해설 에이전트를 통해 정밀 분석하여 중계하는 고성능 시계열 랭킹 대시보드입니다. Polestar의 차갑고 정밀한 북유럽식 미니멀리즘에서 시각적 영감을 받았습니다."
+              className="text-white/75 leading-relaxed block"
+              style={{ fontSize: 'clamp(0.875rem, 1vw, 1rem)' }}
+              delay={0.8}
+              speed={16}
+              active={isTransitionTarget}
+              as="p"
+              cursorColor="rgba(255,255,255,0.5)"
+            />
+          </div>
+
+          {/* Tech Stack */}
+          <div>
+            <InlineTypewriter
+              text="TECH_STACK//"
+              className="text-white/25 font-mono text-[10px] tracking-[0.3em] uppercase mb-3 block"
+              delay={1.1}
+              speed={30}
+              active={isTransitionTarget}
+            />
+            <div className="flex flex-wrap gap-2">
+              {stacks.map((s, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.6, ease: easing, delay: 1.2 + i * 0.05 }}
+                  className="flex items-center gap-2 px-3.5 py-2 bg-black/40 border border-[#747474]/40 hover:border-white/60 hover:bg-white/5 transition-all duration-300 group"
+                  style={{ borderRadius: 0 }}
+                >
+                  <s.Icon className="text-white/70 text-base shrink-0 group-hover:text-white group-hover:scale-110 transition-all" />
+                  <div>
+                    <p className="text-white font-semibold text-xs leading-tight">{s.name}</p>
+                    <p className="text-white/35 font-mono text-[8px] leading-tight">{s.desc}</p>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+
+          {/* Engineering Highlights */}
+          <div className="space-y-3.5">
+            <InlineTypewriter
+              text="ENGINEERING_HIGHLIGHTS//"
+              className="text-white/25 font-mono text-[10px] tracking-[0.3em] uppercase mb-2 block"
+              delay={1.4}
+              speed={30}
+              active={isTransitionTarget}
+            />
+            {highlights.map((h, i) => (
+              <div key={i} className="flex gap-3.5 group">
+                {/* 선형 생성 애니메이션 바 */}
+                <motion.div
+                  initial={{ scaleY: 0 }}
+                  animate={{ scaleY: 1 }}
+                  transition={{ duration: 0.8, ease: easing, delay: 1.5 + i * 0.15 }}
+                  className="w-0.5 bg-white/20 shrink-0 origin-top group-hover:bg-white/60 transition-colors mt-0.5"
+                />
+                <div className="flex-1 min-w-0">
+                  <InlineTypewriter
+                    text={h.title}
+                    className="text-white font-bold text-sm mb-1 block"
+                    delay={1.6 + i * 0.15}
+                    speed={15}
+                    active={isTransitionTarget}
+                  />
+                  <InlineTypewriter
+                    text={h.desc}
+                    className="text-white/55 text-sm leading-relaxed block"
+                    delay={1.8 + i * 0.15}
+                    speed={10}
+                    active={isTransitionTarget}
+                    cursor={false}
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* ── RIGHT: Screenshot + Buttons ── */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.98 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 1.0, ease: easing, delay: 0.1 }}
+          className="flex flex-col gap-3"
+        >
+          {/* 브라우저 목업을 감싸는 4개 ㄱ자 UFC 타겟 프레임 */}
+          <div className="w-full drop-shadow-[0_8px_25px_rgba(0,0,0,0.7)] group select-none relative">
+            <CornerFrame size={18} thickness={2} color="rgba(255,255,255,1)" offset={6} delay={0.3} />
+
+            {/* Screenshot Container with laser-drawing borders */}
+            <div
+              className="w-full overflow-hidden relative bg-[#0c0d0f]"
+              style={{ borderRadius: 0 }}
+            >
+              
+              {/* Top */}
+              <motion.div
+                initial={{ scaleX: 0 }}
+                animate={{ scaleX: 1 }}
+                transition={{ duration: 0.9, ease: easing, delay: 0.5 }}
+                style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '1px', backgroundColor: '#747474', originX: 0, zIndex: 10 }}
+              />
+              {/* Bottom */}
+              <motion.div
+                initial={{ scaleX: 0 }}
+                animate={{ scaleX: 1 }}
+                transition={{ duration: 0.9, ease: easing, delay: 0.5 }}
+                style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: '1px', backgroundColor: '#747474', originX: 1, zIndex: 10 }}
+              />
+              {/* Left */}
+              <motion.div
+                initial={{ scaleY: 0 }}
+                animate={{ scaleY: 1 }}
+                transition={{ duration: 0.9, ease: easing, delay: 0.5 }}
+                style={{ position: 'absolute', top: 0, bottom: 0, left: 0, width: '1px', backgroundColor: '#747474', originY: 0, zIndex: 10 }}
+              />
+              {/* Right */}
+              <motion.div
+                initial={{ scaleY: 0 }}
+                animate={{ scaleY: 1 }}
+                transition={{ duration: 0.9, ease: easing, delay: 0.5 }}
+                style={{ position: 'absolute', top: 0, bottom: 0, right: 0, width: '1px', backgroundColor: '#747474', originY: 1, zIndex: 10 }}
+              />
+
+              <div className="w-full aspect-video overflow-hidden">
+                <img
+                  src="/projects/ufc.webp"
+                  alt="UFC Dashboard 스크린샷"
+                  className="w-full h-full object-cover object-top group-hover:scale-[1.02] transition-transform duration-700"
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* Action Buttons */}
+          <div className="flex gap-3">
+            <motion.a
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, ease: easing, delay: 1.4 }}
+              href="https://ultimate-framework-championship.vercel.app/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex-1 py-3 bg-white text-black font-bold text-sm text-center tracking-wide transition-all hover:bg-[#e1e4e8]"
+              style={{ borderRadius: 0 }}
+            >
+              Live Dashboard →
+            </motion.a>
+            <motion.a
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, ease: easing, delay: 1.5 }}
+              href="https://github.com/nx2803/UFC"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex-1 py-3 bg-transparent border border-[#747474] text-white font-bold text-sm text-center tracking-wide transition-all hover:border-white hover:bg-white/5"
+              style={{ borderRadius: 0 }}
+            >
+              GitHub →
+            </motion.a>
           </div>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
-
-          {/* Card 1 - Data Pipeline */}
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 1, ease: easing, delay: 0.1 }}
-            whileHover={{ backgroundColor: '#2d3139' }}
-            className="p-6 md:p-8 corner-frame transition-colors duration-300 flex flex-col"
-            style={{ fontFeatureSettings: '"cv02", "cv03", "cv04", "ss01"' }}
-          >
-            <div className="corner-top-left" />
-            <div className="corner-top-right" />
-            <div className="corner-bottom-left" />
-            <div className="corner-bottom-right" />
-
-            <TypewriterText
-              text="Data Pipeline"
-              className="text-sm tracking-widest text-[#6a737d] mb-1 uppercase"
-              delay={0.5}
-              speed={45}
-            />
-            <TypewriterText
-              text="고성능 데이터 배치 엔진"
-              className="text-2xl font-bold mb-4 text-[#e1e4e8]"
-              delay={0.7}
-              speed={40}
-            />
-            <div className="flex flex-wrap gap-1.5 md:gap-2.5 mb-6">
-              {[
-                { Icon: FaJava, name: 'Java 21' },
-                { Icon: SiSpring, name: 'Spring Batch' },
-                { Icon: SiPostgresql, name: 'PostgreSQL' },
-                { Icon: SiRedis, name: 'Redis Cache' },
-              ].map((tech, i) => (
-                <span key={i} className="flex items-center gap-2 text-xs md:text-sm px-3 py-1.5 md:px-4 md:py-2 bg-black/40 text-gray-200 border border-[#30363d] transition-all hover:border-[#00ff41]/50 hover:bg-[#00ff41]/5">
-                  <tech.Icon className="text-lg md:text-xl" /> {tech.name}
-                </span>
-              ))}
-            </div>
-            <TypewriterText
-              text="Java 21 Virtual Threads를 도입하여 I/O 블로킹 문제를 해결하고 처리량을 극대화했습니다. Spring Batch 6.x 기반의 데이터 정제 파이프라인을 구축하여 대규모 지표를 안정적으로 수집하며, 최적화된 DB 인덱싱을 통해 쿼리 성능을 보호합니다."
-              className="font-light text-[#e1e4e8] font-sans text-xs md:text-sm leading-relaxed"
-              delay={1}
-              speed={15}
-            />
-          </motion.div>
-
-          {/* Card 2 - Analyzed Insight */}
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 1, ease: easing, delay: 0.2 }}
-            whileHover={{ backgroundColor: '#2d3139' }}
-            className="p-6 md:p-8 corner-frame transition-colors duration-300 md:col-span-1 flex flex-col"
-            style={{ fontFeatureSettings: '"cv02", "cv03", "cv04", "ss01"' }}
-          >
-            <div className="corner-top-left" />
-            <div className="corner-top-right" />
-            <div className="corner-bottom-left" />
-            <div className="corner-bottom-right" />
-
-            <div className="flex justify-between items-start mb-6">
-              <TypewriterText
-                text="Analyzed Insight"
-                className="text-sm tracking-widest text-[#6a737d] uppercase"
-                delay={0.5}
-                speed={45}
-              />
-            </div>
-
-            <TypewriterText
-              text="AI 실시간 프레임워크 해설"
-              className="text-2xl font-bold mb-4 text-[#e1e4e8]"
-              delay={0.8}
-              speed={40}
-            />
-            <div className="flex flex-wrap gap-2.5 mb-6">
-              {[
-                { Icon: SiFastapi, name: 'FastAPI' },
-                { Icon: SiPython, name: 'Python' },
-                { Icon: SiGoogle, name: 'Gemini 3 Flash' },
-                { Icon: SiHuggingface, name: 'HuggingFace' },
-              ].map((tech, i) => (
-                <span key={i} className="flex items-center gap-2 text-sm px-4 py-2 bg-black/40 text-gray-200 border border-[#30363d] transition-all hover:border-[#00ff41]/50 hover:bg-[#00ff41]/5">
-                  <tech.Icon className="text-xl" /> {tech.name}
-                </span>
-              ))}
-            </div>
-            <TypewriterText
-              text="Java/Spring 메인 서버와 Python/FastAPI AI 모듈을 분산 설계하여 성능과 유연성을 확보했습니다. 분석 전 데이터 정합성을 검증하여 할루시네이션을 방지하며, Gemini 3 Flash를 통해 고차원적인 기술 인사이트를 자동화된 중계 톤으로 제공합니다."
-              className="font-light text-[#e1e4e8] font-sans text-sm"
-              delay={1.1}
-              speed={15}
-            />
-          </motion.div>
-
-          {/* Card 3 - Frontend Dashboard */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1.2, ease: easing, delay: 0.3 }}
-            whileHover={{ backgroundColor: '#2d3139' }}
-            className="p-6 md:p-8 corner-frame transition-colors duration-300 md:col-span-2 flex flex-col md:flex-row gap-8 relative group"
-            style={{ fontFeatureSettings: '"cv02", "cv03", "cv04", "ss01"' }}
-          >
-            <div className="corner-top-left" />
-            <div className="corner-top-right" />
-            <div className="corner-bottom-left" />
-            <div className="corner-bottom-right" />
-
-            <div className="relative z-10 flex flex-col justify-between w-full md:w-1/2">
-              <div>
-                <TypewriterText
-                  text="Frontend Dashboard"
-                  className="text-sm tracking-widest text-[#6a737d] uppercase mb-1"
-                  delay={0.5}
-                  speed={45}
-                />
-                <TypewriterText
-                  text="인터랙티브 분석 대시보드"
-                  className="text-2xl font-bold mb-4 text-[#e1e4e8]"
-                  delay={0.7}
-                  speed={40}
-                />
-
-                <div className="flex flex-wrap gap-2.5 mb-6">
-                  {[
-                    { Icon: SiNextdotjs, name: 'Next.js 15' },
-                    { Icon: SiReact, name: 'React 19' },
-                    { Icon: SiTailwindcss, name: 'Tailwind 4' },
-                    { Icon: SiFramer, name: 'Framer Motion' },
-                  ].map((tech, i) => (
-                    <span key={i} className="flex items-center gap-2 text-sm px-4 py-2 bg-black/60 text-gray-200 border border-[#30363d] backdrop-blur-sm transition-all hover:border-[#00ff41]/50 hover:bg-[#00ff41]/5">
-                      <tech.Icon className="text-xl" /> {tech.name}
-                    </span>
-                  ))}
-                </div>
-                <TypewriterText
-                  text="Next.js 15 App Router와 React 19를 전면 도입하여 서버 컴포넌트(RSC) 기반의 최적화된 데이터 페칭 구조를 구축했으며, Chart.js와 Framer Motion을 결합하여 기술 트렌드 데이터를 동적인 그래프로 시각화했습니다. 이를 통해 대규모 지표를 안정적으로 렌더링, 미니멀하고 정교한 UI 시스템을 구현했습니다."
-                  className="font-light text-[#e1e4e8] font-sans text-sm leading-relaxed"
-                  delay={0.9}
-                  speed={12}
-                />
-              </div>
-
-              <a
-                href="https://ultimate-framework-championship.vercel.app/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mt-8 self-start text-sm uppercase tracking-widest hover:text-white transition-colors flex items-center gap-2 drop-shadow-md group/btn"
-              >
-                Explore Project <span className="group-hover/btn:translate-x-1 transition-transform">→</span>
-              </a>
-            </div>
-
-            {/* Image */}
-            <div className="relative z-10 w-full md:w-1/2 min-h-[200px] md:min-h-75 flex items-center justify-center mt-6 md:mt-0 bg-[#0c0d0f] rounded-xl border border-[#30363d] p-4">
-              <img src="/projects/ufc.png" alt="UFC Dashboard" className="w-full h-full object-contain rounded" />
-            </div>
-          </motion.div>
-
-        </div>
       </div>
     </section>
   );

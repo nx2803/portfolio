@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { SiNextdotjs, SiReact, SiTailwindcss, SiSupabase, SiReactquery, SiFramer } from 'react-icons/si';
+import { SiNextdotjs, SiReact, SiSupabase, SiReactquery, SiPostgresql } from 'react-icons/si';
+import { RiMapPinRangeLine } from 'react-icons/ri';
 import { useStore } from '@nanostores/react';
 import { $activeSection } from '../store/sectionStore';
 
@@ -10,91 +11,146 @@ export default function PeecemakerSection() {
   const isTransitionTarget = activeSection === 'peecemaker';
   const easing = [0.16, 1, 0.3, 1] as any;
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
+  useEffect(() => { setMounted(true); }, []);
   if (!mounted) return <section id="peecemaker" className="min-h-screen" />;
 
+  const stacks = [
+    { Icon: SiNextdotjs, name: 'Next.js 16', desc: 'App Router / SSR' },
+    { Icon: SiReact, name: 'React 19', desc: 'Server Components' },
+    { Icon: SiSupabase, name: 'Supabase', desc: 'Auth & BaaS' },
+    { Icon: SiPostgresql, name: 'PostgreSQL', desc: 'Row Level Security' },
+    { Icon: SiReactquery, name: 'React Query', desc: 'Smart Caching v5' },
+    { Icon: RiMapPinRangeLine, name: 'Kakao Maps', desc: 'Marker Clustering' },
+  ];
+
+  const highlights = [
+    {
+      title: "Supabase RLS 무서버 보안 아키텍처",
+      desc: "백엔드 미들웨어 없이 PostgreSQL Row Level Security와 JWT 세션 검증을 직접 조율하여 데이터 위변조를 원천 차단하고 인프라 비용을 0원에 수렴시켰습니다.",
+    },
+    {
+      title: "카카오맵 1,500개 마커 클러스터링",
+      desc: "제주도 전역 안심 화장실 위치 데이터를 렌더링 시 메인 스레드 프레임 하락을 막기 위해 클러스터링 알고리즘과 지연 실행을 결합해 성능을 보장했습니다.",
+    },
+    {
+      title: "Recharts 실시간 통계 시각화",
+      desc: "사용자 신고 신뢰도를 실시간 HSL 반전 차트로 드로잉하고, 단일 트랜잭션 트리거로 리뷰 별점 평균을 즉각 반영하는 정밀 피드백 루프를 구현했습니다.",
+    },
+  ];
+
   return (
-    <section id="peecemaker" className="relative w-full h-screen flex items-center justify-center font-peecemaker overflow-hidden" style={{ color: 'inherit', fontFamily: 'var(--font-peecemaker)' }}>
+    <section
+      id="peecemaker"
+      className="relative w-full h-screen flex items-center justify-center overflow-hidden bg-transparent"
+      style={{ fontFamily: 'var(--font-peecemaker)' }}
+    >
+      {/* Subtle cosmic bg */}
+      <div className="absolute inset-0 pointer-events-none z-0">
+        <div className="absolute -top-40 -left-40 w-125 h-125 rounded-full bg-[#fb923c]/5 blur-[120px]" />
+        <div className="absolute -bottom-40 -right-40 w-100 h-100 rounded-full bg-[#7c3aed]/5 blur-[120px]" />
+      </div>
 
-      <div className="relative z-10 w-full max-w-[1400px] mx-auto px-6 md:px-12 flex flex-col md:flex-row gap-6 md:gap-8 lg:gap-12 items-center">
+      <div className="relative z-10 w-full max-w-450 mx-auto px-8 xl:px-16 grid grid-cols-1 lg:grid-cols-[5fr_7fr] gap-10 xl:gap-14 items-center">
 
-        {/* Left: Glass Card Info */}
+        {/* ── LEFT: Content ── */}
         <motion.div
-          initial={{ opacity: 0, x: -30 }}
+          initial={{ opacity: 0, x: -40 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 1.2, ease: easing }}
-          className="w-full md:w-5/12 lg:w-1/3 shrink-0"
+          transition={{ duration: 1.0, ease: easing }}
+          className="flex flex-col gap-7"
         >
-          <div className="bg-white/5 backdrop-blur-2xl border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.2)] rounded-3xl p-8 md:p-10 relative overflow-hidden">
-
+          {/* Header */}
+          <div>
+            <p className="text-[#fb923c] font-mono text-xs tracking-[0.4em] uppercase font-bold mb-3 flex items-center gap-2">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#fb923c] animate-pulse inline-block" />
+              PEECE_MAKER_NODE::COSMIC_DECK//
+            </p>
             <h1
-              className="text-3xl md:text-5xl mb-4 font-black tracking-widest uppercase leading-none"
-              style={{ 
+              className="font-black uppercase leading-[0.82] text-white mb-5"
+              style={{
+                fontSize: 'clamp(3.5rem, 5.5vw, 5.5rem)',
+                letterSpacing: '-0.03em',
                 viewTransitionName: isTransitionTarget ? 'project-title' : 'none',
-                fontFamily: "var(--font-peecemaker)"
               }}
             >
-              <span className="text-[#fb923c]">PEECE</span><span className="text-current opacity-80">MAKER</span>
+              <span className="text-[#fb923c]">PEECE</span>
+              <br />MAKER
             </h1>
-            <p className="text-base md:text-xl text-current/70 font-medium mb-6 leading-relaxed">
-              공공데이터의 기술적 무결성을 확보하여 시민에게 도달하는 정보의 가치를 극대화하는 공중화장실 탐색 플랫폼입니다. <br className="hidden lg:block" />
-              정밀한 데이터 필터링 알고리즘과 시각화 엔진을 통해 공공 서비스의 사용자 경험을 엔지니어링 관점에서 재정의했습니다.
+            <p className="text-white/75 leading-relaxed" style={{ fontSize: 'clamp(0.875rem, 1vw, 1rem)' }}>
+              제주도의 복잡다단한 공공데이터 기술적 결함을 정밀하게 정제하여, 사용자 주변의 안심/편의 화장실 조건과 리뷰 커뮤니티 데이터를 매핑하는 위치 기반 위성 항법 지도 및 통계 시각화 플랫폼입니다.
             </p>
+          </div>
 
-            {/* Tech Stack Badges */}
-            <div className="flex flex-wrap gap-1.5 md:gap-2.5 mb-8 max-w-2xl">
-              {[
-                { Icon: SiNextdotjs, name: 'Next.js 16' },
-                { Icon: SiReact, name: 'React 19' },
-                { Icon: SiTailwindcss, name: 'Tailwind 4' },
-                { Icon: SiReactquery, name: 'React Query' },
-                { Icon: SiFramer, name: 'Framer Motion' },
-                { Icon: SiSupabase, name: 'Supabase' },
-              ].map((tech, i) => (
-                <span key={i} className="flex items-center gap-2 px-3 py-1.5 md:px-4 md:py-2 bg-white/10 rounded-full text-xs md:text-sm font-bold text-[#fb923c] border border-white/10 shadow-sm transition-all hover:bg-white/20">
-                  <tech.Icon className="text-lg md:text-xl" /> {tech.name}
-                </span>
+          {/* Tech Stack */}
+          <div>
+            <p className="text-white/30 font-mono text-[10px] tracking-[0.3em] uppercase mb-3">TECH_STACK//</p>
+            <div className="flex flex-wrap gap-2">
+              {stacks.map((s, i) => (
+                <div
+                  key={i}
+                  className="flex items-center gap-2 px-3.5 py-2 bg-white/5 border border-white/10 hover:border-[#fb923c]/50 hover:bg-[#fb923c]/8 rounded-xl transition-all duration-300 group"
+                >
+                  <s.Icon className="text-[#fb923c] text-base shrink-0 group-hover:scale-110 transition-transform" />
+                  <div>
+                    <p className="text-white font-semibold text-xs leading-tight">{s.name}</p>
+                    <p className="text-white/40 font-mono text-[8px] leading-tight">{s.desc}</p>
+                  </div>
+                </div>
               ))}
             </div>
+          </div>
 
-            <ul className="space-y-4 text-current/60 mb-8">
-              {[
-                "Next.js 16 + Supabase BaaS를 결합한 기민한 서버리스 아키텍처로 인프라 비용 및 데이터 파이프라인 복원력 확보",
-                "MarkerClusterer와 휘도 기반 Contrast Engine을 도입하여 수천 개의 위치 데이터를 가독성 저해 없이 렌더링하는 성능 최적화 달성",
-                "공공데이터의 정합성 문제를 해결하기 위해 런타임 데이터 검증 파이프라인을 구축하여 사용자에게 신뢰할 수 있는 정보를 제공"
-              ].map((text, i) => (
-                <li key={i} className="flex items-start gap-3">
-                  <div className="w-2 h-2 rounded-full bg-orange-400 mt-2 shrink-0" />
-                  <span className="font-medium text-[0.9rem] md:text-base leading-tight md:leading-normal">{text}</span>
-                </li>
-              ))}
-            </ul>
-
-            <div className="mt-8">
-              <a 
-                href="https://peece-maker.vercel.app/" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="inline-block px-8 py-3 bg-[#fb923c] text-white font-bold rounded-xl shadow-[0_4px_14px_0_rgba(251,146,60,0.3)] hover:shadow-[0_6px_20px_rgba(251,146,60,0.4)] hover:bg-[#f97316] transition-all ease-in-out duration-300 uppercase tracking-wider text-sm"
-              >
-                Explore Project
-              </a>
-            </div>
+          {/* Engineering Highlights */}
+          <div className="space-y-3.5">
+            <p className="text-white/30 font-mono text-[10px] tracking-[0.3em] uppercase">ENGINEERING_HIGHLIGHTS//</p>
+            {highlights.map((h, i) => (
+              <div key={i} className="flex gap-3.5 group">
+                <div className="w-0.5 bg-[#fb923c]/40 rounded-full shrink-0 group-hover:bg-[#fb923c] transition-colors mt-0.5" />
+                <div>
+                  <p className="text-[#fb923c] font-bold text-sm mb-0.5">{h.title}</p>
+                  <p className="text-white/60 text-sm leading-relaxed">{h.desc}</p>
+                </div>
+              </div>
+            ))}
           </div>
         </motion.div>
 
-        {/* Right: Mockup / Visual */}
+        {/* ── RIGHT: Browser Mockup + Buttons below ── */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.98 }}
+          initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1.5, ease: easing, delay: 0.2 }}
-          className="w-full md:w-7/12 lg:w-2/3 h-[300px] sm:h-[400px] md:h-[600px] flex items-center justify-center p-0"
+          transition={{ duration: 1.2, ease: easing, delay: 0.15 }}
+          className="flex flex-col gap-3"
         >
-          <div className="w-full h-full bg-white/5 backdrop-blur-2xl border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.2)] rounded-3xl overflow-hidden relative flex items-center justify-center p-2 md:p-8">
-            <img src="/projects/peecemaker.png" alt="Peecemaker UI Screenshot" className="w-full h-full object-contain drop-shadow-2xl" />
+          {/* Screenshot */}
+          <div className="w-full drop-shadow-[0_8px_25px_rgba(0,0,0,0.7)] group select-none rounded-2xl overflow-hidden border border-white/10">
+            <div className="w-full aspect-video overflow-hidden">
+              <img
+                src="/projects/peecemaker.webp"
+                alt="PeeceMaker 스크린샷"
+                className="w-full h-full object-cover object-top group-hover:scale-[1.02] transition-transform duration-700"
+              />
+            </div>
+          </div>
+
+          {/* Action Buttons — below screenshot */}
+          <div className="flex gap-3">
+            <a
+              href="https://peece-maker.vercel.app/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex-1 py-3 bg-[#fb923c] hover:bg-[#f97316] text-white font-bold text-sm rounded-xl text-center tracking-wide transition-all shadow-[0_0_20px_rgba(251,146,60,0.25)] hover:shadow-[0_0_30px_rgba(251,146,60,0.4)]"
+            >
+              Live Site →
+            </a>
+            <a
+              href="https://github.com/nx2803/PeeceMaker"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex-1 py-3 bg-white/5 hover:bg-white/10 border border-white/10 text-white font-bold text-sm rounded-xl text-center tracking-wide transition-all"
+            >
+              GitHub →
+            </a>
           </div>
         </motion.div>
 

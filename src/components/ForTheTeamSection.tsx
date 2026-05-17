@@ -1,139 +1,165 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
-import { SiNestjs, SiPrisma, SiNextdotjs, SiReact, SiTailwindcss, SiFramer, SiSocketdotio, SiOpentelemetry, SiRedis } from 'react-icons/si';
 import { useStore } from '@nanostores/react';
 import { $activeSection } from '../store/sectionStore';
+import { SiNestjs, SiNextdotjs, SiSocketdotio, SiOpentelemetry, SiRedis, SiPostgresql } from 'react-icons/si';
 
 export default function ForTheTeamSection() {
-  const [mounted, setMounted] = useState(false);
   const activeSection = useStore($activeSection);
   const isTransitionTarget = activeSection === 'fortheteam';
-  const easing = [0.16, 1, 0.3, 1] as any;
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  // 피스메이커와 100% 동기화된 프리미엄 시네마틱 모션 Easing 정의
+  const customEasing = [0.16, 1, 0.3, 1] as any; // Ultra-smooth cubic bezier
 
-  if (!mounted) return <section id="fortheteam" className="min-h-screen" />;
+  const stacks = [
+    { Icon: SiNextdotjs, name: 'Next.js 16', desc: 'PPR Architecture' },
+    { Icon: SiNestjs, name: 'NestJS', desc: 'WebSocket Gateway' },
+    { Icon: SiSocketdotio, name: 'Socket.io', desc: 'Live Score Sync' },
+    { Icon: SiRedis, name: 'Redis Cache', desc: 'Zero Latency' },
+    { Icon: SiOpentelemetry, name: 'OpenTelemetry', desc: 'Distributed Tracing' },
+    { Icon: SiPostgresql, name: 'PostgreSQL', desc: 'Normalized Domain' },
+  ];
+
+  const highlights = [
+    {
+      title: "PPR & Socket.io — 1초 미만 라이브 동기화",
+      desc: "NestJS Gateway와 Socket.io를 연동하여 실시간 점수 수집 즉시 캐시를 스마트 무효화, 1초 미만 레이턴시를 달성했습니다. 정적 셸은 미리 빌드하고 동적 정보만 비동기 스트리밍하는 PPR 아키텍처를 가동합니다.",
+    },
+    {
+      title: "OpenTelemetry OTLP 분산 트레이싱 파이프라인",
+      desc: "외부 KBO/ESPN API 수집 파이프라인 전 구간에 OpenTelemetry OTLP 추적을 이식해 데이터 처리 지연 및 크롤링 유실 지점을 정밀 탐지하여 병목을 제거했습니다.",
+    },
+    {
+      title: "WCAG 기반 자동 연산 테마 대비 색상 엔진",
+      desc: "각 구단의 헤리티지 컬러를 화면에 주입할 때, 가독성을 실시간 보증하기 위해 상대 휘도(Relative Luminance) 명암 공식으로 전경 색상을 웹뷰 내에서 자동 연산합니다.",
+    },
+  ];
 
   return (
-    <section id="fortheteam" className="relative w-full h-screen flex flex-col justify-center text-white bg-transparent overflow-hidden" style={{ fontFamily: 'var(--font-ftt-title)' }}>
+    <section
+      id="fortheteam"
+      className="relative w-full h-screen flex items-center justify-center text-white bg-transparent overflow-hidden"
+      style={{ fontFamily: 'var(--font-ftt)' }}
+    >
 
-      {/* Kinetic Typography Background */}
-      <div className="absolute inset-0 pointer-events-none z-0 select-none overflow-hidden opacity-[0.25]">
-        <div className="absolute w-[200vw] h-[200vh] top-[-50vh] left-[-50vw] flex flex-col justify-center">
-          {Array.from({ length: 14 }).map((_, i) => (
-            <motion.div
-              key={i}
-              className="flex whitespace-nowrap"
-              animate={{ x: i % 2 === 0 ? [0, -1500] : [-1500, 0] }}
-              transition={{
-                repeat: Infinity,
-                ease: "linear",
-                duration: 45 + (i % 3) * 12,
+
+      <div className="relative z-10 w-full max-w-450 mx-auto px-8 xl:px-16 grid grid-cols-1 lg:grid-cols-[5fr_7fr] gap-10 xl:gap-14 items-center">
+
+        {/* ── LEFT: Content Card (피스메이커와 동일한 웅장하고 일체화된 단일 슬라이드 모션 - backdrop-blur 제거로 120fps 완성) ── */}
+        <motion.div
+          initial={{ opacity: 0, x: -40 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 1.0, ease: customEasing }}
+          style={{ willChange: 'transform, opacity' }}
+          className="flex flex-col gap-7 bg-[#0b0b0c] p-8 border border-white/8 border-l-2 border-l-[#e23645] shadow-[0_12px_50px_rgba(0,0,0,0.85)] relative rounded-none"
+        >
+          {/* Header & Title */}
+          <div>
+            <div className="flex items-center gap-2 mb-3">
+              <span className="w-1.5 h-1.5 bg-[#e23645] inline-block shrink-0 rounded-none animate-pulse" />
+              <p className="text-[#e23645] font-mono text-xs tracking-[0.4em] uppercase font-bold">
+                ENTERPRISE_SPORTS_HUB::NODE_CALENDAR//
+              </p>
+            </div>
+            
+            <h2
+              className="font-bold uppercase italic leading-[0.82] text-white mb-5"
+              style={{
+                fontSize: 'clamp(3.5rem, 5.5vw, 5.5rem)',
+                letterSpacing: '-0.04em',
+                fontFamily: '"Oswald", sans-serif',
+                viewTransitionName: isTransitionTarget ? 'project-title' : 'none',
               }}
             >
-              {Array.from({ length: 12 }).map((_, j) => (
-                <h1
-                  key={j}
-                  className="text-[8rem] md:text-[14rem] font-bold italic uppercase tracking-tighter leading-[0.85] px-8 md:px-12 text-transparent"
-                  style={{
-                    WebkitTextStroke: '1px var(--color-ftt)',
-                    opacity: 1
-                  }}
+              FOR THE <br />
+              <span className="text-[#e23645]">TEAM</span>
+            </h2>
+
+            <p className="text-white/75 leading-relaxed" style={{ fontSize: 'clamp(0.875rem, 1vw, 1rem)' }}>
+              전 세계 5개 이상의 메이저 스포츠 데이터 프로바이더를 병렬 연동하여 실시간 경기 지표와 스케줄러를 제공하는 엔터프라이즈 스포츠 캘린더 플랫폼입니다. 이기종 외부 API 규격을 완벽한 단일 도메인 모델로 정규화했습니다.
+            </p>
+          </div>
+
+          {/* Tech Stack */}
+          <div>
+            <p className="text-white/30 font-mono text-[10px] tracking-[0.3em] uppercase mb-3">
+              TECH_STACK//
+            </p>
+            <div className="flex flex-wrap gap-2">
+              {stacks.map((s, i) => (
+                <div
+                  key={i}
+                  className="flex items-center gap-2 px-3.5 py-2 bg-white/5 border border-white/10 hover:border-[#e23645]/60 hover:bg-[#e23645]/8 rounded-none transition-all duration-300 group"
                 >
-                  FOR THE TEAM
-                </h1>
-              ))}
-            </motion.div>
-          ))}
-        </div>
-      </div>
-
-      <div className="relative z-10 w-full max-w-[1400px] mx-auto px-6 md:px-12">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1.2, ease: easing }}
-          className="flex flex-col md:flex-row shadow-2xl bg-[#0a0a0a] border border-[#1a1a1a] relative"
-        >
-          {/* Corner Brackets */}
-          <div className="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-[#e23645] z-20" />
-          <div className="absolute top-0 right-0 w-4 h-4 border-t-2 border-r-2 border-[#e23645] z-20" />
-          <div className="absolute bottom-0 left-0 w-4 h-4 border-b-2 border-l-2 border-[#e23645] z-20" />
-          <div className="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-[#e23645] z-20" />
-          {/* Content Block */}
-          <div className="w-full md:w-5/12 lg:w-1/3 p-8 md:p-12 flex flex-col justify-between relative overflow-hidden shrink-0">
-            <div className="absolute top-0 right-0 w-2 h-full bg-[#e23645] ftt-glow" />
-
-            <div>
-              <h3 className="text-[#dc3442] font-bold tracking-widest mb-2 uppercase text-sm">Enterprise-grade Sports Platform</h3>
-              <h2
-                className="text-3xl md:text-5xl font-bold uppercase italic tracking-tighter mb-4 text-white leading-none"
-                style={{
-                  viewTransitionName: isTransitionTarget ? 'project-title' : 'none',
-                  fontFamily: '"Oswald", sans-serif',
-                  letterSpacing: '-0.05em'
-                }}
-              >
-                FOR THE <span className='text-[#dc3442]'>TEAM</span>
-              </h2>
-              <p className="text-base md:text-xl text-white font-medium mb-6 leading-relaxed">
-                전 세계 5개 이상의 스포츠 데이터 프로바이더를 통합하여 실시간 경기 지표와 스케줄을 제공하는 엔터프라이즈급 플랫폼입니다. <br className="hidden lg:block" />
-                서로 다른 외부 API 규격을 하나의 통합 도메인 모델로 정규화하고, 분산 트레이싱을 통해 대규모 데이터 연동의 신뢰성을 확보했습니다.
-              </p>
-
-              {/* Tech Stack Badges */}
-              <div className="flex flex-wrap gap-1.5 md:gap-2.5 font-sans mb-8">
-                {[
-                  { Icon: SiNextdotjs, name: 'Next.js 16' },
-                  { Icon: SiReact, name: 'React 19' },
-                  { Icon: SiTailwindcss, name: 'Tailwind 4' },
-                  { Icon: SiFramer, name: 'Framer' },
-                  { Icon: SiNestjs, name: 'NestJS' },
-                  { Icon: SiPrisma, name: 'Prisma' },
-                  { Icon: SiSocketdotio, name: 'WebSockets' },
-                  { Icon: SiOpentelemetry, name: 'OTLP' },
-                  { Icon: SiRedis, name: 'Redis' },
-                ].map((tech, i) => (
-                  <span key={i} className="flex items-center gap-2 px-3 py-1.5 md:px-4 md:py-2 bg-red-950/30 text-[#e23645] border border-red-500/20 uppercase tracking-widest text-[0.7rem] md:text-[0.8rem] font-bold transition-all hover:bg-red-500/10 hover:border-red-500/40">
-                    <tech.Icon className="text-lg md:text-xl" /> {tech.name}
-                  </span>
-                ))}
-              </div>
-            </div>
-
-            <div className="mt-6 font-sans space-y-2">
-              {[
-                "Next.js 16 PPR 및 Socket.io 기반의 실시간 데이터 동기화 파이프라인으로 1초 미만의 점수 반영 레이턴시 구현",
-                "OpenTelemetry 기반 전 구간 분산 트레이싱을 도입하여 대규모 트래픽 환경에서의 성능 병목 지점 및 데이터 유실 추적",
-                "고가용성 확보를 위해 Redis 캐시 및 API Failover 메커니즘을 구축하여 외부 프로바이더 장애 시에도 중단 없는 서비스 보장"
-              ].map((text, i) => (
-                <div key={i} className="bg-[#111111] p-3 text-xs text-gray-400">
-                  {text}
+                  <s.Icon className="text-[#e23645] text-base shrink-0 group-hover:scale-110 transition-transform" />
+                  <div>
+                    <p className="text-white font-semibold text-xs leading-tight">{s.name}</p>
+                    <p className="text-white/40 font-mono text-[8px] leading-tight">{s.desc}</p>
+                  </div>
                 </div>
               ))}
             </div>
+          </div>
 
-            <div className="mt-8">
-              <a
-                href="https://for-the-team.vercel.app/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-block px-6 py-2.5 bg-[#dc3442] text-white font-bold uppercase tracking-widest text-xs hover:bg-white hover:text-[#dc3442] transition-all duration-300 shadow-[0_0_20px_rgba(226,54,69,0.2)]"
-              >
-                Explore Project
-              </a>
+          {/* Engineering Highlights */}
+          <div className="space-y-3.5">
+            <p className="text-white/30 font-mono text-[10px] tracking-[0.3em] uppercase">
+              ENGINEERING_HIGHLIGHTS//
+            </p>
+            {highlights.map((h, i) => (
+              <div key={i} className="flex gap-3.5 group">
+                <div className="w-0.5 bg-[#e23645]/40 shrink-0 group-hover:bg-[#e23645] transition-colors mt-0.5 rounded-none" />
+                <div>
+                  <p className="text-[#e23645] font-bold text-sm mb-0.5">{h.title}</p>
+                  <p className="text-white/60 text-sm leading-relaxed">{h.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </motion.div>
+
+        {/* ── RIGHT: Browser Mockup (피스메이커와 완벽 대칭인 단일 스케일 모션) ── */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 1.2, ease: customEasing, delay: 0.15 }}
+          style={{ willChange: 'transform, opacity' }}
+          className="flex flex-col gap-3"
+        >
+          {/* Screenshot */}
+          <div className="w-full drop-shadow-[0_8px_25px_rgba(0,0,0,0.7)] group select-none overflow-hidden border border-white/10 rounded-none bg-[#070708]">
+            <div className="w-full aspect-video overflow-hidden">
+              <img
+                src="/projects/fortheteam.webp"
+                alt="For The Team 스크린샷"
+                loading="eager"
+                decoding="async"
+                className="w-full h-full object-cover object-top group-hover:scale-[1.02] transition-transform duration-700"
+              />
             </div>
           </div>
 
-          {/* Image/Mockup Block */}
-          <div className="w-full md:w-7/12 lg:w-2/3 bg-[#1a1a1a] h-[300px] sm:h-[400px] md:h-[600px] relative overflow-hidden group flex items-center justify-center p-2 md:p-4">
-            <div className="absolute inset-0 bg-[#e23645] opacity-5 clip-diagonal pointer-events-none" />
-            <img src="/projects/fortheteam.png" alt="For The Team UI" className="w-full h-full object-contain relative z-10 drop-shadow-2xl" />
-            <div className="absolute inset-x-0 bottom-0 h-1/4 bg-gradient-to-t from-[#0a0a0a] to-transparent z-10 pointer-events-none" />
+          {/* Action Buttons */}
+          <div className="flex gap-3">
+            <a
+              href="https://for-the-team.vercel.app/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex-1 py-3 bg-[#e23645] hover:bg-[#b91c1c] text-white font-bold text-sm rounded-none text-center tracking-wide transition-all shadow-[0_0_20px_rgba(226,54,69,0.25)] hover:shadow-[0_0_30px_rgba(226,54,69,0.4)]"
+            >
+              Live Site →
+            </a>
+            <a
+              href="https://github.com/nx2803"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex-1 py-3 bg-white/5 hover:bg-white/10 border border-white/10 text-white font-bold text-sm rounded-none text-center tracking-wide transition-all"
+            >
+              GitHub →
+            </a>
           </div>
         </motion.div>
+
       </div>
     </section>
   );
