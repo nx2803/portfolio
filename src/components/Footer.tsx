@@ -15,12 +15,12 @@ export default function Footer() {
 
   return (
     <section id="contact" className="w-full h-screen relative flex flex-col items-center px-6 md:px-16 lg:px-24 overflow-hidden bg-transparent text-(--foreground) pt-32 md:pt-40">
-      
+
       <div className="w-full max-w-[1800px] flex flex-col items-center relative z-10 flex-1 justify-center">
-        
+
         {/* ── HEADER (Structural Title) ── */}
         <div className="mb-24 md:mb-32 flex items-center gap-10 w-full overflow-hidden">
-          <motion.h1 
+          <motion.h1
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
@@ -28,42 +28,29 @@ export default function Footer() {
           >
             CONTACT_NODE//
           </motion.h1>
-          <motion.div 
+          <motion.div
             initial={{ scaleX: 0 }}
             animate={{ scaleX: 1 }}
             transition={{ duration: 1.5, ease: easing, delay: 0.4 }}
-            className="h-2 md:h-3 bg-current opacity-40 flex-1 origin-left mt-2"
+            className="h-1.5 bg-current flex-1 origin-left mt-2"
           />
         </div>
 
         {/* ── SYMMETRIC CONTACT GRID (HUD Assembly Sequence) ── */}
-        <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-0 relative border-t border-b border-current/20">
-          
-          {/* Top & Bottom Structural Boundaries */}
-          <motion.div 
-            initial={{ scaleX: 0 }}
-            animate={{ scaleX: 1 }}
-            transition={{ duration: 1.5, ease: easing, delay: 0.8 }}
-            className="absolute top-0 left-0 w-full h-px bg-current opacity-20 origin-left z-20" 
-          />
-          <motion.div 
-            initial={{ scaleX: 0 }}
-            animate={{ scaleX: 1 }}
-            transition={{ duration: 1.5, ease: easing, delay: 1.0 }}
-            className="absolute bottom-0 left-0 w-full h-px bg-current opacity-20 origin-left z-20" 
-          />
+        <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-0 relative">
+
           {/* Vertical Separator */}
-          <motion.div 
+          <motion.div
             initial={{ scaleY: 0 }}
             animate={{ scaleY: 1 }}
             transition={{ duration: 1.5, ease: easing, delay: 1.2 }}
-            className="absolute left-1/2 top-0 w-px h-full bg-current opacity-20 hidden md:block origin-top z-20" 
+            className="absolute left-1/2 top-0 w-0.5 h-full bg-current hidden md:block origin-top z-20"
           />
 
           {/* EMAIL PORT */}
           <div className="relative flex flex-col items-center justify-center p-12 md:p-16 lg:p-24 group">
             <div className="flex flex-col items-center gap-10 w-full">
-              
+
               {/* Icon rendering */}
               <motion.div
                 initial={{ opacity: 0, scale: 0.8 }}
@@ -72,16 +59,16 @@ export default function Footer() {
               >
                 <MdEmail className="text-8xl md:text-[140px] lg:text-[160px] text-white opacity-80  transition-all duration-700 group-hover:scale-105 drop-shadow-[0_0_15px_rgba(255,255,255,0.1)]" />
               </motion.div>
-              
+
               <div className="flex flex-col items-center gap-6 w-full max-w-lg">
                 <div className="flex items-center gap-4">
-                  <motion.div 
+                  <motion.div
                     initial={{ scaleX: 0 }}
                     animate={{ scaleX: 1 }}
                     transition={{ duration: 0.8, delay: 2.0 }}
-                    className="w-8 h-0.5 bg-white origin-left" 
+                    className="w-8 h-0.5 bg-white origin-left"
                   />
-                  <motion.span 
+                  <motion.span
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 0.6 }}
                     transition={{ duration: 0.8, delay: 2.2 }}
@@ -90,12 +77,12 @@ export default function Footer() {
                     SMTP_LINK//
                   </motion.span>
                 </div>
-                
-                <motion.a 
+
+                <motion.a
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.8, delay: 2.4 }}
-                  href="mailto:nx2803@gmail.com" 
+                  href="mailto:nx2803@gmail.com"
                   className="text-2xl md:text-3xl lg:text-4xl font-black tracking-tighter uppercase leading-none  transition-colors text-center whitespace-nowrap"
                 >
                   nx2803@gmail.com
@@ -107,7 +94,7 @@ export default function Footer() {
           {/* GITHUB PORT */}
           <div className="relative flex flex-col items-center justify-center p-12 md:p-16 lg:p-24 group">
             <div className="flex flex-col items-center gap-10 w-full">
-              
+
               {/* Icon rendering */}
               <motion.div
                 initial={{ opacity: 0, scale: 0.8 }}
@@ -116,16 +103,16 @@ export default function Footer() {
               >
                 <SiGithub className="text-8xl md:text-[140px] lg:text-[160px] text-white opacity-80  transition-all duration-700 group-hover:scale-105 drop-shadow-[0_0_15px_rgba(255,255,255,0.1)]" />
               </motion.div>
-              
+
               <div className="flex flex-col items-center gap-6 w-full max-w-lg">
                 <div className="flex items-center gap-4">
-                  <motion.div 
+                  <motion.div
                     initial={{ scaleX: 0 }}
                     animate={{ scaleX: 1 }}
                     transition={{ duration: 0.8, delay: 2.2 }}
-                    className="w-8 h-0.5 bg-white origin-left" 
+                    className="w-8 h-0.5 bg-white origin-left"
                   />
-                  <motion.span 
+                  <motion.span
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 0.6 }}
                     transition={{ duration: 0.8, delay: 2.4 }}
@@ -134,14 +121,14 @@ export default function Footer() {
                     GIT_NODE//
                   </motion.span>
                 </div>
-                
-                <motion.a 
+
+                <motion.a
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.8, delay: 2.6 }}
-                  href="https://github.com/nx2803" 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
+                  href="https://github.com/nx2803"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="text-2xl md:text-3xl lg:text-4xl font-black tracking-tighter uppercase leading-none transition-colors text-center whitespace-nowrap"
                 >
                   github.com/nx2803

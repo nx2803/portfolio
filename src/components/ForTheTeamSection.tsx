@@ -63,7 +63,7 @@ export default function ForTheTeamSection() {
             </div>
             
             <h2
-              className="font-bold uppercase italic leading-[0.82] text-white mb-5"
+              className="font-bold uppercase italic leading-[0.82] text-white pb-3 border-b-[3px] border-[#e23645] w-fit mb-6"
               style={{
                 fontSize: 'clamp(3.5rem, 5.5vw, 5.5rem)',
                 letterSpacing: '-0.04em',
@@ -71,8 +71,7 @@ export default function ForTheTeamSection() {
                 viewTransitionName: isTransitionTarget ? 'project-title' : 'none',
               }}
             >
-              FOR THE <br />
-              <span className="text-[#e23645]">TEAM</span>
+              FOR THE <span className="text-[#e23645]"> TEAM</span>
             </h2>
 
             <p className="text-white/75 leading-relaxed" style={{ fontSize: 'clamp(0.875rem, 1vw, 1rem)' }}>
