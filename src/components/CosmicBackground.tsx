@@ -118,6 +118,8 @@ export default function CosmicBackground({ activeSection }: { activeSection: str
               backfaceVisibility: 'hidden',
               WebkitBackfaceVisibility: 'hidden',
               transform: 'translateZ(0)',
+              WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%)',
+              maskImage: 'linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%)',
             }}
           >
             {/* 1행: 좌측 무한 루프 스크롤 (Double Span 구조로 무한 연결) */}

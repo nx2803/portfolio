@@ -62,7 +62,7 @@ export default function TrilogyContainer() {
   }, []);
 
   const transitionConfig = { 
-    duration: 0.8, 
+    duration: 1.0, 
     ease: [0.16, 1, 0.3, 1] as any 
   };
 
@@ -86,25 +86,48 @@ export default function TrilogyContainer() {
       <CosmicBackground activeSection={activeSection} />
 
       {/* ── GLOBAL HUD FRAME (Slants & Ticks) ── */}
-      <div 
-        className="fixed top-0 left-0 w-full h-6 bold-slants opacity-70 z-20 pointer-events-none transition-colors duration-700" 
+      {/* Top Bar: 화면 밖(위)에서 안으로 강하게 밀고 들어옴 */}
+      <motion.div 
+        initial={{ y: -30, opacity: 0 }}
+        animate={{ y: 0, opacity: 0.3 }}
+        transition={{ duration: 1.0, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
+        className="fixed top-0 left-0 w-full h-6 md:h-8 bold-slants z-20 pointer-events-none transition-colors duration-700" 
         style={{ color: 'var(--accent)' }}
       />
-      <div 
-        className="fixed bottom-0 left-0 w-full h-6 bold-slants opacity-70 z-20 pointer-events-none transition-colors duration-700" 
+      {/* Bottom Bar: 화면 밖(아래)에서 안으로 강하게 밀고 들어옴 */}
+      <motion.div 
+        initial={{ y: 30, opacity: 0 }}
+        animate={{ y: 0, opacity: 0.3 }}
+        transition={{ duration: 1.0, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
+        className="fixed bottom-0 left-0 w-full h-6 md:h-8 bold-slants z-20 pointer-events-none transition-colors duration-700" 
         style={{ color: 'var(--accent)' }}
       />
 
-      <div className="fixed left-6 top-0 h-full flex flex-col items-center justify-center gap-10 opacity-50 z-20 pointer-events-none transition-colors duration-700" style={{ color: 'var(--accent)' }}>
+      {/* Left Ticks: 좌측 화면 밖에서 안으로 미끄러져 튀어나옴 */}
+      <motion.div 
+        initial={{ x: -20, opacity: 0 }}
+        animate={{ x: 0, opacity: 0.5 }}
+        transition={{ duration: 1.0, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
+        className="fixed left-6 md:left-8 top-0 h-full flex flex-col items-center justify-center gap-10 z-20 pointer-events-none transition-colors duration-700" 
+        style={{ color: 'var(--accent)' }}
+      >
         {[...Array(8)].map((_, i) => (
-          <div key={i} className="w-4 h-px bg-current" />
+          <div key={i} className="w-4 md:w-6 h-px bg-current" />
         ))}
-      </div>
-      <div className="fixed right-6 top-0 h-full flex flex-col items-center justify-center gap-10 opacity-50 z-20 pointer-events-none transition-colors duration-700" style={{ color: 'var(--accent)' }}>
+      </motion.div>
+      
+      {/* Right Ticks: 우측 화면 밖에서 안으로 미끄러져 튀어나옴 */}
+      <motion.div 
+        initial={{ x: 20, opacity: 0 }}
+        animate={{ x: 0, opacity: 0.5 }}
+        transition={{ duration: 1.0, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
+        className="fixed right-6 md:right-8 top-0 h-full flex flex-col items-center justify-center gap-10 z-20 pointer-events-none transition-colors duration-700" 
+        style={{ color: 'var(--accent)' }}
+      >
         {[...Array(8)].map((_, i) => (
-          <div key={i} className="w-4 h-px bg-current" />
+          <div key={i} className="w-4 md:w-6 h-px bg-current" />
         ))}
-      </div>
+      </motion.div>
 
       {/* 글로벌 Peecemaker 그라데이션 */}
       <motion.div 
@@ -117,9 +140,9 @@ export default function TrilogyContainer() {
           {activeSection === 'intro' && (
             <motion.div
               key="intro"
-              initial={{ opacity: 0, scale: 1, filter: 'blur(5px)', y: 0 }}
+              initial={{ opacity: 0, scale: 0.92, filter: 'blur(10px)', y: 0 }}
               animate={{ opacity: 1, scale: 1, filter: 'blur(0px)', y: 0 }}
-              exit={{ opacity: 0, scale: 1, filter: 'blur(5px)', y: 0 }}
+              exit={{ opacity: 0, scale: 1.08, filter: 'blur(10px)', y: 0 }}
               transition={transitionConfig}
               className="w-full h-screen flex flex-col items-center justify-center relative overflow-hidden"
             >
@@ -132,9 +155,9 @@ export default function TrilogyContainer() {
           {activeSection === 'techstack' && (
             <motion.div
               key="techstack"
-              initial={{ opacity: 0, scale: 1, filter: 'blur(5px)', y: 0 }}
+              initial={{ opacity: 0, scale: 0.92, filter: 'blur(10px)', y: 0 }}
               animate={{ opacity: 1, scale: 1, filter: 'blur(0px)', y: 0 }}
-              exit={{ opacity: 0, scale: 1, filter: 'blur(5px)', y: 0 }}
+              exit={{ opacity: 0, scale: 1.08, filter: 'blur(10px)', y: 0 }}
               transition={transitionConfig}
               className="w-full h-screen flex flex-col items-center justify-center relative overflow-hidden"
             >
@@ -147,9 +170,9 @@ export default function TrilogyContainer() {
           {activeSection === 'trilogy_intro' && (
             <motion.div
               key="trilogy_intro"
-              initial={{ opacity: 0, scale: 1, filter: 'blur(5px)', y: 0 }}
+              initial={{ opacity: 0, scale: 0.92, filter: 'blur(10px)', y: 0 }}
               animate={{ opacity: 1, scale: 1, filter: 'blur(0px)', y: 0 }}
-              exit={{ opacity: 0, scale: 1, filter: 'blur(5px)', y: 0 }}
+              exit={{ opacity: 0, scale: 1.08, filter: 'blur(10px)', y: 0 }}
               transition={transitionConfig}
               className="w-full h-screen flex flex-col items-center justify-center relative overflow-hidden"
             >
@@ -162,9 +185,9 @@ export default function TrilogyContainer() {
           {activeSection === 'peecemaker' && (
             <motion.div
               key="peecemaker"
-              initial={{ opacity: 0, scale: 1, filter: 'blur(5px)', y: 0 }}
+              initial={{ opacity: 0, scale: 0.92, filter: 'blur(10px)', y: 0 }}
               animate={{ opacity: 1, scale: 1, filter: 'blur(0px)', y: 0 }}
-              exit={{ opacity: 0, scale: 1, filter: 'blur(5px)', y: 0 }}
+              exit={{ opacity: 0, scale: 1.08, filter: 'blur(10px)', y: 0 }}
               transition={transitionConfig}
               className="w-full h-screen flex flex-col items-center justify-center relative overflow-hidden"
             >
@@ -177,9 +200,9 @@ export default function TrilogyContainer() {
           {activeSection === 'fortheteam' && (
             <motion.div
               key="fortheteam"
-              initial={{ opacity: 0, scale: 1, filter: 'blur(5px)', y: 0 }}
+              initial={{ opacity: 0, scale: 0.92, filter: 'blur(10px)', y: 0 }}
               animate={{ opacity: 1, scale: 1, filter: 'blur(0px)', y: 0 }}
-              exit={{ opacity: 0, scale: 1, filter: 'blur(5px)', y: 0 }}
+              exit={{ opacity: 0, scale: 1.08, filter: 'blur(10px)', y: 0 }}
               transition={transitionConfig}
               className="w-full h-screen flex flex-col items-center justify-center relative overflow-hidden"
             >
@@ -192,9 +215,9 @@ export default function TrilogyContainer() {
           {activeSection === 'ufc' && (
             <motion.div
               key="ufc"
-              initial={{ opacity: 0, scale: 1, filter: 'blur(5px)', y: 0 }}
+              initial={{ opacity: 0, scale: 0.92, filter: 'blur(10px)', y: 0 }}
               animate={{ opacity: 1, scale: 1, filter: 'blur(0px)', y: 0 }}
-              exit={{ opacity: 0, scale: 1, filter: 'blur(5px)', y: 0 }}
+              exit={{ opacity: 0, scale: 1.08, filter: 'blur(10px)', y: 0 }}
               transition={transitionConfig}
               className="w-full h-screen flex flex-col items-center justify-center relative overflow-hidden"
             >
@@ -207,9 +230,9 @@ export default function TrilogyContainer() {
           {activeSection === 'contact' && (
             <motion.div
               key="contact"
-              initial={{ opacity: 0, scale: 1, filter: 'blur(5px)', y: 0 }}
+              initial={{ opacity: 0, scale: 0.92, filter: 'blur(10px)', y: 0 }}
               animate={{ opacity: 1, scale: 1, filter: 'blur(0px)', y: 0 }}
-              exit={{ opacity: 0, scale: 1, filter: 'blur(5px)', y: 0 }}
+              exit={{ opacity: 0, scale: 1.08, filter: 'blur(10px)', y: 0 }}
               transition={transitionConfig}
               className="w-full h-screen flex flex-col items-center justify-center relative overflow-hidden"
             >

@@ -46,107 +46,141 @@ export default function ProjectTrilogySection() {
   if (!mounted) return <section id="trilogy_intro" className="min-h-[80vh] md:min-h-screen" />;
 
   return (
-    <section id="trilogy_intro" className="relative py-12 md:py-16 overflow-hidden bg-transparent text-(--foreground)">
+    <section id="trilogy_intro" className="relative w-full h-screen flex flex-col justify-center py-12 md:py-16 overflow-hidden bg-transparent text-(--foreground)">
 
-      {/* ── HEADER AREA ── */}
-      <div className="w-full px-6 md:px-10 mb-20 md:mb-32 relative z-10">
+      {/* ── HEADER AREA (Structural Boot-up) ── */}
+      <div className="w-full px-6 md:px-10 mb-16 md:mb-24 relative z-10 max-w-[1800px] mx-auto">
         <div className="flex flex-col gap-4">
-          {/* Subtitle with Tight // Decoration */}
-          <motion.span 
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 0.6, x: 0 }}
-            transition={{ duration: 1, delay: 0.2 }}
-            className="text-xs md:text-sm font-mono tracking-[0.5em] font-black text-(--accent) uppercase"
-          >
-            PROJECT_INDEX_MAPPING//
-          </motion.span>
+          <div className="flex items-center gap-6">
+            <motion.span 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 0.6 }}
+              transition={{ duration: 0.8, delay: 0.8 }}
+              className="text-xs md:text-sm font-mono tracking-[0.5em] font-black text-(--accent) uppercase"
+            >
+              PROJECT_INDEX_MAPPING//
+            </motion.span>
+            <motion.div 
+              initial={{ scaleX: 0 }}
+              animate={{ scaleX: 1 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+              className="h-0.5 w-16 bg-(--accent) origin-left" 
+            />
+          </div>
           
           <div className="flex items-center gap-10 relative overflow-hidden">
             <motion.h2 
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.8, delay: 0 }}
-              className="text-6xl md:text-[8vw] font-stencil leading-none tracking-tighter select-none uppercase shrink-0"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 1.0 }}
+              className="text-6xl md:text-[7vw] font-stencil leading-none tracking-tighter select-none uppercase shrink-0"
             >
               THE_TRILOGY
             </motion.h2>
             <motion.div 
               initial={{ scaleX: 0 }}
               animate={{ scaleX: 1 }}
-              transition={{ duration: 1.5, ease: easing, delay: 0.3 }}
-              className="h-1.5 bg-current opacity-40 flex-1 origin-left"
+              transition={{ duration: 1.5, ease: easing, delay: 0.6 }}
+              className="h-1.5 bg-current flex-1 origin-left"
             />
           </div>
         </div>
       </div>
 
-      {/* ── ROADMAP GRID ── */}
-      <div className="w-full px-4 md:px-8 relative z-10">
-        <div className="relative grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-current/20">
+      {/* ── ROADMAP GRID (Structural Grid Drawing) ── */}
+      <div className="w-full px-4 md:px-8 relative z-10 max-w-[1800px] mx-auto">
+        <div className="relative grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0">
           
+          {/* Main Horizontal Grid Lines */}
           <motion.div 
             initial={{ scaleX: 0 }}
             animate={{ scaleX: 1 }}
-            transition={{ duration: 1.5, ease: easing, delay: 0.5 }}
-            className="absolute top-0 left-0 w-full h-px bg-current opacity-20 origin-left"
+            transition={{ duration: 1.5, ease: easing, delay: 1.2 }}
+            className="absolute top-0 left-0 w-full h-0.5 bg-current origin-left z-20"
           />
-
           <motion.div 
             initial={{ scaleX: 0 }}
             animate={{ scaleX: 1 }}
-            transition={{ duration: 1.5, ease: easing, delay: 0.55 }}
-            className="absolute bottom-0 left-0 w-full h-px bg-current opacity-20 origin-left"
+            transition={{ duration: 1.5, ease: easing, delay: 1.4 }}
+            className="absolute bottom-0 left-0 w-full h-0.5 bg-current origin-left z-20"
           />
 
           {phases.map((phase, idx) => (
             <div
               key={phase.id}
               onClick={() => handleProjectClick(phase.sectionId)}
-              className="relative group p-10 md:p-16 flex flex-col gap-16 transition-all duration-700 overflow-hidden cursor-pointer hover:bg-current/5"
+              className="relative group p-10 md:p-14 flex flex-col gap-12 transition-all duration-700 overflow-hidden cursor-pointer hover:bg-current/5"
               style={{ '--accent': phase.accent } as any}
             >
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 1, delay: 1.5 + idx * 0.1 }}
-                className="relative z-10 flex flex-col gap-12"
-              >
+              {/* Vertical Grid Line Separator (between items) */}
+              {idx > 0 && (
+                <motion.div 
+                  initial={{ scaleY: 0 }}
+                  animate={{ scaleY: 1 }}
+                  transition={{ duration: 1.2, ease: easing, delay: 1.6 + idx * 0.2 }}
+                  className="absolute left-0 top-0 w-0.5 h-full bg-current origin-top hidden md:block"
+                />
+              )}
+
+              <div className="relative z-10 flex flex-col gap-10">
                 <div className="flex justify-between items-start">
-                  <span className="text-7xl md:text-9xl font-stencil opacity-15 group-hover:opacity-30 group-hover:text-[var(--accent)] transition-all leading-none duration-700">
-                    {phase.id}
-                  </span>
-                  <div className="flex flex-col items-end gap-2">
-                    <span className="text-[10px] font-bold border border-current/20 px-4 py-1 transition-all group-hover:border-(--accent) group-hover:bg-(--accent) group-hover:text-(--background)">
-                      {phase.tag}//
+                  <motion.div 
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 1.0, delay: 2.0 + idx * 0.1 }}
+                  >
+                    <span className="text-7xl md:text-8xl lg:text-9xl font-stencil opacity-15 group-hover:opacity-40 group-hover:text-[var(--accent)] transition-all leading-none duration-700 block">
+                      {phase.id}
                     </span>
-                    <span className="text-[10px] font-bold opacity-0 group-hover:opacity-100 transition-all text-(--accent) animate-pulse">
+                  </motion.div>
+                  <div className="flex flex-col items-end gap-2">
+                    <motion.div 
+                      initial={{ opacity: 0, x: -10 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ duration: 0.5, delay: 2.4 + idx * 0.1 }}
+                    >
+                      <span className="text-[10px] font-bold border border-current/20 px-4 py-1 transition-all group-hover:border-[var(--accent)] group-hover:bg-[var(--accent)] group-hover:text-(--background) block">
+                        {phase.tag}//
+                      </span>
+                    </motion.div>
+                    <span className="text-[10px] font-bold opacity-0 group-hover:opacity-100 transition-all text-[var(--accent)] animate-pulse">
                       VIEW PROJECT →
                     </span>
                   </div>
                 </div>
 
-                <div className="space-y-8">
-                  <h3 className="text-4xl md:text-6xl font-stencil uppercase tracking-tighter leading-tight transition-colors duration-700 group-hover:text-(--accent)">
-                    {phase.project}
-                  </h3>
-
-                  <div className="h-1.5 w-full bg-current/10 relative overflow-hidden">
+                <div className="space-y-6">
+                  <motion.div 
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8, delay: 2.6 + idx * 0.1 }}
+                  >
+                    <h3 className="text-4xl md:text-5xl lg:text-6xl font-stencil uppercase tracking-tighter leading-tight transition-colors duration-700 group-hover:text-[var(--accent)]">
+                      {phase.project}
+                    </h3>
+                  </motion.div>
+                  
+                  {/* Decorative Bar under Title */}
+                  <div className="h-1 w-full bg-current/10 relative overflow-hidden">
                     <motion.div 
                       initial={{ scaleX: 0 }}
-                      animate={{ scaleX: 0.15 }}
-                      whileHover={{ scaleX: 1 }}
-                      transition={{ delay: 1 + idx * 0.1, duration: 1.2, ease: easing }}
-                      className="absolute inset-y-0 left-0 w-full bg-current opacity-40 group-hover:bg-(--accent) group-hover:opacity-100 origin-left transition-colors duration-500"
+                      animate={{ scaleX: 1 }}
+                      transition={{ duration: 1.5, ease: easing, delay: 2.8 + idx * 0.1 }}
+                      className="absolute inset-y-0 left-0 w-full bg-[var(--accent)] shadow-[0_0_15px_var(--accent)] origin-left opacity-0 group-hover:opacity-100 transition-opacity duration-700"
                     />
                   </div>
 
-                  <p className="text-base md:text-2xl font-medium leading-relaxed break-keep group-hover:opacity-100 opacity-60 transition-opacity duration-700">
-                    {phase.description}
-                  </p>
+                  <motion.div 
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 1.0, delay: 3.0 + idx * 0.1 }}
+                  >
+                    <p className="text-sm md:text-base leading-relaxed tracking-tight break-keep opacity-50 group-hover:opacity-90 transition-opacity duration-700">
+                      {phase.description}
+                    </p>
+                  </motion.div>
                 </div>
-              </motion.div>
-
-              <div className="absolute inset-0 bold-slants opacity-0 group-hover:opacity-5 transition-opacity duration-700 pointer-events-none" />
+              </div>
             </div>
           ))}
         </div>

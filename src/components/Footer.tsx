@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { SiGithub } from 'react-icons/si';
-import { MdEmail, MdArrowForward } from 'react-icons/md';
+import { MdEmail } from 'react-icons/md';
 
 export default function Footer() {
   const [mounted, setMounted] = useState(false);
@@ -18,113 +18,139 @@ export default function Footer() {
       
       <div className="w-full max-w-[1800px] flex flex-col items-center relative z-10 flex-1 justify-center">
         
-        {/* ── HEADER (Clean Title) ── */}
-        <div className="mb-24 md:mb-36 flex items-center gap-10 w-full overflow-hidden">
+        {/* ── HEADER (Structural Title) ── */}
+        <div className="mb-24 md:mb-32 flex items-center gap-10 w-full overflow-hidden">
           <motion.h1 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0 }}
-            className="text-4xl md:text-8xl font-black uppercase tracking-tighter shrink-0 whitespace-nowrap"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="text-4xl md:text-7xl lg:text-8xl font-stencil uppercase tracking-tighter shrink-0 whitespace-nowrap"
           >
-            CONTACT
+            CONTACT_NODE//
           </motion.h1>
           <motion.div 
             initial={{ scaleX: 0 }}
             animate={{ scaleX: 1 }}
-            transition={{ duration: 1.5, ease: easing, delay: 0.3 }}
-            className="h-2 md:h-4 bg-current opacity-40 flex-1 origin-left mt-2"
+            transition={{ duration: 1.5, ease: easing, delay: 0.4 }}
+            className="h-2 md:h-3 bg-current opacity-40 flex-1 origin-left mt-2"
           />
         </div>
 
-        {/* ── SYMMETRIC CONTACT GRID ── */}
-        <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-0 relative">
+        {/* ── SYMMETRIC CONTACT GRID (HUD Assembly Sequence) ── */}
+        <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-0 relative border-t border-b border-current/20">
           
+          {/* Top & Bottom Structural Boundaries */}
+          <motion.div 
+            initial={{ scaleX: 0 }}
+            animate={{ scaleX: 1 }}
+            transition={{ duration: 1.5, ease: easing, delay: 0.8 }}
+            className="absolute top-0 left-0 w-full h-px bg-current opacity-20 origin-left z-20" 
+          />
+          <motion.div 
+            initial={{ scaleX: 0 }}
+            animate={{ scaleX: 1 }}
+            transition={{ duration: 1.5, ease: easing, delay: 1.0 }}
+            className="absolute bottom-0 left-0 w-full h-px bg-current opacity-20 origin-left z-20" 
+          />
+          {/* Vertical Separator */}
           <motion.div 
             initial={{ scaleY: 0 }}
             animate={{ scaleY: 1 }}
-            transition={{ duration: 1.5, ease: easing, delay: 0.4 }}
-            className="absolute left-1/2 top-0 w-px h-full bg-current opacity-20 hidden md:block origin-top" 
+            transition={{ duration: 1.5, ease: easing, delay: 1.2 }}
+            className="absolute left-1/2 top-0 w-px h-full bg-current opacity-20 hidden md:block origin-top z-20" 
           />
 
           {/* EMAIL PORT */}
-          <div className="relative flex flex-col items-center gap-12 p-12 md:p-16 lg:p-24 group">
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 1, delay: 1.2 }}
-              className="flex flex-col items-center gap-12 w-full"
-            >
-              <MdEmail className="text-9xl md:text-[180px] text-white opacity-90 group-hover:text-(--accent) transition-all duration-700 group-hover:scale-105 drop-shadow-[0_0_20px_rgba(255,255,255,0.1)]" />
+          <div className="relative flex flex-col items-center justify-center p-12 md:p-16 lg:p-24 group">
+            <div className="flex flex-col items-center gap-10 w-full">
               
-              <div className="flex flex-col items-center gap-8 w-full max-w-lg">
+              {/* Icon rendering */}
+              <motion.div
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 1, delay: 1.6, ease: easing }}
+              >
+                <MdEmail className="text-8xl md:text-[140px] lg:text-[160px] text-white opacity-80  transition-all duration-700 group-hover:scale-105 drop-shadow-[0_0_15px_rgba(255,255,255,0.1)]" />
+              </motion.div>
+              
+              <div className="flex flex-col items-center gap-6 w-full max-w-lg">
                 <div className="flex items-center gap-4">
-                  <div className="w-12 h-1 bg-(--accent) shadow-[0_0_15px_var(--accent)]" />
-                  <span className="text-xs font-mono tracking-[0.5em] text-(--accent) font-black uppercase">
-                    SMTP_LINK//
-                  </span>
-                </div>
-                <a href="mailto:nx2803@gmail.com" className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-black tracking-tighter uppercase leading-none group-hover:text-(--accent) transition-colors text-center whitespace-nowrap">
-                  nx2803@gmail.com
-                </a>
-                
-                <div className="h-4 w-full bg-white/10 relative overflow-hidden mt-4">
                   <motion.div 
                     initial={{ scaleX: 0 }}
                     animate={{ scaleX: 1 }}
-                    transition={{ delay: 1.8, duration: 1.5, ease: easing }}
-                    className="absolute inset-y-0 left-0 w-full bg-(--accent) shadow-[0_0_30px_var(--accent)] origin-left" 
+                    transition={{ duration: 0.8, delay: 2.0 }}
+                    className="w-8 h-0.5 bg-white origin-left" 
                   />
+                  <motion.span 
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 0.6 }}
+                    transition={{ duration: 0.8, delay: 2.2 }}
+                    className="text-xs font-mono tracking-[0.5em]  font-black uppercase"
+                  >
+                    SMTP_LINK//
+                  </motion.span>
                 </div>
+                
+                <motion.a 
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: 2.4 }}
+                  href="mailto:nx2803@gmail.com" 
+                  className="text-2xl md:text-3xl lg:text-4xl font-black tracking-tighter uppercase leading-none  transition-colors text-center whitespace-nowrap"
+                >
+                  nx2803@gmail.com
+                </motion.a>
               </div>
-            </motion.div>
+            </div>
           </div>
 
           {/* GITHUB PORT */}
-          <div className="relative flex flex-col items-center gap-12 p-12 md:p-16 lg:p-24 group">
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 1, delay: 1.4 }}
-              className="flex flex-col items-center gap-12 w-full"
-            >
-              <SiGithub className="text-9xl md:text-[180px] text-white opacity-90 group-hover:text-(--accent) transition-all duration-700 group-hover:scale-105 drop-shadow-[0_0_20px_rgba(255,255,255,0.1)]" />
+          <div className="relative flex flex-col items-center justify-center p-12 md:p-16 lg:p-24 group">
+            <div className="flex flex-col items-center gap-10 w-full">
               
-              <div className="flex flex-col items-center gap-8 w-full max-w-lg">
+              {/* Icon rendering */}
+              <motion.div
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 1, delay: 1.8, ease: easing }}
+              >
+                <SiGithub className="text-8xl md:text-[140px] lg:text-[160px] text-white opacity-80  transition-all duration-700 group-hover:scale-105 drop-shadow-[0_0_15px_rgba(255,255,255,0.1)]" />
+              </motion.div>
+              
+              <div className="flex flex-col items-center gap-6 w-full max-w-lg">
                 <div className="flex items-center gap-4">
-                  <div className="w-12 h-1 bg-(--accent) shadow-[0_0_15px_var(--accent)]" />
-                  <span className="text-xs font-mono tracking-[0.5em] text-(--accent) font-black uppercase">
-                    GIT_NODE//
-                  </span>
-                </div>
-                <a href="https://github.com/nx2803" target="_blank" rel="noopener noreferrer" className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-black tracking-tighter uppercase leading-none group-hover:text-(--accent) transition-colors text-center whitespace-nowrap">
-                  github.com/nx2803
-                </a>
-                
-                <div className="h-4 w-full bg-white/10 relative overflow-hidden mt-4">
                   <motion.div 
                     initial={{ scaleX: 0 }}
                     animate={{ scaleX: 1 }}
-                    transition={{ delay: 2.0, duration: 1.5, ease: easing }}
-                    className="absolute inset-y-0 left-0 w-full bg-(--accent) shadow-[0_0_30px_var(--accent)] origin-left" 
+                    transition={{ duration: 0.8, delay: 2.2 }}
+                    className="w-8 h-0.5 bg-white origin-left" 
                   />
+                  <motion.span 
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 0.6 }}
+                    transition={{ duration: 0.8, delay: 2.4 }}
+                    className="text-xs font-mono tracking-[0.5em]  font-black uppercase"
+                  >
+                    GIT_NODE//
+                  </motion.span>
                 </div>
+                
+                <motion.a 
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: 2.6 }}
+                  href="https://github.com/nx2803" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="text-2xl md:text-3xl lg:text-4xl font-black tracking-tighter uppercase leading-none transition-colors text-center whitespace-nowrap"
+                >
+                  github.com/nx2803
+                </motion.a>
               </div>
-            </motion.div>
+            </div>
           </div>
-
         </div>
-
-        {/* ── SIMPLE SYSTEM FOOTER ── */}
-        <div className="w-full flex flex-col md:flex-row justify-between items-end pt-20 pb-12 opacity-50 font-mono text-[10px] tracking-[0.4em] uppercase border-t-2 border-current/10 mt-auto">
-          <div className="flex flex-col gap-2">
-            <span className="font-black text-(--accent)">TERMINAL_HALT: SUCCESS//</span>
-            <span>SEOUL_HQ / EST_2026</span>
-          </div>
-          <span className="font-black">&copy; 2026_NX2803_ARCHIVE_SECURED</span>
-        </div>
-
       </div>
-
     </section>
   );
 }

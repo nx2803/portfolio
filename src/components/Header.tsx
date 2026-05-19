@@ -1,6 +1,6 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { useStore } from '@nanostores/react';
-import { $activeSection, updateActiveSection, $viewMode, updateViewMode, type ViewMode } from '../store/sectionStore';
+import { $activeSection, updateActiveSection, type ViewMode } from '../store/sectionStore';
 import { useState, useEffect } from 'react';
 import { HiMenu, HiX } from 'react-icons/hi';
 
@@ -16,7 +16,7 @@ const sections = [
 
 const themeColors: Record<string, string> = {
   peecemaker: '#fb923c',
-  fortheteam: '#dc3442',
+  fortheteam: '#e23645',
   ufc: '#00ff41',
 };
 
@@ -29,10 +29,7 @@ export default function Header() {
     setMounted(true);
   }, []);
 
-  // Peecemaker is the only "light" background section in the cosmic journey
-  const isEffectiveLight = false;
-
-  const currentColor = themeColors[activeSection] || (isEffectiveLight ? '#000000' : '#ffffff');
+  const currentColor = themeColors[activeSection] || '#ffffff';
 
   useEffect(() => {
     if (isMenuOpen) document.body.style.overflow = 'hidden';
@@ -41,116 +38,122 @@ export default function Header() {
 
   const handleNavClick = (id: string, mode: ViewMode) => {
     updateActiveSection(id);
-    updateViewMode(mode);
     setIsMenuOpen(false);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const activeLabel = sections.find(s => s.id === activeSection)?.label || 'Intro';
 
+  if (!mounted) return null;
+
   return (
     <>
-      {/* ── PC HEADER ── */}
-      <header className="hidden md:block fixed top-8 left-1/2 -translate-x-1/2 z-50 w-full max-w-fit px-6">
-        <motion.nav
-          initial={{ y: -120, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.9, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-          className={`
-            relative px-8 py-3.5 rounded-full border transition-all duration-500 flex items-center gap-8 whitespace-nowrap backdrop-blur-xl
-            ${isEffectiveLight
-              ? 'bg-[#e5e5e5]/80 border-black shadow-[0_8px_32px_rgba(0,0,0,0.05)] text-black'
-              : 'bg-[#000000]/60 border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.3)] text-white'
-            }
-          `}
-        >
-          <button 
-            onClick={() => handleNavClick('intro', 'portal')}
-            className="flex items-center group shrink-0"
+      {/* ── PC HEADER: 미니멀리즘 전술 네비게이션 ── */}
+      <header className="hidden md:block fixed top-12 left-1/2 -translate-x-1/2 z-50 w-full max-w-fit px-6">
+        <nav className="relative px-9 py-4 flex items-center gap-8 whitespace-nowrap">
+
+          {/* 3. Actual Content */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5, delay: 1.0 }}
+            className="flex items-center gap-8 text-white z-10 w-full"
           >
-            <span className="text-lg font-black tracking-tight uppercase font-stencil">
-              PORTFOLIO
-            </span>
-          </button>
+            {/* Logo */}
+            <button 
+              onClick={() => handleNavClick('intro', 'portal')}
+              className="flex items-center gap-2 group shrink-0"
+            >
+              <span className="text-[15px] font-extrabold tracking-[0.2em] uppercase font-mono text-white/70 group-hover:text-white transition-colors">
+                PORTFOLIO
+              </span>
+            </button>
 
-          <div className={`h-5 w-px shrink-0 ${isEffectiveLight ? 'bg-black/20' : 'bg-white/10'}`} />
+            <div className="h-4 w-px bg-white/15 shrink-0" />
 
-          <div className="flex gap-7 items-center">
-            {sections.map(({ id, label, mode }) => (
-              <button
-                key={id}
-                onClick={() => handleNavClick(id, mode)}
-                className={`
-                  relative py-1 text-[11px] font-black uppercase tracking-[0.2em] transition-all duration-300
-                  ${activeSection === id
-                    ? (isEffectiveLight ? 'text-black' : 'text-white')
-                    : (isEffectiveLight ? 'text-black/30 hover:text-black' : 'text-white/30 hover:text-white')
-                  }
-                `}
-              >
-                {label}
-                {activeSection === id && (
-                  <motion.div
-                    layoutId="activeTabHeader"
-                    className="absolute -bottom-1 left-0 w-full h-0.5 rounded-full"
-                    style={{ backgroundColor: currentColor }}
-                    transition={{ type: "spring", stiffness: 380, damping: 30 }}
-                  />
-                )}
-              </button>
-            ))}
-          </div>
-        </motion.nav>
+            {/* Navigation Links */}
+            <div className="flex gap-7 items-center">
+              {sections.map(({ id, label, mode }) => (
+                <button
+                  key={id}
+                  onClick={() => handleNavClick(id, mode)}
+                  className={`
+                    relative py-1 text-[14px] font-extrabold tracking-[0.18em] uppercase transition-all duration-300
+                    ${activeSection === id
+                      ? 'font-black'
+                      : 'text-white/50 hover:text-white/90'
+                    }
+                  `}
+                  style={{ color: activeSection === id ? currentColor : undefined }}
+                >
+                  {label}
+                  {activeSection === id && (
+                    <motion.div
+                      layoutId="activeTabHeader"
+                      className="absolute -bottom-1.5 left-0 w-full h-[2.5px] rounded-none"
+                      style={{ backgroundColor: currentColor }}
+                      transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                    />
+                  )}
+                </button>
+              ))}
+            </div>
+          </motion.div>
+        </nav>
       </header>
 
       {/* ── MOBILE HEADER ── */}
-      <motion.header
-        initial={{ y: 200, x: "-50%", opacity: 0 }}
-        animate={{ y: 0, x: "-50%", opacity: 1 }}
-        transition={{ duration: 0.9, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-        className="md:hidden fixed bottom-6 left-1/2 z-210 w-full max-w-[90vw] px-4"
-      >
-        <div
-          className={`
-            relative px-6 py-3 rounded-full border flex items-center justify-between backdrop-blur-xl transition-all duration-500
-            ${isEffectiveLight && !isMenuOpen
-              ? 'bg-[#e5e5e5]/80 border-black shadow-lg text-black'
-              : 'bg-[#000000]/80 border-white/10 shadow-2xl text-white'
-            }
-          `}
-        >
-          <div className="flex-1 flex items-center justify-start px-2 overflow-hidden">
-            <span className="text-[9px] font-mono font-black uppercase tracking-widest opacity-60 truncate">
-              {isMenuOpen ? 'CLOSE_MENU' : activeLabel}
-            </span>
-          </div>
+      <header className="md:hidden fixed bottom-10 left-1/2 -translate-x-1/2 z-[210] w-full max-w-[90vw] px-4">
+        <div className="relative px-5 py-3 flex items-center justify-between">
 
-          <button
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="p-2 transition-transform active:scale-90"
-            style={{ color: currentColor }}
-            aria-label="Toggle Menu"
+          {/* 3. Actual Content */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5, delay: 1.0 }}
+            className="flex-1 flex items-center justify-between z-10 text-white w-full"
           >
-            {isMenuOpen ? <HiX className="text-2xl" /> : <HiMenu className="text-2xl" />}
-          </button>
+            <div className="flex-1 flex items-center justify-start px-1 overflow-hidden">
+              <span 
+                className="text-[13px] font-mono tracking-[0.18em] uppercase truncate transition-colors duration-300"
+                style={{ color: currentColor }}
+              >
+                {isMenuOpen ? 'CLOSE MENU' : `NODE::${activeLabel.toUpperCase()}`}
+              </span>
+            </div>
+
+            <button
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className="p-1 transition-colors shrink-0"
+              style={{ color: currentColor }}
+              aria-label="Toggle Menu"
+            >
+              {isMenuOpen ? <HiX className="text-2xl" /> : <HiMenu className="text-2xl" />}
+            </button>
+          </motion.div>
+
         </div>
-      </motion.header>
+      </header>
 
       {/* ── MOBILE OVERLAY MENU ── */}
       <AnimatePresence>
         {isMenuOpen && (
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
             className="fixed inset-0 z-200 bg-[#050505] text-white flex flex-col p-8 pt-12 overflow-y-auto"
           >
-            <div className="mb-12 flex justify-between items-center">
-              <span className="text-2xl font-black font-stencil">
+            <div className="mb-12 flex justify-between items-center relative">
+              <span className="text-xl font-bold font-mono tracking-[0.2em] text-white/50">
                 MENU_SYSTEM
               </span>
-              <button onClick={() => setIsMenuOpen(false)} className="p-2">
-                <HiX className="text-3xl" />
+              <button 
+                onClick={() => setIsMenuOpen(false)} 
+                className="p-2 text-white/60 hover:text-white transition-colors"
+                style={{ color: currentColor }}
+              >
+                <HiX className="text-2xl" />
               </button>
             </div>
 
@@ -162,14 +165,22 @@ export default function Header() {
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: idx * 0.05 }}
-                  className="flex items-end group text-left"
+                  className="flex items-end group text-left relative"
                 >
-                  <span className="text-4xl md:text-5xl font-black text-white/5 group-hover:text-white/20 transition-colors w-16 shrink-0 font-stencil">
+                  <span 
+                    className="text-3xl font-mono text-white/5 group-hover:text-white/10 transition-colors w-16 shrink-0"
+                    style={{ color: activeSection === id ? currentColor : undefined }}
+                  >
                     0{idx + 1}
                   </span>
                   <div className="flex flex-col pb-1">
-                    <span className="text-[8px] font-mono text-white/20 tracking-[0.4em] uppercase">section_id: {id}</span>
-                    <span className="text-xl md:text-2xl font-black uppercase tracking-tighter leading-none group-hover:text-[var(--accent)] transition-colors">{label}</span>
+                    <span className="text-[8px] font-mono text-white/20 tracking-[0.4em] uppercase">node: {id}</span>
+                    <span 
+                      className={`text-lg font-bold uppercase tracking-tighter leading-none transition-colors`}
+                      style={{ color: activeSection === id ? currentColor : 'rgba(255,255,255,0.4)' }}
+                    >
+                      {label}
+                    </span>
                   </div>
                 </motion.button>
               ))}
