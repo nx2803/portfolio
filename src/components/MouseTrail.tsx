@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion, useMotionValue, useTransform } from 'framer-motion';
 
 interface MouseTrailProps {
@@ -6,6 +6,7 @@ interface MouseTrailProps {
 }
 
 export default function MouseTrail({ activeSection }: MouseTrailProps) {
+  const [mounted, setMounted] = useState(false);
   const mouseX = useMotionValue(-100);
   const mouseY = useMotionValue(-100);
 
@@ -14,6 +15,8 @@ export default function MouseTrail({ activeSection }: MouseTrailProps) {
   const yStr = useTransform(mouseY, (y) => String(Math.max(0, Math.floor(y))).padStart(4, '0'));
 
   useEffect(() => {
+    setMounted(true);
+
     // 터치 디바이스(모바일)인 경우 활성화하지 않음
     if (window.matchMedia('(pointer: coarse)').matches) {
       return;
@@ -30,8 +33,8 @@ export default function MouseTrail({ activeSection }: MouseTrailProps) {
     };
   }, [mouseX, mouseY]);
 
-  // 모바일 렌더링 예외 처리
-  if (typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches) {
+  // 마운트 완료 전(SSR) 혹은 모바일 렌더링 예외 처리
+  if (!mounted || (typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches)) {
     return null;
   }
 

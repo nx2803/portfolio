@@ -223,4 +223,23 @@ section {
   will-change: transform, opacity;
 }
 
+/* CosmicBackground 별 반짝임 최적화 (GPU 가속) */
+@keyframes twinkle {
+  0%, 100% {
+    opacity: var(--twinkle-min-opacity, 0.1);
+    transform: scale(0.8) translate3d(0, 0, 0);
+  }
+  50% {
+    opacity: var(--twinkle-max-opacity, 0.8);
+    transform: scale(1.2) translate3d(0, 0, 0);
+  }
+}
+
+.animate-twinkle {
+  animation: twinkle var(--twinkle-duration, 5s) ease-in-out infinite;
+  animation-delay: var(--twinkle-delay, 0s);
+  will-change: transform, opacity;
+}
+
+
 

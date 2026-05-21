@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, useMotionValue, useTransform, useMotionTemplate } from 'framer-motion';
 import { useStore } from '@nanostores/react';
 import { $activeSection } from '../store/sectionStore';
 import { SiNestjs, SiNextdotjs, SiSocketdotio, SiOpentelemetry, SiRedis, SiPostgresql } from 'react-icons/si';
@@ -11,6 +11,70 @@ export default function ForTheTeamSection() {
 
   // 피스메이커와 100% 동기화된 프리미엄 시네마틱 모션 Easing 정의
   const customEasing = [0.16, 1, 0.3, 1] as any; // Ultra-smooth cubic bezier
+
+  // 3D Tilt 효과 제어
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+  
+  const rotateX = useTransform(mouseY, [-180, 180], [6, -6]);
+  const rotateY = useTransform(mouseX, [-320, 320], [-6, 6]);
+  const radialGlow = useMotionTemplate`radial-gradient(circle 220px at ${mouseX}px ${mouseY}px, rgba(226, 54, 69, 0.15) 0%, transparent 80%)`;
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = e.clientX - rect.left - rect.width / 2;
+    const y = e.clientY - rect.top - rect.height / 2;
+    mouseX.set(x);
+    mouseY.set(y);
+  };
+
+  const handleMouseLeave = () => {
+    mouseX.set(0);
+    mouseY.set(0);
+  };
+
+  // Stagger 컨테이너 Variants (기계적 조립 컨셉)
+  const containerVariants = {
+    initial: { opacity: 0 },
+    animate: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.08,
+        delayChildren: 0.15
+      }
+    }
+  };
+
+  const itemVariants = {
+    initial: { opacity: 0, y: 25 },
+    animate: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        type: 'spring' as const,
+        stiffness: 140,
+        damping: 16,
+        mass: 0.85
+      }
+    }
+  };
+
+  // 선형 외곽 프레임 애니메이션 Variants
+  const lineVariants = {
+    initial: { scaleX: 0 },
+    animate: {
+      scaleX: 1,
+      transition: { duration: 0.5, ease: customEasing }
+    }
+  };
+
+  const verticalLineVariants = {
+    initial: { scaleY: 0 },
+    animate: {
+      scaleY: 1,
+      transition: { duration: 0.5, ease: customEasing }
+    }
+  };
 
   const stacks = [
     { Icon: SiNextdotjs, name: 'Next.js 16', desc: 'PPR Architecture' },
@@ -42,20 +106,40 @@ export default function ForTheTeamSection() {
       className="relative w-full lg:h-screen min-h-screen flex items-center justify-center text-white bg-transparent pt-28 pb-16 lg:py-0 overflow-y-auto lg:overflow-hidden"
       style={{ fontFamily: 'var(--font-ftt)' }}
     >
-
-
       <div className="relative z-10 w-full max-w-450 mx-auto px-8 xl:px-16 grid grid-cols-1 lg:grid-cols-[5fr_7fr] gap-10 xl:gap-14 items-center">
 
-        {/* ── LEFT: Content Card (피스메이커와 동일한 웅장하고 일체화된 단일 슬라이드 모션 - backdrop-blur 제거로 120fps 완성) ── */}
+        {/* ── LEFT: Content Card (외곽 선공개 드로잉 프레임 적용) ── */}
         <motion.div
-          initial={{ opacity: 0, x: -40 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 1.0, ease: customEasing }}
+          variants={containerVariants}
+          initial="initial"
+          animate="animate"
           style={{ willChange: 'transform, opacity' }}
-          className="flex flex-col gap-7 bg-[#0b0b0c] p-8 border border-white/8 border-l-2 border-l-[#e23645] shadow-[0_12px_50px_rgba(0,0,0,0.85)] relative rounded-none"
+          className="flex flex-col gap-7 bg-[#0b0b0c] p-8 shadow-[0_12px_50px_rgba(0,0,0,0.85)] relative rounded-none border border-white/5 overflow-hidden"
         >
+          {/* 선형 프레임 드로잉 라인들 */}
+          <motion.span
+            variants={lineVariants}
+            style={{ originX: 0 }}
+            className="absolute top-0 left-0 right-0 h-px bg-white/15"
+          />
+          <motion.span
+            variants={verticalLineVariants}
+            style={{ originY: 0 }}
+            className="absolute top-0 bottom-0 right-0 w-px bg-white/15"
+          />
+          <motion.span
+            variants={lineVariants}
+            style={{ originX: 1 }}
+            className="absolute bottom-0 left-0 right-0 h-px bg-white/15"
+          />
+          <motion.span
+            variants={verticalLineVariants}
+            style={{ originY: 0 }}
+            className="absolute top-0 bottom-0 left-0 w-1 bg-[#e23645]"
+          />
+
           {/* Header & Title */}
-          <div>
+          <motion.div variants={itemVariants}>
             <div className="flex items-center gap-2 mb-3">
               <span className="w-1.5 h-1.5 bg-[#e23645] inline-block shrink-0 rounded-none animate-pulse" />
               <p className="text-[#e23645] font-mono text-xs tracking-[0.4em] uppercase font-bold">
@@ -78,10 +162,10 @@ export default function ForTheTeamSection() {
             <p className="text-white/80 leading-relaxed font-light" style={{ fontSize: 'clamp(1.15rem, 1.35vw, 1.45rem)', lineHeight: '1.6' }}>
               전 세계 5개 이상의 메이저 스포츠 데이터 프로바이더를 병렬 연동하여 실시간 경기 지표와 스케줄러를 제공하는 엔터프라이즈 스포츠 캘린더 플랫폼입니다. 이기종 외부 API 규격을 완벽한 단일 도메인 모델로 정규화했습니다.
             </p>
-          </div>
+          </motion.div>
 
           {/* Tech Stack */}
-          <div>
+          <motion.div variants={itemVariants}>
             <p className="text-white/30 font-mono text-[10px] tracking-[0.3em] uppercase mb-3">
               TECH_STACK//
             </p>
@@ -89,7 +173,7 @@ export default function ForTheTeamSection() {
               {stacks.map((s, i) => (
                 <div
                   key={i}
-                  className="flex items-center gap-2 px-3.5 py-2 bg-white/5 border border-white/10 hover:border-[#e23645]/60 hover:bg-[#e23645]/8 rounded-none transition-all duration-300 group"
+                  className="flex items-center gap-2 px-3.5 py-2 bg-white/5 border border-white/10 hover:border-[#e23645]/60 hover:bg-[#e23645]/8 rounded-none transition-colors duration-300 group"
                 >
                   <s.Icon className="text-[#e23645] text-base shrink-0 group-hover:scale-110 transition-transform" />
                   <div>
@@ -99,42 +183,71 @@ export default function ForTheTeamSection() {
                 </div>
               ))}
             </div>
-          </div>
+          </motion.div>
 
           {/* Engineering Highlights */}
           <div className="space-y-3.5">
-            <p className="text-white/30 font-mono text-[10px] tracking-[0.3em] uppercase">
+            <motion.p variants={itemVariants} className="text-white/30 font-mono text-[10px] tracking-[0.3em] uppercase">
               ENGINEERING_HIGHLIGHTS//
-            </p>
+            </motion.p>
             {highlights.map((h, i) => (
-              <div key={i} className="flex gap-3.5 group">
-                <div className="w-0.5 bg-[#e23645]/40 shrink-0 group-hover:bg-[#e23645] transition-colors mt-1 rounded-none" />
+              <motion.div key={i} variants={itemVariants} className="flex gap-3.5 group">
+                <div className="relative w-0.5 shrink-0 mt-1 rounded-none overflow-hidden">
+                  <div className="absolute inset-0 bg-white/10" />
+                  <motion.div
+                    initial={{ scaleY: 0 }}
+                    animate={{ scaleY: 1 }}
+                    transition={{ delay: 0.5 + i * 0.1, duration: 0.5, ease: customEasing }}
+                    style={{ originY: 0 }}
+                    className="absolute inset-0 bg-[#e23645]/50 group-hover:bg-[#e23645] transition-colors"
+                  />
+                </div>
                 <div>
                   <p className="text-[#e23645] font-bold text-lg md:text-xl mb-1.5">{h.title}</p>
                   <p className="text-white/65 text-base md:text-lg leading-relaxed">{h.desc}</p>
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
         </motion.div>
 
-        {/* ── RIGHT: Browser Mockup (피스메이커와 완벽 대칭인 단일 스케일 모션) ── */}
+        {/* ── RIGHT: Browser Mockup (3D Perspective Tilt & Radial Glow) ── */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1.2, ease: customEasing, delay: 0.15 }}
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1.0, ease: customEasing, delay: 0.25 }}
           style={{ willChange: 'transform, opacity' }}
           className="flex flex-col gap-3"
         >
           {/* Screenshot */}
-          <div className="w-full drop-shadow-[0_8px_25px_rgba(0,0,0,0.7)] group select-none overflow-hidden border border-white/10 rounded-none bg-[#070708]">
-            <div className="w-full aspect-video overflow-hidden relative bg-[#0c0d0f]">
+          <motion.div
+            style={{
+              rotateX,
+              rotateY,
+              transformStyle: "preserve-3d",
+              perspective: 1000,
+              willChange: "transform"
+            }}
+            onMouseMove={handleMouseMove}
+            onMouseLeave={handleMouseLeave}
+            className="w-full drop-shadow-[0_20px_50px_rgba(0,0,0,0.9)] select-none overflow-hidden border border-white/10 rounded-none bg-[#070708] relative group transition-shadow duration-300 hover:shadow-[0_0_35px_rgba(226,54,69,0.22)]"
+          >
+            {/* Reflective Neon Glow */}
+            <motion.div 
+              style={{ background: radialGlow }}
+              className="absolute inset-0 pointer-events-none z-10"
+            />
+            
+            <div 
+              className="w-full aspect-video overflow-hidden relative bg-[#0c0d0f] transition-transform duration-500 group-hover:scale-[1.015]"
+              style={{ transform: "translateZ(15px)" }}
+            >
               <img
                 src="/projects/fortheteam.webp"
                 alt="For The Team 스크린샷"
                 loading="eager"
                 decoding="async"
-                className={`w-full h-full object-cover object-top group-hover:scale-[1.02] transition-all duration-700 ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
+                className={`w-full h-full object-cover object-top transition-opacity duration-700 ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
                 onLoad={() => setImageLoaded(true)}
               />
               {!imageLoaded && (
@@ -144,7 +257,7 @@ export default function ForTheTeamSection() {
                 </div>
               )}
             </div>
-          </div>
+          </motion.div>
 
           {/* Action Buttons */}
           <div className="flex gap-3">

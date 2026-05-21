@@ -21,27 +21,20 @@ export default function CosmicBackground({ activeSection }: { activeSection: str
       {/* ── STARS (화면 전체에 400개를 응축, 확실한 반짝임) ── */}
       <div className="absolute inset-0">
         {stars.map((star) => (
-          <motion.div
+          <div
             key={star.id}
-            initial={{ opacity: star.opacity * 0.2 }}
-            animate={{
-              opacity: [star.opacity * 0.2, star.opacity, star.opacity * 0.2],
-              scale: [0.8, 1.2, 0.8]
-            }}
-            transition={{
-              duration: star.duration,
-              delay: star.delay,
-              repeat: Infinity,
-              ease: "easeInOut"
-            }}
-            className="absolute rounded-full bg-white"
+            className="absolute rounded-full bg-white animate-twinkle"
             style={{
               width: star.size,
               height: star.size,
               left: `${star.x}%`,
               top: `${star.y}%`,
-              boxShadow: star.size > 1.5 ? `0 0 8px rgba(255,255,255,0.6)` : 'none'
-            }}
+              boxShadow: star.size > 1.5 ? `0 0 8px rgba(255,255,255,0.6)` : 'none',
+              '--twinkle-duration': `${star.duration}s`,
+              '--twinkle-delay': `${star.delay}s`,
+              '--twinkle-min-opacity': star.opacity * 0.2,
+              '--twinkle-max-opacity': star.opacity
+            } as React.CSSProperties}
           />
         ))}
       </div>

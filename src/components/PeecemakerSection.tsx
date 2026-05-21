@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, useMotionValue, useTransform, useMotionTemplate } from 'framer-motion';
 import { SiNextdotjs, SiDocker, SiSupabase, SiReactquery, SiPostgresql } from 'react-icons/si';
 import { RiMapPinRangeLine } from 'react-icons/ri';
 import { useStore } from '@nanostores/react';
@@ -10,10 +10,125 @@ export default function PeecemakerSection() {
   const [imageLoaded, setImageLoaded] = useState(false);
   const activeSection = useStore($activeSection);
   const isTransitionTarget = activeSection === 'peecemaker';
-  const easing = [0.16, 1, 0.3, 1] as any;
+
+  // 제주도의 부드럽고 산뜻한 감성에 맞는 Easing 정의
+  const customEasing = [0.16, 1, 0.3, 1] as any;
+
+  // 3D Tilt 효과 제어
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+  
+  const rotateX = useTransform(mouseY, [-180, 180], [6, -6]);
+  const rotateY = useTransform(mouseX, [-320, 320], [-6, 6]);
+  const radialGlow = useMotionTemplate`radial-gradient(circle 220px at ${mouseX}px ${mouseY}px, rgba(251, 146, 60, 0.15) 0%, transparent 80%)`;
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = e.clientX - rect.left - rect.width / 2;
+    const y = e.clientY - rect.top - rect.height / 2;
+    mouseX.set(x);
+    mouseY.set(y);
+  };
+
+  const handleMouseLeave = () => {
+    mouseX.set(0);
+    mouseY.set(0);
+  };
 
   useEffect(() => { setMounted(true); }, []);
   if (!mounted) return <section id="peecemaker" className="min-h-screen" />;
+
+  // Stagger 컨테이너 Variants (블록 레벨 순차 등장)
+  const containerVariants = {
+    initial: { opacity: 0 },
+    animate: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.12, // 각 영역(Header -> Stack -> Highlights) 간 0.12초 간격
+        delayChildren: 0.05
+      }
+    }
+  };
+ 
+  // 지도 위 핀이 "톡!" 떨어지듯 등장하는 핀 드롭 모션 Variants
+  const pinDropVariants = {
+    initial: { opacity: 0, y: -15 },
+    animate: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        type: 'spring' as const,
+        stiffness: 180,
+        damping: 14
+      }
+    }
+  };
+ 
+  // 테크스택 컨테이너 Variants (자식 스태거 적용)
+  const techStackContainerVariants = {
+    initial: { opacity: 0 },
+    animate: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.06, // 카드가 왼쪽 위부터 오른쪽 아래로 "퐁! 퐁! 퐁!" 솟아오름
+        delayChildren: 0.05
+      }
+    }
+  };
+ 
+  // 개별 테크스택 카드 Variants (바운스 없는 고속 슈슈슉 슬라이드)
+  const bubbleVariants = {
+    initial: { opacity: 0, y: 10 },
+    animate: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        type: 'spring' as const,
+        stiffness: 220,
+        damping: 24, // 튕김을 전면 억제하여 단정하게 슬라이딩
+        mass: 0.8
+      }
+    }
+  };
+ 
+  // 하이라이트 컨테이너 Variants
+  const highlightsContainerVariants = {
+    initial: { opacity: 0 },
+    animate: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.08, // 각 라인이 0.08초 간격으로 아래로 스태거
+        delayChildren: 0.05
+      }
+    }
+  };
+ 
+  // 하이라이트 리스트 등장 Variants (변위 축소 및 튕김 억제)
+  const highlightVariants = {
+    initial: { opacity: 0, y: 12, x: -4 },
+    animate: {
+      opacity: 1,
+      y: 0,
+      x: 0,
+      transition: {
+        type: 'spring' as const,
+        stiffness: 180,
+        damping: 20
+      }
+    }
+  };
+
+  // 하이라이트 좌측 오렌지 선 애니메이션 (부모 stagger에 연동)
+  const lineVariants = {
+    initial: { scaleY: 0 },
+    animate: {
+      scaleY: 1,
+      transition: {
+        duration: 0.45,
+        ease: customEasing
+      }
+    }
+  };
 
   const stacks = [
     { Icon: SiNextdotjs, name: 'Next.js 16', desc: 'App Router / SSR' },
@@ -45,26 +160,27 @@ export default function PeecemakerSection() {
       className="relative w-full lg:h-screen min-h-screen flex items-center justify-center text-white bg-transparent pt-28 pb-16 lg:py-0 overflow-y-auto lg:overflow-hidden"
       style={{ fontFamily: 'var(--font-peecemaker)' }}
     >
-      {/* Subtle cosmic bg */}
+      {/* 은은하고 싱그러운 제주 감귤/한라봉 귤빛 오렌지 백그라운드 오라 */}
       <div className="absolute inset-0 pointer-events-none z-0">
-        <div className="absolute -top-40 -left-40 w-125 h-125 rounded-full bg-[#fb923c]/5 blur-[120px]" />
-        <div className="absolute -bottom-40 -right-40 w-100 h-100 rounded-full bg-[#7c3aed]/5 blur-[120px]" />
+        <div className="absolute -top-40 -left-40 w-125 h-125 rounded-full bg-[#fb923c]/8 blur-[120px]" />
+        <div className="absolute -bottom-40 -right-40 w-100 h-100 rounded-full bg-[#fb923c]/5 blur-[120px]" />
       </div>
 
       <div className="relative z-10 w-full max-w-450 mx-auto px-8 xl:px-16 grid grid-cols-1 lg:grid-cols-[5fr_7fr] gap-10 xl:gap-14 items-center">
 
-        {/* ── LEFT: Content ── */}
+        {/* ── LEFT: Content (순차 Stagger 등장 구조 복원 및 이중 이동 간섭 제거) ── */}
         <motion.div
-          initial={{ opacity: 0, x: -40 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 1.0, ease: easing }}
+          variants={containerVariants}
+          initial="initial"
+          animate="animate"
+          style={{ willChange: 'opacity' }}
           className="flex flex-col gap-7"
         >
           {/* Header */}
-          <div>
+          <motion.div variants={pinDropVariants}>
             <p className="text-[#fb923c] font-mono text-xs tracking-[0.4em] uppercase font-bold mb-3 flex items-center gap-2">
               <span className="w-1.5 h-1.5 rounded-full bg-[#fb923c] animate-pulse inline-block" />
-              PEECE_MAKER_NODE::COSMIC_DECK//
+              PEECE_MAKER_NODE::JEJU_CLEAN_MAP//
             </p>
             <h1
               className="font-black uppercase leading-[0.82] text-white mb-5"
@@ -78,58 +194,93 @@ export default function PeecemakerSection() {
               <br />MAKER
             </h1>
             <p className="text-white/80 leading-relaxed font-light" style={{ fontSize: 'clamp(1.15rem, 1.35vw, 1.45rem)', lineHeight: '1.6' }}>
-              제주도의 복잡다단한 공공데이터 기술적 결함을 정제하여, 사용자 주변의 안심/편의 화장실 조건과 리뷰 커뮤니티 데이터를 매핑하는 위치 기반 위성 항법 지도 및 통계 시각화 플랫폼입니다.
+              제주도 내 공중화장실의 위치 및 상세 정보(안심벨, 장애인 시설 등)를 지도에 시각화하고, 사용자 리뷰 및 커뮤니티 기능을 통해 쾌적한 화장실 이용을 돕는 로컬 라이프 커뮤니티 플랫폼입니다.
             </p>
-          </div>
+          </motion.div>
 
           {/* Tech Stack */}
-          <div>
-            <p className="text-white/30 font-mono text-[10px] tracking-[0.3em] uppercase mb-3">TECH_STACK//</p>
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+          <div className="flex flex-col">
+            <p className="text-white/30 font-mono text-[10px] tracking-[0.3em] uppercase mb-3">
+              TECH_STACK//
+            </p>
+            <motion.div variants={techStackContainerVariants} className="grid grid-cols-2 sm:grid-cols-3 gap-2">
               {stacks.map((s, i) => (
-                <div
+                <motion.div
                   key={i}
-                  className="flex items-center gap-2 px-3.5 py-2 bg-white/5 border border-white/10 hover:border-[#fb923c]/50 hover:bg-[#fb923c]/8 rounded-xl transition-all duration-300 group"
+                  variants={bubbleVariants}
+                  className="flex items-center gap-2 px-3.5 py-2 bg-white/5 border border-white/10 hover:border-[#fb923c]/50 hover:bg-[#fb923c]/8 rounded-xl transition-colors duration-300 group cursor-pointer"
                 >
                   <s.Icon className="text-[#fb923c] text-base shrink-0 group-hover:scale-110 transition-transform" />
                   <div>
                     <p className="text-white font-semibold text-xs leading-tight">{s.name}</p>
                     <p className="text-white/40 font-mono text-[8px] leading-tight">{s.desc}</p>
                   </div>
-                </div>
+                </motion.div>
               ))}
-            </div>
+            </motion.div>
           </div>
 
           {/* Engineering Highlights */}
           <div className="space-y-3.5">
-            <p className="text-white/30 font-mono text-[10px] tracking-[0.3em] uppercase">ENGINEERING_HIGHLIGHTS//</p>
-            {highlights.map((h, i) => (
-              <div key={i} className="flex gap-3.5 group">
-                <div className="w-0.5 bg-[#fb923c]/40 rounded-full shrink-0 group-hover:bg-[#fb923c] transition-colors mt-1" />
-                <div>
-                  <p className="text-[#fb923c] font-bold text-lg md:text-xl mb-1.5">{h.title}</p>
-                  <p className="text-white/65 text-base md:text-lg leading-relaxed">{h.desc}</p>
-                </div>
-              </div>
-            ))}
+            <p className="text-white/30 font-mono text-[10px] tracking-[0.3em] uppercase">
+              ENGINEERING_HIGHLIGHTS//
+            </p>
+            <motion.div variants={highlightsContainerVariants} className="space-y-3.5">
+              {highlights.map((h, i) => (
+                <motion.div key={i} variants={highlightVariants} className="flex gap-3.5 group">
+                  <div className="relative w-0.5 shrink-0 mt-1 rounded-full overflow-hidden">
+                    <div className="absolute inset-0 bg-white/10" />
+                    <motion.div
+                      variants={lineVariants}
+                      style={{ originY: 0 }}
+                      className="absolute inset-0 bg-[#fb923c]/60 group-hover:bg-[#fb923c] transition-colors"
+                    />
+                  </div>
+                  <div>
+                    <p className="text-[#fb923c] font-bold text-lg md:text-xl mb-1.5">{h.title}</p>
+                    <p className="text-white/65 text-base md:text-lg leading-relaxed">{h.desc}</p>
+                  </div>
+                </motion.div>
+              ))}
+            </motion.div>
           </div>
         </motion.div>
 
         {/* ── RIGHT: Browser Mockup + Buttons below ── */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1.2, ease: easing, delay: 0.15 }}
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1.0, ease: customEasing, delay: 0.25 }}
+          style={{ willChange: 'transform, opacity' }}
           className="flex flex-col gap-3"
         >
           {/* Screenshot */}
-          <div className="w-full drop-shadow-[0_8px_25px_rgba(0,0,0,0.7)] group select-none rounded-2xl overflow-hidden border border-white/10">
-            <div className="w-full aspect-video overflow-hidden relative bg-[#0c0d0f]">
+          <motion.div
+            style={{
+              rotateX,
+              rotateY,
+              transformStyle: 'preserve-3d',
+              perspective: 1000,
+              willChange: 'transform'
+            }}
+            onMouseMove={handleMouseMove}
+            onMouseLeave={handleMouseLeave}
+            className="w-full drop-shadow-[0_20px_50px_rgba(0,0,0,0.9)] select-none overflow-hidden border border-white/10 rounded-2xl bg-[#070708] relative group transition-shadow duration-300 hover:shadow-[0_0_35px_rgba(251,146,60,0.22)]"
+          >
+            {/* Reflective Orange Glow */}
+            <motion.div 
+              style={{ background: radialGlow }}
+              className="absolute inset-0 pointer-events-none z-10"
+            />
+            
+            <div 
+              className="w-full aspect-video overflow-hidden relative bg-[#0c0d0f] transition-transform duration-500 group-hover:scale-[1.015]"
+              style={{ transform: "translateZ(15px)" }}
+            >
               <img
                 src="/projects/peecemaker.webp"
                 alt="PeeceMaker 스크린샷"
-                className={`w-full h-full object-cover object-top group-hover:scale-[1.02] transition-all duration-700 ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
+                className={`w-full h-full object-cover object-top transition-all duration-700 ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
                 onLoad={() => setImageLoaded(true)}
               />
               {!imageLoaded && (
@@ -139,7 +290,7 @@ export default function PeecemakerSection() {
                 </div>
               )}
             </div>
-          </div>
+          </motion.div>
 
           {/* Action Buttons — below screenshot */}
           <div className="flex gap-3">
@@ -166,3 +317,4 @@ export default function PeecemakerSection() {
     </section>
   );
 }
+
