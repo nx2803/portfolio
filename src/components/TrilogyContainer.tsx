@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useStore } from '@nanostores/react';
 import { $activeSection, updateActiveSection } from '../store/sectionStore';
@@ -12,6 +12,7 @@ import ForTheTeamSection from './ForTheTeamSection';
 import UfcSection from './UfcSection';
 import Footer from './Footer';
 import CosmicBackground from './CosmicBackground';
+import MouseTrail from './MouseTrail';
 
 // 섹션별 배경색 통합 관리
 const getBgColors = (theme: 'light' | 'dark'): Record<string, string> => {
@@ -45,21 +46,93 @@ const getFgColors = (theme: 'light' | 'dark'): Record<string, string> => {
   };
 };
 
+// 섹션 탐색 순서 정의
+const SECTION_ORDER = ['intro', 'techstack', 'trilogy_intro', 'peecemaker', 'fortheteam', 'ufc', 'contact'];
+
 export default function TrilogyContainer() {
   const activeSection = useStore($activeSection);
-  const theme = 'dark'; // Force dark theme for cosmic experience
+  const theme = 'dark';
   const bgColors = getBgColors(theme);
   const fgColors = getFgColors(theme);
   const [mounted, setMounted] = useState(false);
+  const touchStartX = useRef<number | null>(null);
+  const touchStartY = useRef<number | null>(null);
 
   useEffect(() => {
     setMounted(true);
+    
+    // 프로젝트 상세 스크린샷 이미지 백그라운드 프리로드
+    const screenshots = [
+      '/projects/peecemaker.webp',
+      '/projects/fortheteam.webp',
+      '/projects/ufc.webp'
+    ];
+    screenshots.forEach(src => {
+      const img = new Image();
+      img.src = src;
+    });
   }, []);
 
-  // 테마 변경 시 클래스 동기화
   useEffect(() => {
     document.documentElement.classList.add('dark');
   }, []);
+
+  // 모바일 스와이프 제스처 처리
+  useEffect(() => {
+    const isMobile = window.matchMedia('(pointer: coarse)').matches;
+    if (!isMobile) return;
+
+    const touchTarget = { current: null as Element | null };
+
+    const handleTouchStart = (e: TouchEvent) => {
+      touchStartX.current = e.touches[0].clientX;
+      touchStartY.current = e.touches[0].clientY;
+      touchTarget.current = e.target as Element;
+    };
+
+    const isInsideHorizontalScroll = (el: Element | null): boolean => {
+      while (el && el !== document.body) {
+        const style = window.getComputedStyle(el);
+        const overflowX = style.overflowX;
+        if ((overflowX === 'auto' || overflowX === 'scroll') && el.scrollWidth > el.clientWidth) {
+          return true;
+        }
+        el = el.parentElement;
+      }
+      return false;
+    };
+
+    const handleTouchEnd = (e: TouchEvent) => {
+      if (touchStartX.current === null || touchStartY.current === null) return;
+
+      const dx = e.changedTouches[0].clientX - touchStartX.current;
+      const dy = e.changedTouches[0].clientY - touchStartY.current;
+
+      // 수직 스크롤이 더 크면 세션 전환 무시
+      if (Math.abs(dy) > Math.abs(dx)) return;
+      // 최소 스와이프 거리 50px
+      if (Math.abs(dx) < 50) return;
+      // 가로 스크롤 가능한 자식 요소 위에서 시작한 경우 무시
+      if (isInsideHorizontalScroll(touchTarget.current)) return;
+
+      const currentIndex = SECTION_ORDER.indexOf($activeSection.get());
+      if (dx < 0 && currentIndex < SECTION_ORDER.length - 1) {
+        updateActiveSection(SECTION_ORDER[currentIndex + 1]);
+      } else if (dx > 0 && currentIndex > 0) {
+        updateActiveSection(SECTION_ORDER[currentIndex - 1]);
+      }
+
+      touchStartX.current = null;
+      touchStartY.current = null;
+    };
+
+    window.addEventListener('touchstart', handleTouchStart, { passive: true });
+    window.addEventListener('touchend', handleTouchEnd, { passive: true });
+    return () => {
+      window.removeEventListener('touchstart', handleTouchStart);
+      window.removeEventListener('touchend', handleTouchEnd);
+    };
+  }, [mounted]);
 
   const transitionConfig = { 
     duration: 1.0, 
@@ -80,8 +153,11 @@ export default function TrilogyContainer() {
         '--accent': activeSection === 'peecemaker' ? '#fb923c' : activeSection === 'fortheteam' ? '#e23645' : activeSection === 'ufc' ? '#00ff41' : '#ffffff'
       } as any}
       transition={transitionConfig} 
-      className="w-full h-screen flex items-center flex-col relative overflow-hidden"
+      className="w-full lg:h-screen min-h-screen flex items-center flex-col relative overflow-y-auto lg:overflow-hidden"
     >
+      {/* ── MOUSE TRAIL LAYER ── */}
+      <MouseTrail activeSection={activeSection} />
+
       {/* ── COSMIC BACKGROUND LAYER ── */}
       <CosmicBackground activeSection={activeSection} />
 
@@ -91,7 +167,7 @@ export default function TrilogyContainer() {
         initial={{ y: -30, opacity: 0 }}
         animate={{ y: 0, opacity: 0.3 }}
         transition={{ duration: 1.0, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
-        className="fixed top-0 left-0 w-full h-6 md:h-8 bold-slants z-20 pointer-events-none transition-colors duration-700" 
+        className="fixed top-0 left-0 w-full h-4 md:h-8 bold-slants z-20 pointer-events-none transition-colors duration-700" 
         style={{ color: 'var(--accent)' }}
       />
       {/* Bottom Bar: 화면 밖(아래)에서 안으로 강하게 밀고 들어옴 */}
@@ -99,16 +175,16 @@ export default function TrilogyContainer() {
         initial={{ y: 30, opacity: 0 }}
         animate={{ y: 0, opacity: 0.3 }}
         transition={{ duration: 1.0, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
-        className="fixed bottom-0 left-0 w-full h-6 md:h-8 bold-slants z-20 pointer-events-none transition-colors duration-700" 
+        className="fixed bottom-0 left-0 w-full h-4 md:h-8 bold-slants z-20 pointer-events-none transition-colors duration-700" 
         style={{ color: 'var(--accent)' }}
       />
-
+ 
       {/* Left Ticks: 좌측 화면 밖에서 안으로 미끄러져 튀어나옴 */}
       <motion.div 
         initial={{ x: -20, opacity: 0 }}
         animate={{ x: 0, opacity: 0.5 }}
         transition={{ duration: 1.0, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
-        className="fixed left-6 md:left-8 top-0 h-full flex flex-col items-center justify-center gap-10 z-20 pointer-events-none transition-colors duration-700" 
+        className="hidden md:flex fixed left-6 md:left-8 top-0 h-full flex flex-col items-center justify-center gap-10 z-20 pointer-events-none transition-colors duration-700" 
         style={{ color: 'var(--accent)' }}
       >
         {[...Array(8)].map((_, i) => (
@@ -121,7 +197,7 @@ export default function TrilogyContainer() {
         initial={{ x: 20, opacity: 0 }}
         animate={{ x: 0, opacity: 0.5 }}
         transition={{ duration: 1.0, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
-        className="fixed right-6 md:right-8 top-0 h-full flex flex-col items-center justify-center gap-10 z-20 pointer-events-none transition-colors duration-700" 
+        className="hidden md:flex fixed right-6 md:right-8 top-0 h-full flex flex-col items-center justify-center gap-10 z-20 pointer-events-none transition-colors duration-700" 
         style={{ color: 'var(--accent)' }}
       >
         {[...Array(8)].map((_, i) => (
@@ -144,9 +220,9 @@ export default function TrilogyContainer() {
               animate={{ opacity: 1, scale: 1, filter: 'blur(0px)', y: 0 }}
               exit={{ opacity: 0, scale: 1.08, filter: 'blur(10px)', y: 0 }}
               transition={transitionConfig}
-              className="w-full h-screen flex flex-col items-center justify-center relative overflow-hidden"
+              className="w-full lg:h-screen min-h-screen flex flex-col items-center justify-center relative overflow-y-auto lg:overflow-hidden"
             >
-              <div className="w-full h-full flex flex-col justify-center overflow-hidden">
+              <div className="w-full lg:h-full min-h-screen lg:min-h-0 flex flex-col justify-center overflow-y-auto lg:overflow-hidden">
                 <HeroSection />
               </div>
             </motion.div>
@@ -159,9 +235,9 @@ export default function TrilogyContainer() {
               animate={{ opacity: 1, scale: 1, filter: 'blur(0px)', y: 0 }}
               exit={{ opacity: 0, scale: 1.08, filter: 'blur(10px)', y: 0 }}
               transition={transitionConfig}
-              className="w-full h-screen flex flex-col items-center justify-center relative overflow-hidden"
+              className="w-full lg:h-screen min-h-screen flex flex-col items-center justify-center relative overflow-y-auto lg:overflow-hidden"
             >
-              <div className="w-full h-full flex flex-col justify-center overflow-hidden">
+              <div className="w-full lg:h-full min-h-screen lg:min-h-0 flex flex-col justify-center overflow-y-auto lg:overflow-hidden">
                 <TechStackSection />
               </div>
             </motion.div>
@@ -174,9 +250,9 @@ export default function TrilogyContainer() {
               animate={{ opacity: 1, scale: 1, filter: 'blur(0px)', y: 0 }}
               exit={{ opacity: 0, scale: 1.08, filter: 'blur(10px)', y: 0 }}
               transition={transitionConfig}
-              className="w-full h-screen flex flex-col items-center justify-center relative overflow-hidden"
+              className="w-full lg:h-screen min-h-screen flex flex-col items-center justify-center relative overflow-y-auto lg:overflow-hidden"
             >
-              <div className="w-full h-full flex flex-col justify-center overflow-hidden">
+              <div className="w-full lg:h-full min-h-screen lg:min-h-0 flex flex-col justify-center overflow-y-auto lg:overflow-hidden">
                 <ProjectTrilogySection />
               </div>
             </motion.div>
@@ -189,9 +265,9 @@ export default function TrilogyContainer() {
               animate={{ opacity: 1, scale: 1, filter: 'blur(0px)', y: 0 }}
               exit={{ opacity: 0, scale: 1.08, filter: 'blur(10px)', y: 0 }}
               transition={transitionConfig}
-              className="w-full h-screen flex flex-col items-center justify-center relative overflow-hidden"
+              className="w-full lg:h-screen min-h-screen flex flex-col items-center justify-center relative overflow-y-auto lg:overflow-hidden"
             >
-              <div className="w-full h-full flex flex-col justify-center overflow-hidden">
+              <div className="w-full lg:h-full min-h-screen lg:min-h-0 flex flex-col justify-center overflow-y-auto lg:overflow-hidden">
                 <PeecemakerSection />
               </div>
             </motion.div>
@@ -204,9 +280,9 @@ export default function TrilogyContainer() {
               animate={{ opacity: 1, scale: 1, filter: 'blur(0px)', y: 0 }}
               exit={{ opacity: 0, scale: 1.08, filter: 'blur(10px)', y: 0 }}
               transition={transitionConfig}
-              className="w-full h-screen flex flex-col items-center justify-center relative overflow-hidden"
+              className="w-full lg:h-screen min-h-screen flex flex-col items-center justify-center relative overflow-y-auto lg:overflow-hidden"
             >
-              <div className="w-full h-full flex flex-col justify-center overflow-hidden">
+              <div className="w-full lg:h-full min-h-screen lg:min-h-0 flex flex-col justify-center overflow-y-auto lg:overflow-hidden">
                 <ForTheTeamSection />
               </div>
             </motion.div>
@@ -219,9 +295,9 @@ export default function TrilogyContainer() {
               animate={{ opacity: 1, scale: 1, filter: 'blur(0px)', y: 0 }}
               exit={{ opacity: 0, scale: 1.08, filter: 'blur(10px)', y: 0 }}
               transition={transitionConfig}
-              className="w-full h-screen flex flex-col items-center justify-center relative overflow-hidden"
+              className="w-full lg:h-screen min-h-screen flex flex-col items-center justify-center relative overflow-y-auto lg:overflow-hidden"
             >
-              <div className="w-full h-full flex flex-col justify-center overflow-hidden">
+              <div className="w-full lg:h-full min-h-screen lg:min-h-0 flex flex-col justify-center overflow-y-auto lg:overflow-hidden">
                 <UfcSection />
               </div>
             </motion.div>
@@ -234,9 +310,9 @@ export default function TrilogyContainer() {
               animate={{ opacity: 1, scale: 1, filter: 'blur(0px)', y: 0 }}
               exit={{ opacity: 0, scale: 1.08, filter: 'blur(10px)', y: 0 }}
               transition={transitionConfig}
-              className="w-full h-screen flex flex-col items-center justify-center relative overflow-hidden"
+              className="w-full lg:h-screen min-h-screen flex flex-col items-center justify-center relative overflow-y-auto lg:overflow-hidden"
             >
-              <div className="w-full h-full flex flex-col justify-center overflow-hidden">
+              <div className="w-full lg:h-full min-h-screen lg:min-h-0 flex flex-col justify-center overflow-y-auto lg:overflow-hidden">
                 <Footer />
               </div>
             </motion.div>

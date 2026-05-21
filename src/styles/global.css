@@ -39,6 +39,12 @@ html, body {
   -webkit-font-smoothing: antialiased;
 }
 
+/* 모바일 터치 하이라이트 전역 제거 */
+* {
+  -webkit-tap-highlight-color: transparent;
+  outline-color: transparent;
+}
+
 /* ================== */
 /* Bold Retro-Futurism Utilities */
 /* ================== */

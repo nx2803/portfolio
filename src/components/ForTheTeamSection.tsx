@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useStore } from '@nanostores/react';
 import { $activeSection } from '../store/sectionStore';
 import { SiNestjs, SiNextdotjs, SiSocketdotio, SiOpentelemetry, SiRedis, SiPostgresql } from 'react-icons/si';
 
 export default function ForTheTeamSection() {
+  const [imageLoaded, setImageLoaded] = useState(false);
   const activeSection = useStore($activeSection);
   const isTransitionTarget = activeSection === 'fortheteam';
 
@@ -22,23 +23,23 @@ export default function ForTheTeamSection() {
 
   const highlights = [
     {
-      title: "PPR & Socket.io — 1초 미만 라이브 동기화",
-      desc: "NestJS Gateway와 Socket.io를 연동하여 실시간 점수 수집 즉시 캐시를 스마트 무효화, 1초 미만 레이턴시를 달성했습니다. 정적 셸은 미리 빌드하고 동적 정보만 비동기 스트리밍하는 PPR 아키텍처를 가동합니다.",
+      title: "이기종 스포츠 API 정규화 및 어댑터 패턴",
+      desc: "ESPN, LCK, KBO 등 이종 스포츠 데이터 소스를 단일 도메인 모델(League, Team, Match)로 규격화하고, 어댑터 패턴을 설계하여 특정 API 장애 시 전체 서비스가 격리되는 결합도 완화를 실현했습니다.",
     },
     {
-      title: "OpenTelemetry OTLP 분산 트레이싱 파이프라인",
-      desc: "외부 KBO/ESPN API 수집 파이프라인 전 구간에 OpenTelemetry OTLP 추적을 이식해 데이터 처리 지연 및 크롤링 유실 지점을 정밀 탐지하여 병목을 제거했습니다.",
+      title: "PPR & Socket.io 라이브 점수 동기화",
+      desc: "Next.js 16 PPR(Partial Prerendering)을 도입해 정적 셸은 즉시 서빙하고 실시간 스코어는 스트리밍합니다. NestJS 웹소켓과 React Query Invalidation을 결합해 1초 미만의 지연 시간으로 최신 경기 정보를 주입합니다.",
     },
     {
-      title: "WCAG 기반 자동 연산 테마 대비 색상 엔진",
-      desc: "각 구단의 헤리티지 컬러를 화면에 주입할 때, 가독성을 실시간 보증하기 위해 상대 휘도(Relative Luminance) 명암 공식으로 전경 색상을 웹뷰 내에서 자동 연산합니다.",
+      title: "KBO 리버스 엔지니어링 & Redis Fallback 캐시",
+      desc: "네이버 스포츠 내부 게이트웨이를 분석 및 크롤링하여 국내 야구 데이터를 동기화하고, Redis 분산 캐시와 In-memory 로컬 폴백을 탑재하여 대용량 DB 조회 성능 저하와 API 횟수 한계를 방어했습니다.",
     },
   ];
 
   return (
     <section
       id="fortheteam"
-      className="relative w-full h-screen flex items-center justify-center text-white bg-transparent overflow-hidden"
+      className="relative w-full lg:h-screen min-h-screen flex items-center justify-center text-white bg-transparent pt-28 pb-16 lg:py-0 overflow-y-auto lg:overflow-hidden"
       style={{ fontFamily: 'var(--font-ftt)' }}
     >
 
@@ -65,16 +66,16 @@ export default function ForTheTeamSection() {
             <h2
               className="font-bold uppercase italic leading-[0.82] text-white pb-3 border-b-[3px] border-[#e23645] w-fit mb-6"
               style={{
-                fontSize: 'clamp(3.5rem, 5.5vw, 5.5rem)',
+                fontSize: 'clamp(2.2rem, 5.5vw, 5.5rem)',
                 letterSpacing: '-0.04em',
                 fontFamily: '"Oswald", sans-serif',
                 viewTransitionName: isTransitionTarget ? 'project-title' : 'none',
               }}
             >
-              FOR THE <span className="text-[#e23645]"> TEAM</span>
+              FOR THE <br className="md:hidden" /> <span className="text-[#e23645]"> TEAM</span>
             </h2>
 
-            <p className="text-white/75 leading-relaxed" style={{ fontSize: 'clamp(0.875rem, 1vw, 1rem)' }}>
+            <p className="text-white/80 leading-relaxed font-light" style={{ fontSize: 'clamp(1.15rem, 1.35vw, 1.45rem)', lineHeight: '1.6' }}>
               전 세계 5개 이상의 메이저 스포츠 데이터 프로바이더를 병렬 연동하여 실시간 경기 지표와 스케줄러를 제공하는 엔터프라이즈 스포츠 캘린더 플랫폼입니다. 이기종 외부 API 규격을 완벽한 단일 도메인 모델로 정규화했습니다.
             </p>
           </div>
@@ -84,7 +85,7 @@ export default function ForTheTeamSection() {
             <p className="text-white/30 font-mono text-[10px] tracking-[0.3em] uppercase mb-3">
               TECH_STACK//
             </p>
-            <div className="flex flex-wrap gap-2">
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
               {stacks.map((s, i) => (
                 <div
                   key={i}
@@ -107,10 +108,10 @@ export default function ForTheTeamSection() {
             </p>
             {highlights.map((h, i) => (
               <div key={i} className="flex gap-3.5 group">
-                <div className="w-0.5 bg-[#e23645]/40 shrink-0 group-hover:bg-[#e23645] transition-colors mt-0.5 rounded-none" />
+                <div className="w-0.5 bg-[#e23645]/40 shrink-0 group-hover:bg-[#e23645] transition-colors mt-1 rounded-none" />
                 <div>
-                  <p className="text-[#e23645] font-bold text-sm mb-0.5">{h.title}</p>
-                  <p className="text-white/60 text-sm leading-relaxed">{h.desc}</p>
+                  <p className="text-[#e23645] font-bold text-lg md:text-xl mb-1.5">{h.title}</p>
+                  <p className="text-white/65 text-base md:text-lg leading-relaxed">{h.desc}</p>
                 </div>
               </div>
             ))}
@@ -127,14 +128,21 @@ export default function ForTheTeamSection() {
         >
           {/* Screenshot */}
           <div className="w-full drop-shadow-[0_8px_25px_rgba(0,0,0,0.7)] group select-none overflow-hidden border border-white/10 rounded-none bg-[#070708]">
-            <div className="w-full aspect-video overflow-hidden">
+            <div className="w-full aspect-video overflow-hidden relative bg-[#0c0d0f]">
               <img
                 src="/projects/fortheteam.webp"
                 alt="For The Team 스크린샷"
                 loading="eager"
                 decoding="async"
-                className="w-full h-full object-cover object-top group-hover:scale-[1.02] transition-transform duration-700"
+                className={`w-full h-full object-cover object-top group-hover:scale-[1.02] transition-all duration-700 ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
+                onLoad={() => setImageLoaded(true)}
               />
+              {!imageLoaded && (
+                <div className="absolute inset-0 flex flex-col items-center justify-center bg-[#070708] gap-3">
+                  <div className="w-8 h-8 border-2 border-[#e23645]/20 border-t-[#e23645] rounded-full animate-spin" />
+                  <span className="text-[10px] font-mono tracking-[0.2em] text-[#e23645] animate-pulse">LOAD_ASSET//</span>
+                </div>
+              )}
             </div>
           </div>
 

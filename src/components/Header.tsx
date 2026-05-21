@@ -2,7 +2,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useStore } from '@nanostores/react';
 import { $activeSection, updateActiveSection, type ViewMode } from '../store/sectionStore';
 import { useState, useEffect } from 'react';
-import { HiMenu, HiX } from 'react-icons/hi';
+import { HiMenu, HiX, HiChevronLeft, HiChevronRight } from 'react-icons/hi';
 
 const sections = [
   { id: 'intro', label: 'Intro', mode: 'portal' as ViewMode },
@@ -43,6 +43,21 @@ export default function Header() {
   };
 
   const activeLabel = sections.find(s => s.id === activeSection)?.label || 'Intro';
+  const activeIndex = sections.findIndex(s => s.id === activeSection);
+
+  const navigatePrev = () => {
+    if (activeIndex > 0) {
+      const prev = sections[activeIndex - 1];
+      handleNavClick(prev.id, prev.mode);
+    }
+  };
+
+  const navigateNext = () => {
+    if (activeIndex < sections.length - 1) {
+      const next = sections[activeIndex + 1];
+      handleNavClick(next.id, next.mode);
+    }
+  };
 
   if (!mounted) return null;
 
@@ -103,32 +118,57 @@ export default function Header() {
       </header>
 
       {/* ── MOBILE HEADER ── */}
-      <header className="md:hidden fixed bottom-10 left-1/2 -translate-x-1/2 z-[210] w-full max-w-[90vw] px-4">
-        <div className="relative px-5 py-3 flex items-center justify-between">
+      <header className="md:hidden fixed top-6 left-1/2 -translate-x-1/2 z-[210] w-full max-w-[90vw] px-4">
+        <div
+          className={`relative px-5 py-3 flex items-center justify-between rounded-xl transition-all duration-300 ${isMenuOpen ? '' : 'bg-[#08080a]/90 backdrop-blur-md border border-white/10 shadow-[0_4px_24px_rgba(0,0,0,0.6)]'}`}
+          style={{ WebkitTapHighlightColor: 'transparent' }}
+        >
 
-          {/* 3. Actual Content */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5, delay: 1.0 }}
-            className="flex-1 flex items-center justify-between z-10 text-white w-full"
+            className="flex items-center justify-between z-10 text-white w-full gap-2"
           >
-            <div className="flex-1 flex items-center justify-start px-1 overflow-hidden">
-              <span 
-                className="text-[13px] font-mono tracking-[0.18em] uppercase truncate transition-colors duration-300"
-                style={{ color: currentColor }}
-              >
-                {isMenuOpen ? 'CLOSE MENU' : `NODE::${activeLabel.toUpperCase()}`}
-              </span>
-            </div>
+            {/* 이전 섹션 버튼 */}
+            <button
+              onClick={navigatePrev}
+              disabled={activeIndex === 0}
+              className="p-1 shrink-0 transition-colors disabled:opacity-20"
+              style={{ color: currentColor }}
+              aria-label="Previous section"
+            >
+              <HiChevronLeft className="text-2xl" />
+            </button>
 
+            {/* 현재 섹션 라벨 (탭하면 메뉴 오픈) */}
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="p-1 transition-colors shrink-0"
-              style={{ color: currentColor }}
-              aria-label="Toggle Menu"
+              className="flex-1 flex items-center justify-center gap-2 overflow-hidden"
             >
-              {isMenuOpen ? <HiX className="text-2xl" /> : <HiMenu className="text-2xl" />}
+              <span
+                className="text-[13px] font-mono tracking-[0.18em] uppercase truncate transition-colors duration-300 font-bold"
+                style={{ color: currentColor }}
+              >
+                {isMenuOpen ? 'CLOSE' : activeLabel.toUpperCase()}
+              </span>
+              {!isMenuOpen && (
+                <HiMenu className="text-lg shrink-0" style={{ color: currentColor }} />
+              )}
+              {isMenuOpen && (
+                <HiX className="text-lg shrink-0" style={{ color: currentColor }} />
+              )}
+            </button>
+
+            {/* 다음 섹션 버튼 */}
+            <button
+              onClick={navigateNext}
+              disabled={activeIndex === sections.length - 1}
+              className="p-1 shrink-0 transition-colors disabled:opacity-20"
+              style={{ color: currentColor }}
+              aria-label="Next section"
+            >
+              <HiChevronRight className="text-2xl" />
             </button>
           </motion.div>
 
@@ -142,46 +182,39 @@ export default function Header() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-200 bg-[#050505] text-white flex flex-col p-8 pt-12 overflow-y-auto"
+            className="fixed inset-0 z-200 bg-[#050505]/98 backdrop-blur-sm text-white flex flex-col overflow-y-auto"
           >
-            <div className="mb-12 flex justify-between items-center relative">
-              <span className="text-xl font-bold font-mono tracking-[0.2em] text-white/50">
-                MENU_SYSTEM
-              </span>
-              <button 
-                onClick={() => setIsMenuOpen(false)} 
-                className="p-2 text-white/60 hover:text-white transition-colors"
-                style={{ color: currentColor }}
-              >
-                <HiX className="text-2xl" />
-              </button>
-            </div>
-
-            <div className="flex flex-col gap-6">
+            {/* 메뉴 아이템 목록 — pt-28로 상단 플로팅 헤더와 겹치지 않게 여백 확보 */}
+            <div className="flex flex-col gap-1 px-6 pt-28 pb-16">
               {sections.map(({ id, label, mode }, idx) => (
                 <motion.button
                   key={id}
                   onClick={() => handleNavClick(id, mode)}
-                  initial={{ opacity: 0, x: -20 }}
+                  initial={{ opacity: 0, x: -16 }}
                   animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: idx * 0.05 }}
-                  className="flex items-end group text-left relative"
+                  transition={{ delay: idx * 0.04 }}
+                  className="flex items-center gap-5 group text-left relative py-4 border-b border-white/[0.05] last:border-0"
                 >
-                  <span 
-                    className="text-3xl font-mono text-white/5 group-hover:text-white/10 transition-colors w-16 shrink-0"
-                    style={{ color: activeSection === id ? currentColor : undefined }}
+                  <span
+                    className="text-sm font-mono w-8 shrink-0 transition-colors"
+                    style={{ color: activeSection === id ? currentColor : 'rgba(255,255,255,0.15)' }}
                   >
-                    0{idx + 1}
+                    {String(idx + 1).padStart(2, '0')}
                   </span>
-                  <div className="flex flex-col pb-1">
-                    <span className="text-[8px] font-mono text-white/20 tracking-[0.4em] uppercase">node: {id}</span>
-                    <span 
-                      className={`text-lg font-bold uppercase tracking-tighter leading-none transition-colors`}
-                      style={{ color: activeSection === id ? currentColor : 'rgba(255,255,255,0.4)' }}
+                  <div className="flex flex-col">
+                    <span
+                      className="text-2xl font-bold uppercase tracking-tight leading-none transition-colors"
+                      style={{ color: activeSection === id ? currentColor : 'rgba(255,255,255,0.55)' }}
                     >
                       {label}
                     </span>
                   </div>
+                  {activeSection === id && (
+                    <span
+                      className="ml-auto w-1.5 h-1.5 rounded-full shrink-0"
+                      style={{ backgroundColor: currentColor, boxShadow: `0 0 6px ${currentColor}` }}
+                    />
+                  )}
                 </motion.button>
               ))}
             </div>

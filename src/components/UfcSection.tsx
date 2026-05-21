@@ -180,6 +180,7 @@ function CornerFrame({
 
 export default function UfcSection() {
   const [mounted, setMounted] = useState(false);
+  const [imageLoaded, setImageLoaded] = useState(false);
   const activeSection = useStore($activeSection);
   const isTransitionTarget = activeSection === 'ufc';
   const easing = [0.16, 1, 0.3, 1] as any;
@@ -198,23 +199,23 @@ export default function UfcSection() {
 
   const highlights = [
     {
-      title: "Java 21 Virtual Threads — 고성능 병렬 수집",
-      desc: "Java 21 가상 스레드를 통해 외부 API I/O 병목과 무거운 OS 스레드 비용을 블로킹 없이 해소합니다. Spring Batch 6의 Chunk Processing 트랜잭션으로 코퍼스 데이터 적재 무결성을 전면 보장합니다.",
+      title: "Java 21 가상 스레드 & Spring Batch 6 병렬 적재",
+      desc: "Java 21 Virtual Threads를 활용하여 대량의 GitHub API I/O 호출 병목을 논블로킹으로 최적화하고, Spring Batch 6의 Chunk Processing 단위를 설계하여 수천 건의 지표 데이터를 트랜잭션 무결성 하에 안전하게 적재했습니다.",
     },
     {
-      title: "Gemini AI — 실시간 기술 트렌드 해설 에이전트",
-      desc: "FastAPI와 google-genai SDK를 조율하여 매일 누적 지표를 분석하고, 2차 데이터 완결성 사전 검증 필터로 할루시네이션을 방지하며 스포츠 중계 톤의 한글 해설을 자동 생성합니다.",
+      title: "AI 에이전트 정합성 2차 검증 및 왜곡 분석 차단",
+      desc: "FastAPI와 google-genai SDK 기반의 Gemini AI 분석을 트리거하기 전, 백엔드가 최근 2시간 내 수집 데이터 유효성을 2차 검증하여 AI 환각(Hallucination) 생성을 원천 차단하고 스포츠 중계 톤의 해설 생성을 자동화했습니다.",
     },
     {
-      title: "Next.js 15 RSC & 대비 보정 UI 알고리즘",
-      desc: "React 19 서버 컴포넌트로 데이터를 지연 없이 스트리밍하며, 브랜드 컬러와 배경색 간의 가독성 간섭을 막기 위해 HSL 명도를 자동 연산 보정하는 logoUtils 알고리즘을 이식했습니다.",
+      title: "API 장애 복구 보간 및 90일 데이터 정제 데몬",
+      desc: "외부 통신 에러 발생 시 최대 3회 재시도 및 직전 데이터 Fallback 보간을 지원하며, 매일 자정 90일이 지난 노후 시계열 데이터를 1ms 이내로 무중단 분리·삭제하는 자동화 데몬을 탑재해 고가용성을 확보했습니다.",
     },
   ];
 
   return (
     <section
       id="ufc"
-      className="relative w-full h-screen flex items-center justify-center text-[#e1e4e8] bg-transparent overflow-hidden"
+      className="relative w-full lg:h-screen min-h-screen flex items-center justify-center text-white bg-transparent pt-28 pb-16 lg:py-0 overflow-y-auto lg:overflow-hidden"
       style={{ fontFamily: 'var(--font-ufc)' }}
     >
       {/* Subtle bg */}
@@ -246,7 +247,7 @@ export default function UfcSection() {
               text={"ULTIMATE\nFRAMEWORK\nCHAMPIONSHIP"}
               className="font-black leading-[0.82] text-white mb-5 block whitespace-pre-line"
               style={{
-                fontSize: 'clamp(3rem, 5vw, 5rem)',
+                fontSize: 'clamp(2.2rem, 5.5vw, 5.5rem)',
                 letterSpacing: '-0.04em',
                 fontFamily: '"Geologica", sans-serif',
                 viewTransitionName: isTransitionTarget ? 'project-title' : 'none',
@@ -260,8 +261,8 @@ export default function UfcSection() {
             {/* 소개 */}
             <InlineTypewriter
               text="대규모 기술 트렌드 코퍼스를 Java 21과 AI 해설 에이전트를 통해 정밀 분석하여 중계하는 고성능 시계열 랭킹 대시보드입니다. Polestar의 차갑고 정밀한 북유럽식 미니멀리즘에서 시각적 영감을 받았습니다."
-              className="text-white/75 leading-relaxed block"
-              style={{ fontSize: 'clamp(0.875rem, 1vw, 1rem)' }}
+              className="text-white/80 leading-relaxed font-light block"
+              style={{ fontSize: 'clamp(1.15rem, 1.35vw, 1.45rem)', lineHeight: '1.6' }}
               delay={0.8}
               speed={16}
               active={isTransitionTarget}
@@ -279,14 +280,14 @@ export default function UfcSection() {
               speed={30}
               active={isTransitionTarget}
             />
-            <div className="flex flex-wrap gap-2">
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
               {stacks.map((s, i) => (
                 <motion.div
                   key={i}
                   initial={{ opacity: 0, scale: 0.95 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ duration: 0.6, ease: easing, delay: 1.2 + i * 0.05 }}
-                  className="flex items-center gap-2 px-3.5 py-2 bg-black/40 border border-[#747474]/40 hover:border-white/60 hover:bg-white/5 transition-all duration-300 group"
+                  className="flex items-center gap-2 px-3.5 py-2 bg-black/40 border border-[#747474]/40 hover:border-white/60 hover:bg-white/5 transition-colors duration-300 group"
                   style={{ borderRadius: 0 }}
                 >
                   <s.Icon className="text-white/70 text-base shrink-0 group-hover:text-white group-hover:scale-110 transition-all" />
@@ -315,19 +316,19 @@ export default function UfcSection() {
                   initial={{ scaleY: 0 }}
                   animate={{ scaleY: 1 }}
                   transition={{ duration: 0.8, ease: easing, delay: 1.5 + i * 0.15 }}
-                  className="w-0.5 bg-white/20 shrink-0 origin-top group-hover:bg-white/60 transition-colors mt-0.5"
+                  className="w-0.5 bg-white/20 shrink-0 origin-top group-hover:bg-white/60 transition-colors mt-1"
                 />
                 <div className="flex-1 min-w-0">
                   <InlineTypewriter
                     text={h.title}
-                    className="text-white font-bold text-sm mb-1 block"
+                    className="text-white font-bold text-lg md:text-xl mb-1.5 block"
                     delay={1.6 + i * 0.15}
                     speed={15}
                     active={isTransitionTarget}
                   />
                   <InlineTypewriter
                     text={h.desc}
-                    className="text-white/55 text-sm leading-relaxed block"
+                    className="text-white/65 text-base md:text-lg leading-relaxed block"
                     delay={1.8 + i * 0.15}
                     speed={10}
                     active={isTransitionTarget}
@@ -385,12 +386,19 @@ export default function UfcSection() {
                 style={{ position: 'absolute', top: 0, bottom: 0, right: 0, width: '1px', backgroundColor: '#747474', originY: 1, zIndex: 10 }}
               />
 
-              <div className="w-full aspect-video overflow-hidden">
+              <div className="w-full aspect-video overflow-hidden relative bg-[#0c0d0f]">
                 <img
                   src="/projects/ufc.webp"
                   alt="UFC Dashboard 스크린샷"
-                  className="w-full h-full object-cover object-top group-hover:scale-[1.02] transition-transform duration-700"
+                  className={`w-full h-full object-cover object-top group-hover:scale-[1.02] transition-all duration-700 ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
+                  onLoad={() => setImageLoaded(true)}
                 />
+                {!imageLoaded && (
+                  <div className="absolute inset-0 flex flex-col items-center justify-center bg-[#070708] gap-3">
+                    <div className="w-8 h-8 border-2 border-[#00ff41]/20 border-t-[#00ff41] rounded-full animate-spin" />
+                    <span className="text-[10px] font-mono tracking-[0.2em] text-[#00ff41] animate-pulse">LOAD_ASSET//</span>
+                  </div>
+                )}
               </div>
             </div>
           </div>
@@ -404,7 +412,7 @@ export default function UfcSection() {
               href="https://ultimate-framework-championship.vercel.app/"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex-1 py-3 bg-white text-black font-bold text-sm text-center tracking-wide transition-all hover:bg-[#e1e4e8]"
+              className="flex-1 py-3 bg-white text-black font-bold text-sm text-center tracking-wide transition-colors duration-300 hover:bg-[#e1e4e8]"
               style={{ borderRadius: 0 }}
             >
               Live Dashboard →
@@ -416,7 +424,7 @@ export default function UfcSection() {
               href="https://github.com/nx2803/UFC"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex-1 py-3 bg-transparent border border-[#747474] text-white font-bold text-sm text-center tracking-wide transition-all hover:border-white hover:bg-white/5"
+              className="flex-1 py-3 bg-transparent border border-[#747474] text-white font-bold text-sm text-center tracking-wide transition-colors duration-300 hover:border-white hover:bg-white/5"
               style={{ borderRadius: 0 }}
             >
               GitHub →
