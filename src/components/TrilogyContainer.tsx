@@ -153,7 +153,7 @@ export default function TrilogyContainer() {
         '--accent': activeSection === 'peecemaker' ? '#fb923c' : activeSection === 'fortheteam' ? '#e23645' : activeSection === 'ufc' ? '#00ff41' : '#ffffff'
       } as any}
       transition={transitionConfig} 
-      className="w-full lg:h-screen min-h-screen flex items-center flex-col relative overflow-y-auto lg:overflow-hidden"
+      className="w-full h-screen lg:h-screen relative flex items-center flex-col overflow-hidden"
     >
       {/* ── MOUSE TRAIL LAYER ── */}
       <MouseTrail activeSection={activeSection} />
@@ -220,9 +220,9 @@ export default function TrilogyContainer() {
               animate={{ opacity: 1, scale: 1, filter: 'blur(0px)', y: 0 }}
               exit={{ opacity: 0, scale: 1.08, filter: 'blur(10px)', y: 0 }}
               transition={transitionConfig}
-              className="w-full lg:h-screen min-h-screen flex flex-col items-center justify-center relative overflow-y-auto lg:overflow-hidden"
+              className="w-full h-full relative flex flex-col items-center justify-center overflow-hidden"
             >
-              <div className="w-full lg:h-full min-h-screen lg:min-h-0 flex flex-col justify-center overflow-y-auto lg:overflow-hidden">
+              <div className="w-full h-full relative flex flex-col justify-center overflow-hidden">
                 <HeroSection />
               </div>
             </motion.div>
@@ -235,9 +235,9 @@ export default function TrilogyContainer() {
               animate={{ opacity: 1, scale: 1, filter: 'blur(0px)', y: 0 }}
               exit={{ opacity: 0, scale: 1.08, filter: 'blur(10px)', y: 0 }}
               transition={transitionConfig}
-              className="w-full lg:h-screen min-h-screen flex flex-col items-center justify-center relative overflow-y-auto lg:overflow-hidden"
+              className="w-full h-full relative flex flex-col items-center justify-center overflow-hidden"
             >
-              <div className="w-full lg:h-full min-h-screen lg:min-h-0 flex flex-col justify-center overflow-y-auto lg:overflow-hidden">
+              <div className="w-full h-full relative flex flex-col justify-center overflow-hidden">
                 <TechStackSection />
               </div>
             </motion.div>
@@ -250,9 +250,9 @@ export default function TrilogyContainer() {
               animate={{ opacity: 1, scale: 1, filter: 'blur(0px)', y: 0 }}
               exit={{ opacity: 0, scale: 1.08, filter: 'blur(10px)', y: 0 }}
               transition={transitionConfig}
-              className="w-full lg:h-screen min-h-screen flex flex-col items-center justify-center relative overflow-y-auto lg:overflow-hidden"
+              className="w-full h-full relative flex flex-col items-center justify-center overflow-hidden"
             >
-              <div className="w-full lg:h-full min-h-screen lg:min-h-0 flex flex-col justify-center overflow-y-auto lg:overflow-hidden">
+              <div className="w-full h-full relative flex flex-col justify-center overflow-hidden">
                 <ProjectTrilogySection />
               </div>
             </motion.div>
@@ -265,9 +265,9 @@ export default function TrilogyContainer() {
               animate={{ opacity: 1, scale: 1, filter: 'blur(0px)', y: 0 }}
               exit={{ opacity: 0, scale: 1.08, filter: 'blur(10px)', y: 0 }}
               transition={transitionConfig}
-              className="w-full lg:h-screen min-h-screen flex flex-col items-center justify-center relative overflow-y-auto lg:overflow-hidden"
+              className="w-full h-full relative flex flex-col items-center justify-center overflow-hidden"
             >
-              <div className="w-full lg:h-full min-h-screen lg:min-h-0 flex flex-col justify-center overflow-y-auto lg:overflow-hidden">
+              <div className="w-full h-full relative flex flex-col justify-center overflow-hidden">
                 <PeecemakerSection />
               </div>
             </motion.div>
@@ -280,9 +280,9 @@ export default function TrilogyContainer() {
               animate={{ opacity: 1, scale: 1, filter: 'blur(0px)', y: 0 }}
               exit={{ opacity: 0, scale: 1.08, filter: 'blur(10px)', y: 0 }}
               transition={transitionConfig}
-              className="w-full lg:h-screen min-h-screen flex flex-col items-center justify-center relative overflow-y-auto lg:overflow-hidden"
+              className="w-full h-full relative flex flex-col items-center justify-center overflow-hidden"
             >
-              <div className="w-full lg:h-full min-h-screen lg:min-h-0 flex flex-col justify-center overflow-y-auto lg:overflow-hidden">
+              <div className="w-full h-full relative flex flex-col justify-center overflow-hidden">
                 <ForTheTeamSection />
               </div>
             </motion.div>
@@ -295,9 +295,9 @@ export default function TrilogyContainer() {
               animate={{ opacity: 1, scale: 1, filter: 'blur(0px)', y: 0 }}
               exit={{ opacity: 0, scale: 1.08, filter: 'blur(10px)', y: 0 }}
               transition={transitionConfig}
-              className="w-full lg:h-screen min-h-screen flex flex-col items-center justify-center relative overflow-y-auto lg:overflow-hidden"
+              className="w-full h-full relative flex flex-col items-center justify-center overflow-hidden"
             >
-              <div className="w-full lg:h-full min-h-screen lg:min-h-0 flex flex-col justify-center overflow-y-auto lg:overflow-hidden">
+              <div className="w-full h-full relative flex flex-col justify-center overflow-hidden">
                 <UfcSection />
               </div>
             </motion.div>
@@ -310,9 +310,9 @@ export default function TrilogyContainer() {
               animate={{ opacity: 1, scale: 1, filter: 'blur(0px)', y: 0 }}
               exit={{ opacity: 0, scale: 1.08, filter: 'blur(10px)', y: 0 }}
               transition={transitionConfig}
-              className="w-full lg:h-screen min-h-screen flex flex-col items-center justify-center relative overflow-y-auto lg:overflow-hidden"
+              className="w-full h-full relative flex flex-col items-center justify-center overflow-hidden"
             >
-              <div className="w-full lg:h-full min-h-screen lg:min-h-0 flex flex-col justify-center overflow-y-auto lg:overflow-hidden">
+              <div className="w-full h-full relative flex flex-col justify-center overflow-hidden">
                 <Footer />
               </div>
             </motion.div>

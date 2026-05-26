@@ -148,8 +148,6 @@ export default function HeroSection() {
           className="flex items-center gap-6"
         >
           <span className="text-micro font-mono opacity-40 tracking-[0.2em]">EST. 2026</span>
-          <div className="w-12 h-px bg-current/20" />
-          <span className="text-micro font-mono opacity-40 tracking-[0.2em]">SEOUL_HQ</span>
         </motion.div>
         <motion.div
           initial={{ opacity: 0, x: 20 }}

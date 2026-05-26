@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { motion, useMotionValue, useTransform, useMotionTemplate } from 'framer-motion';
-import { SiNextdotjs, SiDocker, SiSupabase, SiReactquery, SiPostgresql } from 'react-icons/si';
+import { SiNextdotjs, SiDocker, SiSupabase, SiReactquery, SiPostgresql, SiVercel, SiGithub } from 'react-icons/si';
 import { RiMapPinRangeLine } from 'react-icons/ri';
 import { useStore } from '@nanostores/react';
 import { $activeSection } from '../store/sectionStore';
@@ -141,24 +141,24 @@ export default function PeecemakerSection() {
 
   const highlights = [
     {
-      title: "Supabase RLS 무서버 보안 아키텍처",
-      desc: "백엔드 서버 없이 PostgreSQL RLS(행 수준 보안) 정책과 JWT 세션 검증을 DB 단에 직접 적용하여 API 변조를 통한 커뮤니티 데이터의 무단 수정을 원천 차단했습니다.",
+      title: "Supabase RLS 기반 Serverless 보안 아키텍처",
+      desc: "백엔드 서버 없이 PostgreSQL RLS(행 수준 보안) 정책과 JWT 세션 검증을 DB 단에 직접 구현하여, API 강제 변조를 통한 커뮤니티 데이터의 무단 수정 및 비인가 조작을 원천 차단했습니다.",
     },
     {
-      title: "카카오맵 1,500개 마커 렌더링 최적화",
-      desc: "제주도 전역 화장실 데이터를 브라우저 렌더링할 때의 병목을 해소하기 위해 Kakao Map Clusterer를 적용, 지도 축척에 따라 동적 그룹화하여 메인 스레드 프레임을 보장했습니다.",
+      title: "카카오맵 1,500개 마커 렌더링 성능 최적화",
+      desc: "제주도 전역 화장실 데이터를 지도 상에 시각화할 때 발생하는 브라우저 DOM 렌더링 병목을 해결하기 위해 Kakao Map Clusterer를 도입, 축척별 동적 그룹화로 렌더링 프레임 성능을 개선했습니다.",
     },
     {
-      title: "Docker Standalone 기반 경량 프로덕션 배포",
-      desc: "Next.js standalone 빌드와 Multi-stage 패키징 아키텍처를 도입하여 불필요한 의존성 용량을 80% 이상 제거하고 컨테이너 이미지 크기를 초경량으로 최적화했습니다.",
+      title: "Docker Standalone 기반의 컨테이너 배포 경량화",
+      desc: "Next.js standalone 빌드 및 Multi-stage 패키징 파이프라인을 도입하여, 프로덕션 구동에 불필요한 의존성 용량을 80% 이상 제거하고 컨테이너 이미지를 초경량으로 배포 최적화했습니다.",
     },
   ];
 
   return (
     <section
       id="peecemaker"
-      className="relative w-full lg:h-screen min-h-screen flex items-center justify-center text-white bg-transparent pt-28 pb-16 lg:py-0 overflow-y-auto lg:overflow-hidden"
-      style={{ fontFamily: 'var(--font-peecemaker)' }}
+      className="relative w-full h-full flex items-center justify-center text-white bg-transparent pt-28 pb-32 lg:py-0 overflow-y-auto lg:overflow-hidden"
+      style={{ fontFamily: 'var(--font-peecemaker)', WebkitOverflowScrolling: 'touch' }}
     >
       {/* 은은하고 싱그러운 제주 감귤/한라봉 귤빛 오렌지 백그라운드 오라 */}
       <div className="absolute inset-0 pointer-events-none z-0">
@@ -194,7 +194,7 @@ export default function PeecemakerSection() {
               <br />MAKER
             </h1>
             <p className="text-white/80 leading-relaxed font-light" style={{ fontSize: 'clamp(1.15rem, 1.35vw, 1.45rem)', lineHeight: '1.6' }}>
-              제주도 내 공중화장실의 위치 및 상세 정보(안심벨, 장애인 시설 등)를 지도에 시각화하고, 사용자 리뷰 및 커뮤니티 기능을 통해 쾌적한 화장실 이용을 돕는 로컬 라이프 커뮤니티 플랫폼입니다.
+              제주도 내 공중화장실의 위치 및 편의시설 공공데이터를 카카오맵 지도 상에 직관적으로 시각화하고, Supabase RLS 무서버 보안 아키텍처 기반의 실시간 소통 공간을 제공하는 로컬 라이프 커뮤니티 플랫폼입니다.
             </p>
           </motion.div>
 
@@ -255,27 +255,11 @@ export default function PeecemakerSection() {
           className="flex flex-col gap-3"
         >
           {/* Screenshot */}
-          <motion.div
-            style={{
-              rotateX,
-              rotateY,
-              transformStyle: 'preserve-3d',
-              perspective: 1000,
-              willChange: 'transform'
-            }}
-            onMouseMove={handleMouseMove}
-            onMouseLeave={handleMouseLeave}
-            className="w-full drop-shadow-[0_20px_50px_rgba(0,0,0,0.9)] select-none overflow-hidden border border-white/10 rounded-2xl bg-[#070708] relative group transition-shadow duration-300 hover:shadow-[0_0_35px_rgba(251,146,60,0.22)]"
+          <div
+            className="w-full drop-shadow-[0_20px_50px_rgba(0,0,0,0.9)] select-none overflow-hidden border border-white/10 rounded-2xl bg-[#070708] relative"
           >
-            {/* Reflective Orange Glow */}
-            <motion.div 
-              style={{ background: radialGlow }}
-              className="absolute inset-0 pointer-events-none z-10"
-            />
-            
             <div 
-              className="w-full aspect-video overflow-hidden relative bg-[#0c0d0f] transition-transform duration-500 group-hover:scale-[1.015]"
-              style={{ transform: "translateZ(15px)" }}
+              className="w-full aspect-video overflow-hidden relative bg-[#0c0d0f]"
             >
               <img
                 src="/projects/peecemaker.webp"
@@ -290,25 +274,27 @@ export default function PeecemakerSection() {
                 </div>
               )}
             </div>
-          </motion.div>
+          </div>
 
           {/* Action Buttons — below screenshot */}
-          <div className="flex gap-3">
+          <div className="flex gap-3 relative z-20">
             <a
               href="https://peece-maker.vercel.app/"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex-1 py-3 bg-[#fb923c] hover:bg-[#f97316] text-white font-bold text-sm rounded-xl text-center tracking-wide transition-all shadow-[0_0_20px_rgba(251,146,60,0.25)] hover:shadow-[0_0_30px_rgba(251,146,60,0.4)]"
+              className="flex-1 py-3 bg-[#fb923c] hover:bg-[#f97316] text-white font-bold text-sm rounded-xl flex items-center justify-center gap-2 tracking-wide transition-all shadow-[0_0_20px_rgba(251,146,60,0.25)] hover:shadow-[0_0_30px_rgba(251,146,60,0.4)]"
             >
-              Live Site →
+              <SiVercel className="text-base" />
+              <span>Live Site</span>
             </a>
             <a
               href="https://github.com/nx2803/PeeceMaker"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex-1 py-3 bg-white/5 hover:bg-white/10 border border-white/10 text-white font-bold text-sm rounded-xl text-center tracking-wide transition-all"
+              className="flex-1 py-3 bg-white/5 hover:bg-white/10 border border-white/10 text-white font-bold text-sm rounded-xl flex items-center justify-center gap-2 tracking-wide transition-all"
             >
-              GitHub →
+              <SiGithub className="text-base" />
+              <span>GitHub</span>
             </a>
           </div>
         </motion.div>

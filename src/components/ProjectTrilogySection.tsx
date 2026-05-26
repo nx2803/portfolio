@@ -19,6 +19,7 @@ const phases = [
     tag: "PASSION",
     accent: "#e23645",
     font: '"Oswald", sans-serif',
+    isItalic: true,
     description: "가장 뜨거운 열정으로 몰입하며 시스템의 체급과 아키텍처 범위를 확장한 성장작입니다. 다중 스포츠 API를 어댑터 패턴으로 정규화하고, KBO 리버스 엔지니어링 및 Redis 분산 캐시 폴백을 도입해 엔터프라이즈급 안정성을 실현했습니다.",
   },
   {
@@ -49,7 +50,7 @@ export default function ProjectTrilogySection() {
   if (!mounted) return <section id="trilogy_intro" className="min-h-[80vh] md:min-h-screen" />;
 
   return (
-    <section id="trilogy_intro" className="relative w-full lg:h-screen min-h-screen flex flex-col justify-center pt-28 pb-16 lg:py-0 overflow-y-auto lg:overflow-hidden bg-transparent text-(--foreground)">
+    <section id="trilogy_intro" className="relative w-full h-full flex flex-col justify-center pt-28 pb-32 lg:py-0 overflow-y-auto lg:overflow-hidden bg-transparent text-(--foreground)" style={{ WebkitOverflowScrolling: 'touch' }}>
 
       {/* ── HEADER AREA (Structural Boot-up) ── */}
       <div className="w-full px-6 md:px-10 mb-16 md:mb-24 relative z-10 max-w-[1800px] mx-auto">
@@ -164,7 +165,7 @@ export default function ProjectTrilogySection() {
                     transition={{ duration: 0.8, delay: 2.6 + idx * 0.1 }}
                   >
                     <h3
-                      className="text-4xl md:text-5xl lg:text-6xl uppercase tracking-tighter leading-tight transition-colors duration-700 group-hover:text-[var(--accent)]"
+                      className={`text-4xl md:text-5xl lg:text-6xl uppercase tracking-tighter leading-tight transition-colors duration-700 group-hover:text-[var(--accent)] ${phase.isItalic ? 'italic' : ''}`}
                       style={{ fontFamily: phase.font }}
                     >
                       {phase.project}

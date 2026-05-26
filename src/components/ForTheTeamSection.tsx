@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { motion, useMotionValue, useTransform, useMotionTemplate } from 'framer-motion';
 import { useStore } from '@nanostores/react';
 import { $activeSection } from '../store/sectionStore';
-import { SiNestjs, SiNextdotjs, SiSocketdotio, SiOpentelemetry, SiRedis, SiPostgresql } from 'react-icons/si';
+import { SiNestjs, SiNextdotjs, SiSocketdotio, SiOpentelemetry, SiRedis, SiPostgresql, SiVercel, SiGithub } from 'react-icons/si';
 
 export default function ForTheTeamSection() {
   const [imageLoaded, setImageLoaded] = useState(false);
@@ -88,23 +88,23 @@ export default function ForTheTeamSection() {
   const highlights = [
     {
       title: "이기종 스포츠 API 정규화 및 어댑터 패턴",
-      desc: "ESPN, LCK, KBO 등 이종 스포츠 데이터 소스를 단일 도메인 모델(League, Team, Match)로 규격화하고, 어댑터 패턴을 설계하여 특정 API 장애 시 전체 서비스가 격리되는 결합도 완화를 실현했습니다.",
+      desc: "ESPN, LCK, KBO 등 이종 스포츠 데이터 소스를 단일 도메인 모델(League, Team, Match)로 규격화하고 어댑터 패턴을 설계하여 특정 API 장애 시의 시스템 결합도를 최소화했습니다.",
     },
     {
-      title: "PPR & Socket.io 라이브 점수 동기화",
-      desc: "Next.js 16 PPR(Partial Prerendering)을 도입해 정적 셸은 즉시 서빙하고 실시간 스코어는 스트리밍합니다. NestJS 웹소켓과 React Query Invalidation을 결합해 1초 미만의 지연 시간으로 최신 경기 정보를 주입합니다.",
+      title: "실시간 스코어 동기화 & Next.js PPR 스트리밍",
+      desc: "Next.js 16 PPR(Partial Prerendering)로 정적 셸을 즉시 서빙하고, NestJS WebSocket Gateway와 React Query 캐시 Invalidation을 결합해 1초 미만의 지연 시간으로 최신 스코어를 동기화했습니다.",
     },
     {
-      title: "KBO 리버스 엔지니어링 & Redis Fallback 캐시",
-      desc: "네이버 스포츠 내부 게이트웨이를 분석 및 크롤링하여 국내 야구 데이터를 동기화하고, Redis 분산 캐시와 In-memory 로컬 폴백을 탑재하여 대용량 DB 조회 성능 저하와 API 횟수 한계를 방어했습니다.",
+      title: "WCAG 2.0 대비 알고리즘 & 런타임 CSS 테마 엔진",
+      desc: "팀별 브랜드 컬러의 상대 휘도(Relative Luminance)를 계산해 글자색 대비를 실시간 보정하고, 런타임 전역 CSS 변수 주입으로 무한한 브랜드 테마 조합을 단일 컴포넌트 구조로 제공합니다.",
     },
   ];
 
   return (
     <section
       id="fortheteam"
-      className="relative w-full lg:h-screen min-h-screen flex items-center justify-center text-white bg-transparent pt-28 pb-16 lg:py-0 overflow-y-auto lg:overflow-hidden"
-      style={{ fontFamily: 'var(--font-ftt)' }}
+      className="relative w-full h-full flex items-center justify-center text-white bg-transparent pt-28 pb-32 lg:py-0 overflow-y-auto lg:overflow-hidden"
+      style={{ fontFamily: 'var(--font-ftt)', WebkitOverflowScrolling: 'touch' }}
     >
       <div className="relative z-10 w-full max-w-450 mx-auto px-8 xl:px-16 grid grid-cols-1 lg:grid-cols-[5fr_7fr] gap-10 xl:gap-14 items-center">
 
@@ -148,7 +148,7 @@ export default function ForTheTeamSection() {
             </div>
             
             <h2
-              className="font-bold uppercase italic leading-[0.82] text-white pb-3 border-b-[3px] border-[#e23645] w-fit mb-6"
+              className="font-bold uppercase italic leading-[0.82] text-white pb-3 w-fit mb-6 relative"
               style={{
                 fontSize: 'clamp(2.2rem, 5.5vw, 5.5rem)',
                 letterSpacing: '-0.04em',
@@ -157,10 +157,17 @@ export default function ForTheTeamSection() {
               }}
             >
               FOR THE <br className="md:hidden" /> <span className="text-[#e23645]"> TEAM</span>
+              <motion.span
+                initial={{ scaleX: 0 }}
+                animate={{ scaleX: 1 }}
+                transition={{ duration: 0.8, ease: customEasing, delay: 0.45 }}
+                style={{ originX: 0 }}
+                className="absolute bottom-0 left-0 right-0 h-[3px] bg-[#e23645] block"
+              />
             </h2>
 
             <p className="text-white/80 leading-relaxed font-light" style={{ fontSize: 'clamp(1.15rem, 1.35vw, 1.45rem)', lineHeight: '1.6' }}>
-              전 세계 5개 이상의 메이저 스포츠 데이터 프로바이더를 병렬 연동하여 실시간 경기 지표와 스케줄러를 제공하는 엔터프라이즈 스포츠 캘린더 플랫폼입니다. 이기종 외부 API 규격을 완벽한 단일 도메인 모델로 정규화했습니다.
+              다양한 글로벌 스포츠 프로바이더의 이기종 데이터를 규격화된 단일 도메인 모델로 정규화하고, 소켓 기반 라이브 스코어 동기화와 사용자 맞춤형 테마 주입을 지원하는 실시간 스포츠 허브 플랫폼입니다.
             </p>
           </motion.div>
 
@@ -220,27 +227,11 @@ export default function ForTheTeamSection() {
           className="flex flex-col gap-3"
         >
           {/* Screenshot */}
-          <motion.div
-            style={{
-              rotateX,
-              rotateY,
-              transformStyle: "preserve-3d",
-              perspective: 1000,
-              willChange: "transform"
-            }}
-            onMouseMove={handleMouseMove}
-            onMouseLeave={handleMouseLeave}
-            className="w-full drop-shadow-[0_20px_50px_rgba(0,0,0,0.9)] select-none overflow-hidden border border-white/10 rounded-none bg-[#070708] relative group transition-shadow duration-300 hover:shadow-[0_0_35px_rgba(226,54,69,0.22)]"
+          <div
+            className="w-full drop-shadow-[0_20px_50px_rgba(0,0,0,0.9)] select-none overflow-hidden border border-white/10 rounded-none bg-[#070708] relative"
           >
-            {/* Reflective Neon Glow */}
-            <motion.div 
-              style={{ background: radialGlow }}
-              className="absolute inset-0 pointer-events-none z-10"
-            />
-            
             <div 
-              className="w-full aspect-video overflow-hidden relative bg-[#0c0d0f] transition-transform duration-500 group-hover:scale-[1.015]"
-              style={{ transform: "translateZ(15px)" }}
+              className="w-full aspect-video overflow-hidden relative bg-[#0c0d0f]"
             >
               <img
                 src="/projects/fortheteam.webp"
@@ -257,25 +248,27 @@ export default function ForTheTeamSection() {
                 </div>
               )}
             </div>
-          </motion.div>
+          </div>
 
           {/* Action Buttons */}
-          <div className="flex gap-3">
+          <div className="flex gap-3 relative z-20">
             <a
               href="https://for-the-team.vercel.app/"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex-1 py-3 bg-[#e23645] hover:bg-[#b91c1c] text-white font-bold text-sm rounded-none text-center tracking-wide transition-all shadow-[0_0_20px_rgba(226,54,69,0.25)] hover:shadow-[0_0_30px_rgba(226,54,69,0.4)]"
+              className="flex-1 py-3 bg-[#e23645] hover:bg-[#b91c1c] text-white font-bold text-sm rounded-none flex items-center justify-center gap-2 tracking-wide transition-all shadow-[0_0_20px_rgba(226,54,69,0.25)] hover:shadow-[0_0_30px_rgba(226,54,69,0.4)]"
             >
-              Live Site →
+              <SiVercel className="text-base" />
+              <span>Live Site</span>
             </a>
             <a
               href="https://github.com/nx2803"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex-1 py-3 bg-white/5 hover:bg-white/10 border border-white/10 text-white font-bold text-sm rounded-none text-center tracking-wide transition-all"
+              className="flex-1 py-3 bg-white/5 hover:bg-white/10 border border-white/10 text-white font-bold text-sm rounded-none flex items-center justify-center gap-2 tracking-wide transition-all"
             >
-              GitHub →
+              <SiGithub className="text-base" />
+              <span>GitHub</span>
             </a>
           </div>
         </motion.div>

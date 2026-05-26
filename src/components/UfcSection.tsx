@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { SiSpring, SiFastapi, SiPython, SiPostgresql, SiNextdotjs } from 'react-icons/si';
-import { FaJava } from 'react-icons/fa';
+import { SiSpring, SiFastapi, SiPython, SiPostgresql, SiNextdotjs, SiVercel } from 'react-icons/si';
+import { FaJava, FaGithub } from 'react-icons/fa';
 import { useStore } from '@nanostores/react';
 import { $activeSection } from '../store/sectionStore';
 
@@ -199,24 +199,24 @@ export default function UfcSection() {
 
   const highlights = [
     {
-      title: "Java 21 가상 스레드 & Spring Batch 6 병렬 적재",
-      desc: "Java 21 Virtual Threads를 활용하여 대량의 GitHub API I/O 호출 병목을 논블로킹으로 최적화하고, Spring Batch 6의 Chunk Processing 단위를 설계하여 수천 건의 지표 데이터를 트랜잭션 무결성 하에 안전하게 적재했습니다.",
+      title: "Java 21 가상 스레드 & Spring Batch 6 대용량 수집",
+      desc: "Java 21 Virtual Threads를 활용하여 대량의 GitHub API I/O 호출 병목을 논블로킹으로 최적화하고, Spring Batch 6.x의 Chunk Processing으로 수천 건의 지표 데이터를 트랜잭션 무결성 하에 실시간 적재했습니다.",
     },
     {
-      title: "AI 에이전트 정합성 2차 검증 및 왜곡 분석 차단",
-      desc: "FastAPI와 google-genai SDK 기반의 Gemini AI 분석을 트리거하기 전, 백엔드가 최근 2시간 내 수집 데이터 유효성을 2차 검증하여 AI 환각(Hallucination) 생성을 원천 차단하고 스포츠 중계 톤의 해설 생성을 자동화했습니다.",
+      title: "AI 에이전트 정합성 검증 & 왜곡 분석 차단",
+      desc: "FastAPI와 google-genai SDK 기반의 Gemini AI 분석을 실행하기 전, 백엔드가 최근 2시간 내 수집 데이터의 유효성을 2차 검증하여 AI 환각(Hallucination) 생성을 원천 차단하고 자동화 해설을 영구 적재합니다.",
     },
     {
-      title: "API 장애 복구 보간 및 90일 데이터 정제 데몬",
-      desc: "외부 통신 에러 발생 시 최대 3회 재시도 및 직전 데이터 Fallback 보간을 지원하며, 매일 자정 90일이 지난 노후 시계열 데이터를 1ms 이내로 무중단 분리·삭제하는 자동화 데몬을 탑재해 고가용성을 확보했습니다.",
+      title: "회복 탄력성(Resilience) 보간 & 노후 데이터 정제 데몬",
+      desc: "수집 실패 시 최대 3회 재시도 및 직전 데이터 보간(Fallback)을 적용하고, 매일 자정 90일이 지난 노후 데이터를 성능 저하 없이 무중단 분리·삭제하는 자동화 데몬을 탑재해 고가용성을 확보했습니다.",
     },
   ];
 
   return (
     <section
       id="ufc"
-      className="relative w-full lg:h-screen min-h-screen flex items-center justify-center text-white bg-transparent pt-28 pb-16 lg:py-0 overflow-y-auto lg:overflow-hidden"
-      style={{ fontFamily: 'var(--font-ufc)' }}
+      className="relative w-full h-full flex items-center justify-center text-white bg-transparent pt-28 pb-32 lg:py-0 overflow-y-auto lg:overflow-hidden"
+      style={{ fontFamily: 'var(--font-ufc)', WebkitOverflowScrolling: 'touch' }}
     >
       {/* Subtle bg */}
       <div className="absolute inset-0 pointer-events-none z-0">
@@ -260,7 +260,7 @@ export default function UfcSection() {
 
             {/* 소개 */}
             <InlineTypewriter
-              text="대규모 기술 트렌드 코퍼스를 Java 21과 AI 해설 에이전트를 통해 정밀 분석하여 중계하는 고성능 시계열 랭킹 대시보드입니다. Polestar의 차갑고 정밀한 북유럽식 미니멀리즘에서 시각적 영감을 받았습니다."
+              text="대규모 기술 트렌드 데이터를 수집·시각화하고 Gemini AI로 실시간 트렌드 해설을 생성하여 스포츠 중계 톤으로 제공하는 지능형 시계열 기술 분석 대시보드입니다."
               className="text-white/80 leading-relaxed font-light block"
               style={{ fontSize: 'clamp(1.15rem, 1.35vw, 1.45rem)', lineHeight: '1.6' }}
               delay={0.8}
@@ -390,7 +390,7 @@ export default function UfcSection() {
                 <img
                   src="/projects/ufc.webp"
                   alt="UFC Dashboard 스크린샷"
-                  className={`w-full h-full object-cover object-top group-hover:scale-[1.02] transition-all duration-700 ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
+                  className={`w-full h-full object-cover object-top transition-all duration-700 ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
                   onLoad={() => setImageLoaded(true)}
                 />
                 {!imageLoaded && (
@@ -404,7 +404,7 @@ export default function UfcSection() {
           </div>
 
           {/* Action Buttons */}
-          <div className="flex gap-3">
+          <div className="flex gap-3 relative z-20">
             <motion.a
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
@@ -412,10 +412,11 @@ export default function UfcSection() {
               href="https://ultimate-framework-championship.vercel.app/"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex-1 py-3 bg-white text-black font-bold text-sm text-center tracking-wide transition-colors duration-300 hover:bg-[#e1e4e8]"
+              className="flex-1 py-3 bg-white text-black font-bold text-sm flex items-center justify-center gap-2 tracking-wide transition-colors duration-300 hover:bg-[#e1e4e8]"
               style={{ borderRadius: 0 }}
             >
-              Live Dashboard →
+              <SiVercel className="text-base" />
+              <span>Live Dashboard</span>
             </motion.a>
             <motion.a
               initial={{ opacity: 0, y: 10 }}
@@ -424,10 +425,11 @@ export default function UfcSection() {
               href="https://github.com/nx2803/UFC"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex-1 py-3 bg-transparent border border-[#747474] text-white font-bold text-sm text-center tracking-wide transition-colors duration-300 hover:border-white hover:bg-white/5"
+              className="flex-1 py-3 bg-transparent border border-[#747474] text-white font-bold text-sm flex items-center justify-center gap-2 tracking-wide transition-colors duration-300 hover:border-white hover:bg-white/5"
               style={{ borderRadius: 0 }}
             >
-              GitHub →
+              <FaGithub className="text-base" />
+              <span>GitHub</span>
             </motion.a>
           </div>
         </motion.div>
