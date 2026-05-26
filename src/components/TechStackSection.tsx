@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import {
-  SiNextdotjs, SiReact, SiTypescript, SiTailwindcss,
-  SiNestjs, SiPython, SiFastapi, SiPostgresql, SiRedis,
+  SiNextdotjs, SiReact, SiTypescript,
+  SiNestjs, SiPython, SiFastapi, SiPostgresql,
   SiPrisma, SiDocker, SiFlutter, SiSpringboot
 } from 'react-icons/si';
 import { FaJava } from 'react-icons/fa';

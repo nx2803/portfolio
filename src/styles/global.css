@@ -138,14 +138,7 @@ html, body {
   background: transparent;
 }
 
-/* LENIS */
-html, body { height: auto; }
-.lenis.lenis-smooth { scroll-behavior: auto !important; }
-.lenis.lenis-stopped { overflow: hidden; }
 
-.lenis.lenis-scrolling iframe {
-  pointer-events: none;
-}
 
 /* ================== */
 /* PORTAL / DETAIL TRANSITION UTILS */

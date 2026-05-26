@@ -77,6 +77,78 @@ export default function TrilogyContainer() {
     document.documentElement.classList.add('dark');
   }, []);
 
+  // 데스크탑 마우스 휠 이벤트 처리 (쿨다운 및 내부 스크롤 보호 포함)
+  useEffect(() => {
+    const isMobile = window.matchMedia('(pointer: coarse)').matches;
+    if (isMobile) return;
+
+    let isWheeling = false;
+
+    // 수직 스크롤이 가능한 자식 요소 위에 있는지 감지하고, 해당 방향으로 추가 스크롤이 가능한지 판단하는 함수
+    const isInsideVerticalScroll = (el: Element | null, deltaY: number): boolean => {
+      while (el && el !== document.body) {
+        const style = window.getComputedStyle(el);
+        const overflowY = style.overflowY;
+        const isScrollable = (overflowY === 'auto' || overflowY === 'scroll') && el.scrollHeight > el.clientHeight;
+        
+        if (isScrollable) {
+          const scrollTop = el.scrollTop;
+          const maxScroll = el.scrollHeight - el.clientHeight;
+          
+          if (deltaY > 0) {
+            // 아래로 스크롤할 때, 스크롤할 영역이 더 남아있다면 true 반환
+            if (scrollTop < maxScroll - 1) return true;
+          } else {
+            // 위로 스크롤할 때, 스크롤할 영역이 더 남아있다면 true 반환
+            if (scrollTop > 1) return true;
+          }
+        }
+        el = el.parentElement;
+      }
+      return false;
+    };
+
+    const handleWheel = (e: WheelEvent) => {
+      if (isWheeling) return;
+
+      const target = e.target as Element;
+      // 마우스 커서가 내부 스크롤 가능한 요소 위에 있고, 해당 요소에 스크롤 가능한 여유가 있으면 섹션 전환하지 않음
+      if (isInsideVerticalScroll(target, e.deltaY)) {
+        return;
+      }
+
+      // 미세한 마우스 움직임(터치패드 관성 등) 방지
+      if (Math.abs(e.deltaY) < 10) return;
+
+      const currentIndex = SECTION_ORDER.indexOf($activeSection.get());
+      let nextIndex = currentIndex;
+
+      if (e.deltaY > 0) {
+        if (currentIndex < SECTION_ORDER.length - 1) {
+          nextIndex = currentIndex + 1;
+        }
+      } else {
+        if (currentIndex > 0) {
+          nextIndex = currentIndex - 1;
+        }
+      }
+
+      if (nextIndex !== currentIndex) {
+        updateActiveSection(SECTION_ORDER[nextIndex]);
+        // 쿨다운 적용
+        isWheeling = true;
+        setTimeout(() => {
+          isWheeling = false;
+        }, 800);
+      }
+    };
+
+    window.addEventListener('wheel', handleWheel, { passive: true });
+    return () => {
+      window.removeEventListener('wheel', handleWheel);
+    };
+  }, [mounted]);
+
   // 모바일 스와이프 제스처 처리
   useEffect(() => {
     const isMobile = window.matchMedia('(pointer: coarse)').matches;

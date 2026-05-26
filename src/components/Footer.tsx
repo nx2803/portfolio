@@ -26,7 +26,7 @@ export default function Footer() {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="text-3xl md:text-7xl lg:text-8xl font-stencil uppercase tracking-tighter shrink-0 whitespace-nowrap"
           >
-            CONTACT_NODE//
+            CONTACT//
           </motion.h1>
           <motion.div
             initial={{ scaleX: 0 }}
