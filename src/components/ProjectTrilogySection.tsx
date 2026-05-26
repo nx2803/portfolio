@@ -93,7 +93,7 @@ export default function ProjectTrilogySection() {
 
       {/* ── ROADMAP GRID (Structural Grid Drawing) ── */}
       <div className="w-full px-4 md:px-8 relative z-10 max-w-[1800px] mx-auto">
-        <div className="relative grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0">
+        <div className="relative grid grid-cols-1 md:grid-cols-3">
 
           {/* Main Horizontal Grid Lines */}
           <motion.div
@@ -116,6 +116,16 @@ export default function ProjectTrilogySection() {
               className="relative group p-10 md:p-14 flex flex-col gap-12 transition-all duration-700 overflow-hidden cursor-pointer hover:bg-current/5"
               style={{ '--accent': phase.accent } as any}
             >
+              {/* Horizontal Grid Line Separator for Mobile (between items) */}
+              {idx > 0 && (
+                <motion.div
+                  initial={{ scaleX: 0 }}
+                  animate={{ scaleX: 1 }}
+                  transition={{ duration: 1.2, ease: easing, delay: 1.6 + idx * 0.2 }}
+                  className="absolute left-0 top-0 w-full h-px bg-current/10 origin-left md:hidden"
+                />
+              )}
+
               {/* Vertical Grid Line Separator (between items) */}
               {idx > 0 && (
                 <motion.div
@@ -173,14 +183,20 @@ export default function ProjectTrilogySection() {
                   </motion.div>
 
                   {/* Decorative Bar under Title */}
-                  <div className="h-1 w-full bg-current/10 relative overflow-hidden">
+                  <motion.div 
+                    initial={{ scaleX: 0 }}
+                    animate={{ scaleX: 1 }}
+                    transition={{ duration: 1.2, ease: easing, delay: 2.6 + idx * 0.1 }}
+                    style={{ originX: 0 }}
+                    className="h-1 w-full bg-current/10 relative overflow-hidden"
+                  >
                     <motion.div
                       initial={{ scaleX: 0 }}
                       animate={{ scaleX: 1 }}
                       transition={{ duration: 1.5, ease: easing, delay: 2.8 + idx * 0.1 }}
                       className="absolute inset-y-0 left-0 w-full bg-[var(--accent)] shadow-[0_0_15px_var(--accent)] origin-left opacity-0 group-hover:opacity-100 transition-opacity duration-700"
                     />
-                  </div>
+                  </motion.div>
 
                   <motion.div
                     initial={{ opacity: 0 }}

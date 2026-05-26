@@ -64,7 +64,7 @@ export default function Header() {
   return (
     <>
       {/* ── PC HEADER: 미니멀리즘 전술 네비게이션 ── */}
-      <header className="hidden md:block fixed top-12 left-1/2 -translate-x-1/2 z-50 w-full max-w-fit px-6">
+      <header className="hidden md:block fixed top-12 left-1/2 -translate-x-1/2 z-[200] w-full max-w-fit px-6">
         <nav className="relative px-9 py-4 flex items-center gap-8 whitespace-nowrap">
 
           {/* 3. Actual Content */}

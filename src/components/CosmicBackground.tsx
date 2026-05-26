@@ -50,14 +50,14 @@ export default function CosmicBackground({ activeSection }: { activeSection: str
   return (
     <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden bg-black">
 
-      {/* ── STARS MULTI-LAYER PARALLAX ── */}
+      {/* ── STARS MULTI-LAYER PARALLAX (이동폭 증폭 및 오버사이즈 확장) ── */}
       <div className="absolute inset-0 overflow-hidden">
         
-        {/* Layer 1: 먼 별 (Deep Space) — 느린 패럴랙스 (x 가중치 -1.8vw), 꼬리 없음 */}
+        {/* Layer 1: 먼 별 (Deep Space) — 느린 패럴랙스 (x 가중치 -5.0vw), 너비 140vw */}
         <motion.div
-          animate={{ x: activeIndex * -1.8 + 'vw' }}
+          animate={{ x: activeIndex * -5.0 + 'vw' }}
           transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-          className="absolute w-[120vw] h-[100vh] left-[-10vw] top-0 pointer-events-none"
+          className="absolute w-[140vw] h-[100vh] left-[-20vw] top-0 pointer-events-none"
         >
           {deepStars.map((star) => (
             <div
@@ -77,11 +77,11 @@ export default function CosmicBackground({ activeSection }: { activeSection: str
           ))}
         </motion.div>
 
-        {/* Layer 2: 중간 별 (Mid Space) — 중간 패럴랙스 (x 가중치 -3.8vw), 꼬리 없음 */}
+        {/* Layer 2: 중간 별 (Mid Space) — 중간 패럴랙스 (x 가중치 -10.0vw), 너비 170vw */}
         <motion.div
-          animate={{ x: activeIndex * -3.8 + 'vw' }}
+          animate={{ x: activeIndex * -10.0 + 'vw' }}
           transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-          className="absolute w-[135vw] h-[100vh] left-[-17.5vw] top-0 pointer-events-none"
+          className="absolute w-[170vw] h-[100vh] left-[-35vw] top-0 pointer-events-none"
         >
           {midStars.map((star) => (
             <div
@@ -101,11 +101,11 @@ export default function CosmicBackground({ activeSection }: { activeSection: str
           ))}
         </motion.div>
 
-        {/* Layer 3: 가까운 별 (Fore Space) — 빠른 패럴랙스 (x 가중치 -7.5vw), 꼬리 없음 */}
+        {/* Layer 3: 가까운 별 (Fore Space) — 빠른 패럴랙스 (x 가중치 -18.0vw), 너비 210vw */}
         <motion.div
-          animate={{ x: activeIndex * -7.5 + 'vw' }}
+          animate={{ x: activeIndex * -18.0 + 'vw' }}
           transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-          className="absolute w-[155vw] h-[100vh] left-[-27.5vw] top-0 pointer-events-none"
+          className="absolute w-[210vw] h-[100vh] left-[-55vw] top-0 pointer-events-none"
         >
           {foreStars.map((star) => (
             <div
