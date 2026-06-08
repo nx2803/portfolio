@@ -215,7 +215,7 @@ export default function UfcSection() {
   return (
     <section
       id="ufc"
-      className="relative w-full h-full flex items-center justify-center text-white bg-transparent pt-24 pb-28 lg:pt-[8.5dvh] lg:pb-[3.5dvh] overflow-y-auto lg:overflow-hidden"
+      className="relative w-full h-full flex items-center justify-center text-white bg-transparent pt-24 pb-28 lg:pt-[10dvh] lg:pb-[2.5dvh] overflow-y-auto lg:overflow-hidden"
       style={{ fontFamily: 'var(--font-ufc)', WebkitOverflowScrolling: 'touch' }}
     >
       {/* Subtle bg */}
@@ -245,9 +245,9 @@ export default function UfcSection() {
             
             <InlineTypewriter
               text={"ULTIMATE\nFRAMEWORK\nCHAMPIONSHIP"}
-              className="font-black leading-[0.82] text-white mb-5 block whitespace-pre-line"
+              className="font-black leading-[0.80] text-white mb-3.5 block whitespace-pre-line"
               style={{
-                fontSize: 'clamp(2.2rem, 5.5vw, 5.5rem)',
+                fontSize: 'clamp(1.8rem, 4.2vw, 4.2rem)',
                 letterSpacing: '-0.04em',
                 fontFamily: '"Geologica", sans-serif',
                 viewTransitionName: isTransitionTarget ? 'project-title' : 'none',
@@ -262,7 +262,7 @@ export default function UfcSection() {
             <InlineTypewriter
               text="대규모 기술 트렌드 데이터를 수집·시각화하고 Gemini AI로 실시간 트렌드 해설을 생성하여 스포츠 중계 톤으로 제공하는 지능형 시계열 기술 분석 대시보드입니다."
               className="text-white/80 leading-relaxed font-light block"
-              style={{ fontSize: 'clamp(1.15rem, 1.35vw, 1.45rem)', lineHeight: '1.6' }}
+              style={{ fontSize: 'clamp(1.0rem, 1.15vw, 1.25rem)', lineHeight: '1.5' }}
               delay={0.8}
               speed={16}
               active={isTransitionTarget}
