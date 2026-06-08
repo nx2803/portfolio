@@ -157,7 +157,7 @@ export default function PeecemakerSection() {
   return (
     <section
       id="peecemaker"
-      className="relative w-full h-full flex items-center justify-center text-white bg-transparent pt-24 pb-28 lg:py-12 overflow-y-auto"
+      className="relative w-full h-full flex items-center justify-center text-white bg-transparent pt-24 pb-28 lg:py-12 overflow-y-auto lg:overflow-hidden"
       style={{ fontFamily: 'var(--font-peecemaker)', WebkitOverflowScrolling: 'touch' }}
     >
       {/* 은은하고 싱그러운 제주 감귤/한라봉 귤빛 오렌지 백그라운드 오라 */}
@@ -174,18 +174,18 @@ export default function PeecemakerSection() {
           initial="initial"
           animate="animate"
           style={{ willChange: 'opacity' }}
-          className="flex flex-col gap-7"
+          className="flex flex-col gap-5"
         >
           {/* Header */}
           <motion.div variants={pinDropVariants}>
-            <p className="text-[#fb923c] font-mono text-xs tracking-[0.4em] uppercase font-bold mb-3 flex items-center gap-2">
+            <p className="text-[#fb923c] font-mono text-xs tracking-[0.4em] uppercase font-bold mb-2 flex items-center gap-2">
               <span className="w-1.5 h-1.5 rounded-full bg-[#fb923c] animate-pulse inline-block" />
               PEECE_MAKER_NODE::JEJU_CLEAN_MAP//
             </p>
             <h1
-              className="font-black uppercase leading-[0.82] text-white mb-5"
+              className="font-black uppercase leading-[0.82] text-white mb-3.5"
               style={{
-                fontSize: 'clamp(2.2rem, 5.5vw, 5.5rem)',
+                fontSize: 'clamp(2.0rem, 5.0vw, 5.0rem)',
                 letterSpacing: '-0.03em',
                 viewTransitionName: isTransitionTarget ? 'project-title' : 'none',
               }}
@@ -193,7 +193,7 @@ export default function PeecemakerSection() {
               <span className="text-[#fb923c]">PEECE</span>
               <br />MAKER
             </h1>
-            <p className="text-white/80 leading-relaxed font-light" style={{ fontSize: 'clamp(1.15rem, 1.35vw, 1.45rem)', lineHeight: '1.6' }}>
+            <p className="text-white/80 leading-relaxed font-light" style={{ fontSize: 'clamp(1.0rem, 1.2vw, 1.3rem)', lineHeight: '1.55' }}>
               제주도 내 공중화장실의 위치 및 편의시설 공공데이터를 카카오맵 지도 상에 직관적으로 시각화하고, Supabase RLS 무서버 보안 아키텍처 기반의 실시간 소통 공간을 제공하는 로컬 라이프 커뮤니티 플랫폼입니다.
             </p>
           </motion.div>
@@ -221,13 +221,13 @@ export default function PeecemakerSection() {
           </div>
 
           {/* Engineering Highlights */}
-          <div className="space-y-3.5">
+          <div className="space-y-2.5">
             <p className="text-white/30 font-mono text-[10px] tracking-[0.3em] uppercase">
               ENGINEERING_HIGHLIGHTS//
             </p>
-            <motion.div variants={highlightsContainerVariants} className="space-y-3.5">
+            <motion.div variants={highlightsContainerVariants} className="space-y-2.5">
               {highlights.map((h, i) => (
-                <motion.div key={i} variants={highlightVariants} className="flex gap-3.5 group">
+                <motion.div key={i} variants={highlightVariants} className="flex gap-3 group">
                   <div className="relative w-0.5 shrink-0 mt-1 rounded-full overflow-hidden">
                     <div className="absolute inset-0 bg-white/10" />
                     <motion.div
@@ -237,8 +237,8 @@ export default function PeecemakerSection() {
                     />
                   </div>
                   <div>
-                    <p className="text-[#fb923c] font-bold text-lg md:text-xl mb-1.5">{h.title}</p>
-                    <p className="text-white/65 text-base md:text-lg leading-relaxed">{h.desc}</p>
+                    <p className="text-[#fb923c] font-bold text-base md:text-lg mb-1">{h.title}</p>
+                    <p className="text-white/65 text-sm md:text-base leading-relaxed">{h.desc}</p>
                   </div>
                 </motion.div>
               ))}

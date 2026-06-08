@@ -339,7 +339,7 @@ export default function TrilogyContainer() {
               transition={transitionConfig}
               className="w-full h-full relative flex flex-col items-center justify-center overflow-hidden"
             >
-              <div className="w-full h-full relative flex flex-col justify-center overflow-hidden">
+              <div className="w-full h-full relative flex flex-col justify-center overflow-y-auto">
                 <PeecemakerSection />
               </div>
             </motion.div>
@@ -354,7 +354,7 @@ export default function TrilogyContainer() {
               transition={transitionConfig}
               className="w-full h-full relative flex flex-col items-center justify-center overflow-hidden"
             >
-              <div className="w-full h-full relative flex flex-col justify-center overflow-hidden">
+              <div className="w-full h-full relative flex flex-col justify-center overflow-y-auto">
                 <ForTheTeamSection />
               </div>
             </motion.div>
@@ -369,7 +369,7 @@ export default function TrilogyContainer() {
               transition={transitionConfig}
               className="w-full h-full relative flex flex-col items-center justify-center overflow-hidden"
             >
-              <div className="w-full h-full relative flex flex-col justify-center overflow-hidden">
+              <div className="w-full h-full relative flex flex-col justify-center overflow-y-auto">
                 <UfcSection />
               </div>
             </motion.div>
