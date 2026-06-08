@@ -14,7 +14,7 @@ export default function Footer() {
   if (!mounted) return <section id="contact" className="h-screen" />;
 
   return (
-    <section id="contact" className="w-full h-full relative flex flex-col items-center px-6 md:px-16 lg:px-24 overflow-y-auto lg:overflow-hidden bg-transparent text-(--foreground) pt-28 pb-32 lg:pt-32 lg:pb-0 md:pt-40" style={{ WebkitOverflowScrolling: 'touch' }}>
+    <section id="contact" className="w-full h-full relative flex flex-col items-center px-6 md:px-16 lg:px-24 overflow-y-auto lg:overflow-hidden bg-transparent text-(--foreground) pt-28 pb-32 lg:pt-36 lg:pb-16 md:pt-40" style={{ WebkitOverflowScrolling: 'touch' }}>
 
       <div className="w-full max-w-[1800px] flex flex-col items-center relative z-10 flex-1 justify-center">
 
@@ -26,7 +26,7 @@ export default function Footer() {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="text-3xl md:text-7xl lg:text-8xl font-stencil uppercase tracking-tighter shrink-0 whitespace-nowrap"
           >
-            CONTACT//
+            CONTACT
           </motion.h1>
           <motion.div
             initial={{ scaleX: 0 }}

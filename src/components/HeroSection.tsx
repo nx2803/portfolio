@@ -83,9 +83,9 @@ export default function HeroSection() {
       </div>
 
       {/* ── 데스크탑 레이아웃 (lg 이상) ── */}
-      <div className="hidden lg:flex relative z-10 w-full h-full px-24 flex-col justify-center items-start max-w-[2000px] mx-auto">
+      <div className="hidden lg:flex relative z-10 w-full h-full px-24 flex-col justify-center items-start max-w-[2000px] mx-auto lg:pt-36 lg:pb-16">
 
-        <div className="w-full flex flex-col items-start relative mt-16">
+        <div className="w-full flex flex-col items-start relative mt-6">
 
           {/* 1. Structural Top Line & Identity */}
           <div className="flex flex-col items-start gap-6 mb-8 w-full">

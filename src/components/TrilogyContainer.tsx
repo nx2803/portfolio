@@ -225,7 +225,7 @@ export default function TrilogyContainer() {
         '--accent': activeSection === 'peecemaker' ? '#fb923c' : activeSection === 'fortheteam' ? '#e23645' : activeSection === 'ufc' ? '#00ff41' : '#ffffff'
       } as any}
       transition={transitionConfig} 
-      className="w-full h-screen lg:h-screen relative flex items-center flex-col overflow-hidden"
+      className="w-full h-[100dvh] lg:h-[100dvh] relative flex items-center flex-col overflow-hidden"
     >
       {/* ── MOUSE TRAIL LAYER ── */}
       <MouseTrail activeSection={activeSection} />
