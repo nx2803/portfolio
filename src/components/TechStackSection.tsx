@@ -48,13 +48,13 @@ export default function TechStackSection() {
   if (!mounted) return <section id="techstack" className="h-screen" />;
 
   return (
-    <section id="techstack" className="w-full h-full relative flex flex-col justify-center items-center px-6 md:px-16 lg:px-24 pt-28 pb-32 lg:pt-36 lg:pb-16 overflow-x-hidden overflow-y-auto lg:overflow-hidden bg-transparent text-(--foreground)" style={{ WebkitOverflowScrolling: 'touch' }}>
-      
+    <section id="techstack" className="w-full h-full relative flex flex-col justify-center items-center px-6 md:px-16 lg:px-24 pt-24 pb-28 lg:py-12 overflow-x-hidden overflow-y-auto bg-transparent text-(--foreground)" style={{ WebkitOverflowScrolling: 'touch' }}>
+
       <div className="w-full max-w-[1800px] flex flex-col justify-center relative z-10">
-        
+
         {/* ── HEADER ── */}
         <div className="mb-10 md:mb-16 flex items-center gap-10 relative overflow-hidden">
-          <motion.h2 
+          <motion.h2
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0 }}
@@ -62,7 +62,7 @@ export default function TechStackSection() {
           >
             TECH_STACK
           </motion.h2>
-          <motion.div 
+          <motion.div
             initial={{ scaleX: 0 }}
             animate={{ scaleX: 1 }}
             transition={{ duration: 1.8, ease: easing, delay: 0.3 }}
@@ -74,8 +74,8 @@ export default function TechStackSection() {
         <div className="flex flex-col relative border-t-2 border-current/10">
           {techGroups.map((group, groupIdx) => (
             <div key={group.category} className="group relative w-full py-10 md:py-14 border-b-2 border-current/10">
-              
-              <motion.div 
+
+              <motion.div
                 initial={{ scaleX: 0 }}
                 animate={{ scaleX: 1 }}
                 transition={{ duration: 1.2, ease: easing, delay: groupIdx * 0.15 + 0.5 }}
@@ -84,7 +84,7 @@ export default function TechStackSection() {
 
               {/* Category Label (Tightened //) */}
               <div className="flex items-center gap-6 mb-8">
-                <motion.span 
+                <motion.span
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 0.4 }}
                   transition={{ duration: 0.8, delay: groupIdx * 0.2 + 1.2 }}
@@ -92,11 +92,11 @@ export default function TechStackSection() {
                 >
                   {group.category}//
                 </motion.span>
-                <motion.div 
+                <motion.div
                   initial={{ scaleX: 0 }}
                   animate={{ scaleX: 1 }}
                   transition={{ delay: groupIdx * 0.2 + 0.6, duration: 0.8 }}
-                  className="h-0.5 w-16 bg-(--accent) origin-left" 
+                  className="h-0.5 w-16 bg-(--accent) origin-left"
                 />
               </div>
 
@@ -112,8 +112,8 @@ export default function TechStackSection() {
                       >
                         <tech.icon className="text-5xl md:text-7xl lg:text-[90px] text-white group-hover/item:text-(--accent) group-hover/item:scale-110 transition-all duration-700 drop-shadow-[0_0_25px_rgba(255,255,255,0.2)]" />
                       </motion.div>
-                      
-                      <motion.div 
+
+                      <motion.div
                         initial={{ scaleY: 0 }}
                         animate={{ scaleY: 1 }}
                         transition={{ delay: 0.8 + techIdx * 0.05, duration: 1 }}
@@ -122,7 +122,7 @@ export default function TechStackSection() {
                     </div>
 
                     <div className="flex flex-col flex-1 min-w-0">
-                      <motion.span 
+                      <motion.span
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         transition={{ duration: 1, delay: 1.6 + techIdx * 0.05 }}
@@ -130,13 +130,13 @@ export default function TechStackSection() {
                       >
                         {tech.name}
                       </motion.span>
-                      
+
                       <div className="h-2 bg-white/10 mt-3 relative overflow-hidden">
-                        <motion.div 
+                        <motion.div
                           initial={{ scaleX: 0 }}
                           animate={{ scaleX: 1 }}
                           transition={{ delay: 1 + techIdx * 0.05, duration: 1.5, ease: easing }}
-                          className="absolute inset-y-0 left-0 w-full bg-(--accent) shadow-[0_0_20px_var(--accent)] origin-left" 
+                          className="absolute inset-y-0 left-0 w-full bg-(--accent) shadow-[0_0_20px_var(--accent)] origin-left"
                         />
                       </div>
                     </div>
@@ -148,7 +148,7 @@ export default function TechStackSection() {
         </div>
 
         {/* ── FOOTER SYSTEM LOG ── */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 0.4 }}
           transition={{ duration: 1, delay: 2.2 }}
