@@ -37,10 +37,12 @@ export default function CosmicBackground({ activeSection }: { activeSection: str
   const activeIndex = SECTION_ORDER.indexOf(activeSection);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
-  // 400개 별 데이터 생성 및 유지
+  // 1000개 고해상도 별 데이터 생성 및 유지 (Canvas 최적화로 성능 저하 없음)
   const stars = useMemo<Star[]>(() => {
     const list: Star[] = [];
-    for (let i = 0; i < 400; i++) {
+    const starCount = 1600;
+    
+    for (let i = 0; i < starCount; i++) {
       const rand = Math.random();
       const opacity = Math.random() * 0.6 + 0.4;
       const starBase = {
@@ -52,25 +54,25 @@ export default function CosmicBackground({ activeSection }: { activeSection: str
         opacity,
       };
 
-      if (rand < 0.5) {
-        // Deep Space (Layer 0)
+      if (rand < 0.65) {
+        // Deep Space (Layer 0) - 원경 별 비중 확대 (65%)하여 깊이감 추가
         list.push({
           ...starBase,
-          size: Math.random() * 0.6 + 0.5,
+          size: Math.random() * 0.5 + 0.3, // 0.3 ~ 0.8px (더욱 미세하게)
           layer: 0,
         });
-      } else if (rand < 0.88) {
-        // Mid Space (Layer 1)
+      } else if (rand < 0.92) {
+        // Mid Space (Layer 1) - 27%
         list.push({
           ...starBase,
-          size: Math.random() * 0.7 + 1.1,
+          size: Math.random() * 0.6 + 1.0, // 1.0 ~ 1.6px
           layer: 1,
         });
       } else {
-        // Fore Space (Layer 2)
+        // Fore Space (Layer 2) - 8%
         list.push({
           ...starBase,
-          size: Math.random() * 1.2 + 1.8,
+          size: Math.random() * 1.0 + 1.6, // 1.6 ~ 2.6px
           layer: 2,
         });
       }
@@ -97,6 +99,14 @@ export default function CosmicBackground({ activeSection }: { activeSection: str
     isTransitioning: false
   });
 
+  // 실시간 마우스 오프셋 좌표 및 물리 보간 관리 Ref
+  const mousePosRef = useRef({
+    x: 0,
+    y: 0,
+    targetX: 0,
+    targetY: 0
+  });
+
   const lastActiveIndex = useRef(activeIndex);
 
   // activeIndex가 변경될 때마다 이전 물리 위치를 이어받아 큐빅 베지어 전환 궤적 가동
@@ -121,6 +131,27 @@ export default function CosmicBackground({ activeSection }: { activeSection: str
       lastActiveIndex.current = activeIndex;
     }
   }, [activeIndex]);
+
+  // 마우스 무브 이벤트 감지 등록 (터치 디바이스 제외)
+  useEffect(() => {
+    if (typeof window === 'undefined' || window.matchMedia('(pointer: coarse)').matches) {
+      return;
+    }
+
+    const handleMouseMove = (e: MouseEvent) => {
+      const w = window.innerWidth;
+      const h = window.innerHeight;
+      
+      // 화면 중앙(0,0) 기준으로 -0.5 ~ 0.5 오프셋 비율 연산
+      mousePosRef.current.targetX = (e.clientX / w) - 0.5;
+      mousePosRef.current.targetY = (e.clientY / h) - 0.5;
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+    };
+  }, []);
 
   // 애니메이션 루프 및 캔버스 드로잉
   useEffect(() => {
@@ -164,6 +195,7 @@ export default function CosmicBackground({ activeSection }: { activeSection: str
 
       const trans = transitionRef.current;
       const cur = curOffsetsRef.current;
+      const mouse = mousePosRef.current;
 
       // 1.2초 전환 큐빅 베지어 보간 연산
       if (trans.isTransitioning) {
@@ -187,6 +219,10 @@ export default function CosmicBackground({ activeSection }: { activeSection: str
         cur.fore = activeIndex * -18;
       }
 
+      // 마우스 오프셋 댐핑 적용 (은은하고 묵직한 Lerp)
+      mouse.x += (mouse.targetX - mouse.x) * 0.08;
+      mouse.y += (mouse.targetY - mouse.y) * 0.08;
+
       // 별 그리기 루프
       stars.forEach((star) => {
         // 레이어별 X 패럴랙스 오프셋 적용
@@ -194,31 +230,45 @@ export default function CosmicBackground({ activeSection }: { activeSection: str
         let layerWidthFactor = 1.0;
         
         if (star.layer === 0) {
-          // deep layer: left: -20vw, width: 140vw
+          // deep layer: left: -30vw, width: 160vw (마지막 섹션 패럴랙스 방어)
           layerOffsetX = (cur.deep / 100) * w;
-          layerWidthFactor = 1.4;
+          layerWidthFactor = 1.6;
         } else if (star.layer === 1) {
-          // mid layer: left: -35vw, width: 170vw
+          // mid layer: left: -70vw, width: 240vw (마지막 섹션 패럴랙스 방어)
           layerOffsetX = (cur.mid / 100) * w;
-          layerWidthFactor = 1.7;
+          layerWidthFactor = 2.4;
         } else {
-          // fore layer: left: -55vw, width: 210vw
+          // fore layer: left: -120vw, width: 340vw (마지막 섹션 패럴랙스 방어)
           layerOffsetX = (cur.fore / 100) * w;
-          layerWidthFactor = 2.1;
+          layerWidthFactor = 3.4;
         }
 
-        // 별의 초기 좌측 여백(left) 보정
+        // 별의 초기 좌측 여백(left) 보정 (마지막 섹션 X축 공백 영구 방어)
         let baseLeft = 0;
-        if (star.layer === 0) baseLeft = -0.20 * w;
-        else if (star.layer === 1) baseLeft = -0.35 * w;
-        else baseLeft = -0.55 * w;
+        if (star.layer === 0) baseLeft = -0.30 * w;
+        else if (star.layer === 1) baseLeft = -0.70 * w;
+        else baseLeft = -1.20 * w;
 
-        // 최종 그릴 x, y 좌표 구하기
+        // 마우스 3D 패럴랙스 오프셋 계산 (가중치 2.3배 이상 증폭)
+        let mouseOffsetX = 0;
+        let mouseOffsetY = 0;
+        if (star.layer === 0) {
+          mouseOffsetX = mouse.x * 30; // deep: 가로 최대 15px
+          mouseOffsetY = mouse.y * 20;
+        } else if (star.layer === 1) {
+          mouseOffsetX = mouse.x * 65; // mid: 가로 최대 32.5px
+          mouseOffsetY = mouse.y * 45;
+        } else {
+          mouseOffsetX = mouse.x * 120; // fore: 가로 최대 60px
+          mouseOffsetY = mouse.y * 80;
+        }
+
+        // 최종 그릴 x, y 좌표 구하기 (스크롤 패럴랙스 + 마우스 패럴랙스 결합)
         const starXPercent = star.x / 100;
         const starYPercent = star.y / 100;
 
-        const x = baseLeft + (starXPercent * w * layerWidthFactor) + layerOffsetX;
-        const y = starYPercent * h;
+        const x = baseLeft + (starXPercent * w * layerWidthFactor) + layerOffsetX - mouseOffsetX;
+        const y = starYPercent * h - mouseOffsetY;
 
         // Twinkle(반짝임) 투명도 연산
         const t = elapsed;
