@@ -228,10 +228,10 @@ export default function ForTheTeamSection() {
         >
           {/* Screenshot */}
           <div
-            className="w-full drop-shadow-[0_20px_50px_rgba(0,0,0,0.9)] select-none overflow-hidden border border-white/10 rounded-none bg-[#070708] relative"
+            className="w-full lg:max-h-[45vh] drop-shadow-[0_20px_50px_rgba(0,0,0,0.9)] select-none overflow-hidden border border-white/10 rounded-none bg-[#070708] relative"
           >
             <div 
-              className="w-full aspect-video overflow-hidden relative bg-[#0c0d0f]"
+              className="w-full h-full aspect-video lg:aspect-auto overflow-hidden relative bg-[#0c0d0f]"
             >
               <img
                 src="/projects/fortheteam.webp"

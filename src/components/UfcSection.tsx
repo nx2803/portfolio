@@ -353,7 +353,7 @@ export default function UfcSection() {
 
             {/* Screenshot Container with laser-drawing borders */}
             <div
-              className="w-full overflow-hidden relative bg-[#0c0d0f]"
+              className="w-full lg:max-h-[45vh] overflow-hidden relative bg-[#0c0d0f]"
               style={{ borderRadius: 0 }}
             >
               
@@ -386,7 +386,7 @@ export default function UfcSection() {
                 style={{ position: 'absolute', top: 0, bottom: 0, right: 0, width: '1px', backgroundColor: '#747474', originY: 1, zIndex: 10 }}
               />
 
-              <div className="w-full aspect-video overflow-hidden relative bg-[#0c0d0f]">
+              <div className="w-full h-full aspect-video lg:aspect-auto overflow-hidden relative bg-[#0c0d0f]">
                 <img
                   src="/projects/ufc.webp"
                   alt="UFC Dashboard 스크린샷"
