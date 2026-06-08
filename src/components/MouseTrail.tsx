@@ -17,7 +17,6 @@ export default function MouseTrail({ activeSection }: MouseTrailProps) {
   useEffect(() => {
     setMounted(true);
 
-    // 터치 디바이스(모바일)인 경우 활성화하지 않음
     if (window.matchMedia('(pointer: coarse)').matches) {
       return;
     }
@@ -33,12 +32,11 @@ export default function MouseTrail({ activeSection }: MouseTrailProps) {
     };
   }, [mouseX, mouseY]);
 
-  // 마운트 완료 전(SSR) 혹은 모바일 렌더링 예외 처리
   if (!mounted || (typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches)) {
     return null;
   }
 
-  // 액센트 컬러 동기화
+  // 나사펑크의 담백하고 솔리드한 포인트 컬러
   const accentColor = 
     activeSection === 'peecemaker' 
       ? '#fb923c' 
@@ -56,7 +54,6 @@ export default function MouseTrail({ activeSection }: MouseTrailProps) {
       }}
       className="fixed top-0 left-0 pointer-events-none z-50 overflow-visible"
     >
-
       {/* ── TECHNOCRATIC COORDINATES TAG (테크노크라틱 좌표 계측기) ── */}
       <div 
         className="absolute left-4 top-4 font-mono text-[11px] font-bold leading-normal tracking-[0.15em] opacity-95 select-none pointer-events-none drop-shadow-[0_2px_8px_rgba(0,0,0,0.6)]"
