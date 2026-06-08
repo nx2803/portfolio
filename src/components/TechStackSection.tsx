@@ -48,7 +48,7 @@ export default function TechStackSection() {
   if (!mounted) return <section id="techstack" className="h-screen" />;
 
   return (
-    <section id="techstack" className="w-full h-full relative flex flex-col justify-center items-center px-6 md:px-16 lg:px-24 pt-24 pb-28 lg:py-12 overflow-x-hidden overflow-y-auto bg-transparent text-(--foreground)" style={{ WebkitOverflowScrolling: 'touch' }}>
+    <section id="techstack" className="w-full h-full relative flex flex-col justify-center items-center px-6 md:px-16 lg:px-24 pt-24 pb-28 lg:pt-32 lg:pb-12 overflow-x-hidden overflow-y-auto lg:overflow-hidden bg-transparent text-(--foreground)" style={{ WebkitOverflowScrolling: 'touch' }}>
 
       <div className="w-full max-w-[1800px] flex flex-col justify-center relative z-10">
 

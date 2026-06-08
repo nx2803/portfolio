@@ -215,7 +215,7 @@ export default function UfcSection() {
   return (
     <section
       id="ufc"
-      className="relative w-full h-full flex items-center justify-center text-white bg-transparent pt-24 pb-28 lg:py-12 overflow-y-auto"
+      className="relative w-full h-full flex items-center justify-center text-white bg-transparent pt-24 pb-28 lg:pt-32 lg:pb-12 overflow-y-auto lg:overflow-hidden"
       style={{ fontFamily: 'var(--font-ufc)', WebkitOverflowScrolling: 'touch' }}
     >
       {/* Subtle bg */}

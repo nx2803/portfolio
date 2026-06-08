@@ -157,7 +157,7 @@ export default function PeecemakerSection() {
   return (
     <section
       id="peecemaker"
-      className="relative w-full h-full flex items-center justify-center text-white bg-transparent pt-24 pb-28 lg:py-12 overflow-y-auto lg:overflow-hidden"
+      className="relative w-full h-full flex items-center justify-center text-white bg-transparent pt-24 pb-28 lg:pt-32 lg:pb-12 overflow-y-auto lg:overflow-hidden"
       style={{ fontFamily: 'var(--font-peecemaker)', WebkitOverflowScrolling: 'touch' }}
     >
       {/* 은은하고 싱그러운 제주 감귤/한라봉 귤빛 오렌지 백그라운드 오라 */}
