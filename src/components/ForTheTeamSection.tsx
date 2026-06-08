@@ -103,7 +103,7 @@ export default function ForTheTeamSection() {
   return (
     <section
       id="fortheteam"
-      className="relative w-full h-full flex items-center justify-center text-white bg-transparent pt-24 pb-28 lg:pt-32 lg:pb-12 overflow-y-auto lg:overflow-hidden"
+      className="relative w-full h-full flex items-center justify-center text-white bg-transparent pt-24 pb-28 lg:pt-[8.5dvh] lg:pb-[3.5dvh] overflow-y-auto lg:overflow-hidden"
       style={{ fontFamily: 'var(--font-ftt)', WebkitOverflowScrolling: 'touch' }}
     >
       <div className="relative z-10 w-full max-w-450 mx-auto px-8 xl:px-16 grid grid-cols-1 lg:grid-cols-[5fr_7fr] gap-10 xl:gap-14 items-center">
@@ -114,7 +114,7 @@ export default function ForTheTeamSection() {
           initial="initial"
           animate="animate"
           style={{ willChange: 'transform, opacity' }}
-          className="flex flex-col gap-7 bg-[#0b0b0c] p-8 shadow-[0_12px_50px_rgba(0,0,0,0.85)] relative rounded-none border border-white/5 overflow-hidden"
+          className="flex flex-col gap-4 bg-[#0b0b0c] p-6 lg:p-7 shadow-[0_12px_50px_rgba(0,0,0,0.85)] relative rounded-none border border-white/5 overflow-hidden"
         >
           {/* 선형 프레임 드로잉 라인들 */}
           <motion.span
@@ -228,7 +228,7 @@ export default function ForTheTeamSection() {
         >
           {/* Screenshot */}
           <div
-            className="w-full lg:max-h-[45vh] drop-shadow-[0_20px_50px_rgba(0,0,0,0.9)] select-none overflow-hidden border border-white/10 rounded-none bg-[#070708] relative"
+            className="w-full lg:max-h-[38dvh] drop-shadow-[0_20px_50px_rgba(0,0,0,0.9)] select-none overflow-hidden border border-white/10 rounded-none bg-[#070708] relative"
           >
             <div 
               className="w-full h-full aspect-video lg:aspect-auto overflow-hidden relative bg-[#0c0d0f]"

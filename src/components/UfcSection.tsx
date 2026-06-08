@@ -215,7 +215,7 @@ export default function UfcSection() {
   return (
     <section
       id="ufc"
-      className="relative w-full h-full flex items-center justify-center text-white bg-transparent pt-24 pb-28 lg:pt-32 lg:pb-12 overflow-y-auto lg:overflow-hidden"
+      className="relative w-full h-full flex items-center justify-center text-white bg-transparent pt-24 pb-28 lg:pt-[8.5dvh] lg:pb-[3.5dvh] overflow-y-auto lg:overflow-hidden"
       style={{ fontFamily: 'var(--font-ufc)', WebkitOverflowScrolling: 'touch' }}
     >
       {/* Subtle bg */}
@@ -226,7 +226,7 @@ export default function UfcSection() {
       <div className="relative z-10 w-full max-w-[1800px] mx-auto px-8 xl:px-16 grid grid-cols-1 lg:grid-cols-[5fr_7fr] gap-10 xl:gap-14 items-center">
 
         {/* ── LEFT: Content — 전체를 4-corner 타겟 프레임으로 감쌈 ── */}
-        <div className="flex flex-col gap-7 relative">
+        <div className="flex flex-col gap-4 relative">
           {/* 좌측 콘텐츠 전체를 감싸는 4개 ㄱ자 UFC 타겟 프레임 */}
           <CornerFrame size={24} thickness={2} color="rgba(255,255,255,1)" offset={12} delay={0} />
 
@@ -353,7 +353,7 @@ export default function UfcSection() {
 
             {/* Screenshot Container with laser-drawing borders */}
             <div
-              className="w-full lg:max-h-[45vh] overflow-hidden relative bg-[#0c0d0f]"
+              className="w-full lg:max-h-[38dvh] overflow-hidden relative bg-[#0c0d0f]"
               style={{ borderRadius: 0 }}
             >
               

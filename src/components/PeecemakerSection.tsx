@@ -157,7 +157,7 @@ export default function PeecemakerSection() {
   return (
     <section
       id="peecemaker"
-      className="relative w-full h-full flex items-center justify-center text-white bg-transparent pt-24 pb-28 lg:pt-32 lg:pb-12 overflow-y-auto lg:overflow-hidden"
+      className="relative w-full h-full flex items-center justify-center text-white bg-transparent pt-24 pb-28 lg:pt-[8.5dvh] lg:pb-[3.5dvh] overflow-y-auto lg:overflow-hidden"
       style={{ fontFamily: 'var(--font-peecemaker)', WebkitOverflowScrolling: 'touch' }}
     >
       {/* 은은하고 싱그러운 제주 감귤/한라봉 귤빛 오렌지 백그라운드 오라 */}
@@ -174,7 +174,7 @@ export default function PeecemakerSection() {
           initial="initial"
           animate="animate"
           style={{ willChange: 'opacity' }}
-          className="flex flex-col gap-5"
+          className="flex flex-col gap-4"
         >
           {/* Header */}
           <motion.div variants={pinDropVariants}>
@@ -256,7 +256,7 @@ export default function PeecemakerSection() {
         >
           {/* Screenshot */}
           <div
-            className="w-full lg:max-h-[45vh] drop-shadow-[0_20px_50px_rgba(0,0,0,0.9)] select-none overflow-hidden border border-white/10 rounded-2xl bg-[#070708] relative"
+            className="w-full lg:max-h-[38dvh] drop-shadow-[0_20px_50px_rgba(0,0,0,0.9)] select-none overflow-hidden border border-white/10 rounded-2xl bg-[#070708] relative"
           >
             <div 
               className="w-full h-full aspect-video lg:aspect-auto overflow-hidden relative bg-[#0c0d0f]"

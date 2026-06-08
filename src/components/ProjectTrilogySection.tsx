@@ -50,7 +50,7 @@ export default function ProjectTrilogySection() {
   if (!mounted) return <section id="trilogy_intro" className="min-h-[80vh] md:min-h-screen" />;
 
   return (
-    <section id="trilogy_intro" className="relative w-full h-full flex flex-col justify-center pt-24 pb-28 lg:pt-32 lg:pb-12 overflow-y-auto lg:overflow-hidden bg-transparent text-(--foreground)" style={{ WebkitOverflowScrolling: 'touch' }}>
+    <section id="trilogy_intro" className="relative w-full h-full flex flex-col justify-center pt-24 pb-28 lg:pt-[8.5dvh] lg:pb-[3.5dvh] overflow-y-auto lg:overflow-hidden bg-transparent text-(--foreground)" style={{ WebkitOverflowScrolling: 'touch' }}>
 
       {/* ── HEADER AREA (Structural Boot-up) ── */}
       <div className="w-full px-6 md:px-10 mb-16 md:mb-24 relative z-10 max-w-[1800px] mx-auto">
