@@ -66,7 +66,7 @@ export default function TechStackSection() {
             initial={{ scaleX: 0 }}
             animate={{ scaleX: 1 }}
             transition={{ duration: 1.8, ease: easing, delay: 0.3 }}
-            className="h-1.5 bg-current opacity-40 flex-1 origin-left"
+            className="h-1.5 bg-current flex-1 origin-left"
           />
         </div>
 
