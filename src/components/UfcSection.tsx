@@ -235,8 +235,8 @@ export default function UfcSection() {
             <div className="flex items-center gap-2 mb-4">
               <span className="w-2 h-2 bg-[#00ff41] shadow-[0_0_8px_#00ff41] animate-pulse inline-block shrink-0" />
               <InlineTypewriter
-                text="C:\UFC\SYSTEM\ANALYSIS_MODULE//"
-                className="text-[#6a737d] font-mono text-xs tracking-[0.4em] uppercase font-bold"
+                text="INTELLIGENT ANALYSIS MODULE"
+                className="text-[#6a737d] font-display text-xs tracking-[0.3em] uppercase font-semibold"
                 delay={0.1}
                 speed={20}
                 active={isTransitionTarget}
@@ -274,8 +274,8 @@ export default function UfcSection() {
           {/* Tech Stack */}
           <div>
             <InlineTypewriter
-              text="TECH_STACK//"
-              className="text-white/25 font-mono text-[10px] tracking-[0.3em] uppercase mb-3 block"
+              text="TECH STACK"
+              className="text-white/35 font-display text-[11px] tracking-[0.25em] uppercase mb-3 block font-semibold"
               delay={1.1}
               speed={30}
               active={isTransitionTarget}
@@ -293,7 +293,7 @@ export default function UfcSection() {
                   <s.Icon className="text-white/70 text-base shrink-0 group-hover:text-white group-hover:scale-110 transition-all" />
                   <div>
                     <p className="text-white font-semibold text-xs leading-tight">{s.name}</p>
-                    <p className="text-white/35 font-mono text-[8px] leading-tight">{s.desc}</p>
+                    <p className="text-white/35 font-display text-[8px] leading-tight">{s.desc}</p>
                   </div>
                 </motion.div>
               ))}
@@ -303,8 +303,8 @@ export default function UfcSection() {
           {/* Engineering Highlights */}
           <div className="space-y-3.5">
             <InlineTypewriter
-              text="ENGINEERING_HIGHLIGHTS//"
-              className="text-white/25 font-mono text-[10px] tracking-[0.3em] uppercase mb-2 block"
+              text="ENGINEERING HIGHLIGHTS"
+              className="text-white/35 font-display text-[11px] tracking-[0.25em] uppercase mb-2 block font-semibold"
               delay={1.4}
               speed={30}
               active={isTransitionTarget}
@@ -396,7 +396,7 @@ export default function UfcSection() {
                 {!imageLoaded && (
                   <div className="absolute inset-0 flex flex-col items-center justify-center bg-[#070708] gap-3">
                     <div className="w-8 h-8 border-2 border-[#00ff41]/20 border-t-[#00ff41] rounded-full animate-spin" />
-                    <span className="text-[10px] font-mono tracking-[0.2em] text-[#00ff41] animate-pulse">LOAD_ASSET//</span>
+                    <span className="text-[10px] font-display tracking-[0.2em] text-[#00ff41] animate-pulse">LOADING ASSET</span>
                   </div>
                 )}
               </div>

@@ -1,28 +1,31 @@
 @import "tailwindcss";
 
 @theme inline {
-  --font-main: "Inter", "Noto Sans KR", sans-serif;
+  --font-main: "Outfit", "Inter", "Noto Sans KR", sans-serif;
   --font-peecemaker: "Chiron GoRound TC", "Noto Sans KR", sans-serif;
   --font-ftt: "Oswald", "Noto Sans KR", sans-serif;
   --font-ufc: "Geologica", "Noto Sans KR", sans-serif;
-  --font-stencil: "Geologica", sans-serif;
+  --font-stencil: "Outfit", "Geologica", sans-serif;
 
   --color-pm: var(--pm-accent);
   --color-ftt: var(--ftt-accent);
 }
 
 :root {
-  --background: #e5e5e5; /* Metallic Silver */
-  --foreground: #0a0a0a;
+  --background: #08080a;
+  --foreground: #f4f4f6;
   
   --pm-accent: #fb923c;
   --ftt-accent: #e23645;
   --ufc-accent: #00ff41;
+  --champagne-gold: #D4AF37;
+  --champagne-gold-light: #E5C378;
+  --champagne-gold-glow: rgba(212, 175, 55, 0.25);
 }
 
 :root.dark {
-  --background: #161618; /* Gunmetal Steel */
-  --foreground: #f4f4f2;
+  --background: #08080a;
+  --foreground: #f4f4f6;
 }
 
 html, body {
@@ -44,90 +47,53 @@ html, body {
 }
 
 /* ================== */
-/* Bold Retro-Futurism Utilities */
+/* Modern Sophisticated Cosmic Utilities */
 /* ================== */
 
-.font-stencil {
-  font-family: var(--font-stencil);
+.font-display {
+  font-family: var(--font-main);
+  letter-spacing: -0.02em;
 }
 
 .massive-text {
   font-size: clamp(4rem, 15vw, 18rem);
-  font-weight: 900;
+  font-weight: 800;
   line-height: 0.85;
   letter-spacing: -0.04em;
 }
 
-.bold-slants {
-  background: repeating-linear-gradient(
-    45deg,
-    currentColor,
-    currentColor 4px,
-    transparent 4px,
-    transparent 24px
-  );
+.champagne-gradient-text {
+  background: linear-gradient(135deg, #FFF0D0 0%, #D4AF37 50%, #AA8221 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
-.bold-linear-border {
-  border: 12px solid currentColor;
+.gold-glow-border {
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  box-shadow: 0 0 20px rgba(212, 175, 55, 0.08);
 }
 
- .text-micro {
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-  font-size: 10px;
-  letter-spacing: 0.3em;
+.text-micro {
+  font-family: var(--font-main);
+  font-size: 11px;
+  letter-spacing: 0.25em;
   text-transform: uppercase;
-  font-weight: 800;
+  font-weight: 600;
 }
 
-/* Glassmorphism (Modified for light theme) */
+/* Modern Glassmorphism */
 .glass-panel {
   position: relative;
-  background: rgba(0, 0, 0, 0.02);
-  border: 1px solid rgba(0, 0, 0, 0.05);
-  backdrop-filter: blur(20px);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(24px);
 }
 
-/* Corner Frame Decorations */
-.corner-frame {
+.glass-panel-gold {
   position: relative;
-}
-
-.corner-top-left, .corner-top-right, .corner-bottom-left, .corner-bottom-right {
-  position: absolute;
-  width: 16px;
-  height: 16px;
-  border-color: currentColor;
-  z-index: 10;
-  pointer-events: none;
-}
-
-.corner-top-left {
-  top: -2px;
-  left: -2px;
-  border-top-width: 4px;
-  border-left-width: 4px;
-}
-
-.corner-top-right {
-  top: -2px;
-  right: -2px;
-  border-top-width: 4px;
-  border-right-width: 4px;
-}
-
-.corner-bottom-left {
-  bottom: -2px;
-  left: -2px;
-  border-bottom-width: 4px;
-  border-left-width: 4px;
-}
-
-.corner-bottom-right {
-  bottom: -2px;
-  right: -2px;
-  border-bottom-width: 4px;
-  border-right-width: 4px;
+  background: rgba(212, 175, 55, 0.03);
+  border: 1px solid rgba(212, 175, 55, 0.15);
+  backdrop-filter: blur(24px);
 }
 
 /* Hide scrollbars */

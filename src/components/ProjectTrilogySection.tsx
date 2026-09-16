@@ -52,23 +52,23 @@ export default function ProjectTrilogySection() {
   return (
     <section id="trilogy_intro" className="relative w-full h-full flex flex-col justify-center pt-24 pb-28 lg:pt-[8.5dvh] lg:pb-[3.5dvh] overflow-y-auto lg:overflow-hidden bg-transparent text-(--foreground)" style={{ WebkitOverflowScrolling: 'touch' }}>
 
-      {/* ── HEADER AREA (Structural Boot-up) ── */}
+      {/* ── HEADER AREA ── */}
       <div className="w-full px-6 md:px-10 mb-16 md:mb-24 relative z-10 max-w-[1800px] mx-auto">
         <div className="flex flex-col gap-4">
-          <div className="flex items-center gap-6">
+          <div className="flex items-center gap-4">
             <motion.span
               initial={{ opacity: 0 }}
-              animate={{ opacity: 0.6 }}
+              animate={{ opacity: 0.8 }}
               transition={{ duration: 0.8, delay: 0.8 }}
-              className="text-xs md:text-sm font-mono tracking-[0.5em] font-black text-(--accent) uppercase"
+              className="text-xs md:text-sm font-display tracking-[0.4em] font-semibold text-[#D4AF37] uppercase"
             >
-              PROJECT_INDEX_MAPPING//
+              PROJECT INDEX MAPPING
             </motion.span>
             <motion.div
               initial={{ scaleX: 0 }}
               animate={{ scaleX: 1 }}
               transition={{ duration: 0.8, delay: 0.4 }}
-              className="h-0.5 w-16 bg-(--accent) origin-left"
+              className="h-px w-12 bg-[#D4AF37]/50 origin-left"
             />
           </div>
 
@@ -77,21 +77,21 @@ export default function ProjectTrilogySection() {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 1.0 }}
-              className="text-4xl md:text-[7vw] font-stencil leading-none tracking-tighter select-none uppercase shrink-0"
+              className="text-4xl md:text-[6vw] font-display font-extrabold leading-none tracking-tight select-none uppercase shrink-0 text-white"
             >
-              THE_TRILOGY
+              THE TRILOGY
             </motion.h2>
             <motion.div
               initial={{ scaleX: 0 }}
               animate={{ scaleX: 1 }}
               transition={{ duration: 1.5, ease: easing, delay: 0.6 }}
-              className="h-1.5 bg-current flex-1 origin-left"
+              className="h-px bg-linear-to-r from-[#D4AF37]/60 via-white/20 to-transparent flex-1 origin-left mt-2"
             />
           </div>
         </div>
       </div>
 
-      {/* ── ROADMAP GRID (Structural Grid Drawing) ── */}
+      {/* ── ROADMAP GRID ── */}
       <div className="w-full px-4 md:px-8 relative z-10 max-w-[1800px] mx-auto">
         <div className="relative grid grid-cols-1 md:grid-cols-3">
 
@@ -100,39 +100,39 @@ export default function ProjectTrilogySection() {
             initial={{ scaleX: 0 }}
             animate={{ scaleX: 1 }}
             transition={{ duration: 1.5, ease: easing, delay: 1.2 }}
-            className="absolute top-0 left-0 w-full h-0.5 bg-current origin-left z-20"
+            className="absolute top-0 left-0 w-full h-px bg-white/10 origin-left z-20"
           />
           <motion.div
             initial={{ scaleX: 0 }}
             animate={{ scaleX: 1 }}
             transition={{ duration: 1.5, ease: easing, delay: 1.4 }}
-            className="absolute bottom-0 left-0 w-full h-0.5 bg-current origin-left z-20"
+            className="absolute bottom-0 left-0 w-full h-px bg-white/10 origin-left z-20"
           />
 
           {phases.map((phase, idx) => (
             <div
               key={phase.id}
               onClick={() => handleProjectClick(phase.sectionId)}
-              className="relative group p-10 md:p-14 flex flex-col gap-12 transition-all duration-700 overflow-hidden cursor-pointer hover:bg-current/5"
+              className="relative group p-10 md:p-14 flex flex-col gap-12 transition-all duration-700 overflow-hidden cursor-pointer hover:bg-white/[0.02]"
               style={{ '--accent': phase.accent } as any}
             >
-              {/* Horizontal Grid Line Separator for Mobile (between items) */}
+              {/* Horizontal Grid Line Separator for Mobile */}
               {idx > 0 && (
                 <motion.div
                   initial={{ scaleX: 0 }}
                   animate={{ scaleX: 1 }}
                   transition={{ duration: 1.2, ease: easing, delay: 1.6 + idx * 0.2 }}
-                  className="absolute left-0 top-0 w-full h-px bg-current/10 origin-left md:hidden"
+                  className="absolute left-0 top-0 w-full h-px bg-white/10 origin-left md:hidden"
                 />
               )}
 
-              {/* Vertical Grid Line Separator (between items) */}
+              {/* Vertical Grid Line Separator */}
               {idx > 0 && (
                 <motion.div
                   initial={{ scaleY: 0 }}
                   animate={{ scaleY: 1 }}
                   transition={{ duration: 1.2, ease: easing, delay: 1.6 + idx * 0.2 }}
-                  className="absolute left-0 top-0 w-0.5 h-full bg-current origin-top hidden md:block"
+                  className="absolute left-0 top-0 w-px h-full bg-white/10 origin-top hidden md:block"
                 />
               )}
 
@@ -143,7 +143,7 @@ export default function ProjectTrilogySection() {
                     animate={{ opacity: 1 }}
                     transition={{ duration: 1.0, delay: 2.0 + idx * 0.1 }}
                   >
-                    <span className="text-7xl md:text-8xl lg:text-9xl font-stencil opacity-15 group-hover:opacity-40 group-hover:text-[var(--accent)] transition-all leading-none duration-700 block">
+                    <span className="text-6xl md:text-7xl lg:text-8xl font-display font-extrabold opacity-20 group-hover:opacity-70 group-hover:text-[var(--accent)] transition-all leading-none duration-500 block text-white">
                       {phase.id}
                     </span>
                   </motion.div>
@@ -153,15 +153,15 @@ export default function ProjectTrilogySection() {
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ duration: 0.5, delay: 2.4 + idx * 0.1 }}
                     >
-                      <span className="text-[10px] font-bold border border-current/20 px-4 py-1 transition-all group-hover:border-[var(--accent)] group-hover:bg-[var(--accent)] group-hover:text-(--background) block">
-                        {phase.tag}//
+                      <span className="text-[10px] font-semibold border border-white/20 px-3.5 py-1 rounded-full transition-all group-hover:border-[var(--accent)] group-hover:bg-[var(--accent)]/15 group-hover:text-[var(--accent)] block tracking-widest text-white/70">
+                        {phase.tag}
                       </span>
                     </motion.div>
                     <motion.span 
                       initial={{ opacity: 0, x: -10 }}
                       animate={{ opacity: 0.8, x: 0 }}
                       transition={{ duration: 0.8, delay: 2.4 + idx * 0.1 }}
-                      className="text-[10px] font-bold text-[var(--accent)] block"
+                      className="text-[10px] font-bold text-[var(--accent)] tracking-widest block mt-1 group-hover:translate-x-1 transition-transform"
                     >
                       VIEW PROJECT →
                     </motion.span>
@@ -175,8 +175,7 @@ export default function ProjectTrilogySection() {
                     transition={{ duration: 0.8, delay: 2.6 + idx * 0.1 }}
                   >
                     <h3
-                      className={`text-4xl md:text-5xl lg:text-6xl uppercase tracking-tighter leading-tight transition-colors duration-700 group-hover:text-[var(--accent)] ${phase.isItalic ? 'italic' : ''}`}
-                      style={{ fontFamily: phase.font }}
+                      className={`text-3xl md:text-4xl lg:text-5xl font-display font-bold uppercase tracking-tight leading-tight transition-colors duration-500 text-white group-hover:text-[var(--accent)] ${phase.isItalic ? 'italic' : ''}`}
                     >
                       {phase.project}
                     </h3>
@@ -188,13 +187,13 @@ export default function ProjectTrilogySection() {
                     animate={{ scaleX: 1 }}
                     transition={{ duration: 1.2, ease: easing, delay: 2.6 + idx * 0.1 }}
                     style={{ originX: 0 }}
-                    className="h-1 w-full bg-current/10 relative overflow-hidden"
+                    className="h-0.5 w-full bg-white/10 relative overflow-hidden rounded-full"
                   >
                     <motion.div
                       initial={{ scaleX: 0 }}
                       animate={{ scaleX: 1 }}
                       transition={{ duration: 1.5, ease: easing, delay: 2.8 + idx * 0.1 }}
-                      className="absolute inset-y-0 left-0 w-full bg-[var(--accent)] shadow-[0_0_15px_var(--accent)] origin-left opacity-0 group-hover:opacity-100 transition-opacity duration-700"
+                      className="absolute inset-y-0 left-0 w-full bg-[var(--accent)] shadow-[0_0_15px_var(--accent)] origin-left opacity-0 group-hover:opacity-100 transition-opacity duration-500"
                     />
                   </motion.div>
 
@@ -203,7 +202,7 @@ export default function ProjectTrilogySection() {
                     animate={{ opacity: 1 }}
                     transition={{ duration: 1.0, delay: 3.0 + idx * 0.1 }}
                   >
-                    <p className="text-lg md:text-xl xl:text-2xl leading-relaxed tracking-tight break-keep opacity-75 group-hover:opacity-98 transition-opacity duration-700 font-light">
+                    <p className="text-base md:text-lg xl:text-xl leading-relaxed tracking-tight break-keep opacity-75 group-hover:opacity-95 transition-opacity duration-500 font-normal text-white/80">
                       {phase.description}
                     </p>
                   </motion.div>

@@ -218,11 +218,11 @@ export default function TrilogyContainer() {
   return (
     <motion.main 
       animate={{ 
-        backgroundColor: bgColors[activeSection] || '#000000',
-        color: fgColors[activeSection] || (theme === 'dark' ? '#f4f4f2' : '#0a0a0a'),
-        '--foreground': fgColors[activeSection] || (theme === 'dark' ? '#f4f4f2' : '#0a0a0a'),
-        '--background': bgColors[activeSection] || (theme === 'dark' ? '#0a0a0a' : '#f4f4f2'),
-        '--accent': activeSection === 'peecemaker' ? '#fb923c' : activeSection === 'fortheteam' ? '#e23645' : activeSection === 'ufc' ? '#00ff41' : '#ffffff'
+        backgroundColor: bgColors[activeSection] || '#08080a',
+        color: fgColors[activeSection] || '#f4f4f6',
+        '--foreground': fgColors[activeSection] || '#f4f4f6',
+        '--background': bgColors[activeSection] || '#08080a',
+        '--accent': activeSection === 'peecemaker' ? '#fb923c' : activeSection === 'fortheteam' ? '#e23645' : activeSection === 'ufc' ? '#00ff41' : '#D4AF37'
       } as any}
       transition={transitionConfig} 
       className="w-full h-[100dvh] lg:h-[100dvh] relative flex items-center flex-col overflow-hidden"
@@ -232,50 +232,6 @@ export default function TrilogyContainer() {
 
       {/* ── COSMIC BACKGROUND LAYER ── */}
       <CosmicBackground activeSection={activeSection} />
-
-      {/* ── GLOBAL HUD FRAME (Slants & Ticks) ── */}
-      {/* Top Bar: 화면 밖(위)에서 안으로 강하게 밀고 들어옴 */}
-      <motion.div 
-        initial={{ y: -30, opacity: 0 }}
-        animate={{ y: 0, opacity: 0.3 }}
-        transition={{ duration: 1.0, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
-        className="fixed top-0 left-0 w-full h-4 md:h-8 bold-slants z-20 pointer-events-none transition-colors duration-700" 
-        style={{ color: 'var(--accent)' }}
-      />
-      {/* Bottom Bar: 화면 밖(아래)에서 안으로 강하게 밀고 들어옴 */}
-      <motion.div 
-        initial={{ y: 30, opacity: 0 }}
-        animate={{ y: 0, opacity: 0.3 }}
-        transition={{ duration: 1.0, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
-        className="fixed bottom-0 left-0 w-full h-4 md:h-8 bold-slants z-20 pointer-events-none transition-colors duration-700" 
-        style={{ color: 'var(--accent)' }}
-      />
- 
-      {/* Left Ticks: 좌측 화면 밖에서 안으로 미끄러져 튀어나옴 */}
-      <motion.div 
-        initial={{ x: -20, opacity: 0 }}
-        animate={{ x: 0, opacity: 0.5 }}
-        transition={{ duration: 1.0, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
-        className="hidden md:flex fixed left-6 md:left-8 top-0 h-full flex flex-col items-center justify-center gap-10 z-20 pointer-events-none transition-colors duration-700" 
-        style={{ color: 'var(--accent)' }}
-      >
-        {[...Array(8)].map((_, i) => (
-          <div key={i} className="w-4 md:w-6 h-px bg-current" />
-        ))}
-      </motion.div>
-      
-      {/* Right Ticks: 우측 화면 밖에서 안으로 미끄러져 튀어나옴 */}
-      <motion.div 
-        initial={{ x: 20, opacity: 0 }}
-        animate={{ x: 0, opacity: 0.5 }}
-        transition={{ duration: 1.0, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
-        className="hidden md:flex fixed right-6 md:right-8 top-0 h-full flex flex-col items-center justify-center gap-10 z-20 pointer-events-none transition-colors duration-700" 
-        style={{ color: 'var(--accent)' }}
-      >
-        {[...Array(8)].map((_, i) => (
-          <div key={i} className="w-4 md:w-6 h-px bg-current" />
-        ))}
-      </motion.div>
 
       {/* 글로벌 Peecemaker 그라데이션 */}
       <motion.div 

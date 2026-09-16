@@ -165,44 +165,6 @@ export default function CosmicBackground({ activeSection }: { activeSection: str
     };
   }, []);
 
-  // 클릭 시 나사펑크 텔레메트리 마커 생성 이벤트 감지 (터치 디바이스 제외)
-  useEffect(() => {
-    if (typeof window === 'undefined' || window.matchMedia('(pointer: coarse)').matches) {
-      return;
-    }
-
-    const handleClick = (e: MouseEvent) => {
-      const x = e.clientX;
-      const y = e.clientY;
-
-      // 액센트 컬러 동기화
-      let accent = '#ffffff';
-      if (activeSection === 'peecemaker') {
-        accent = '#fb923c';
-      } else if (activeSection === 'fortheteam') {
-        accent = '#e23645';
-      } else if (activeSection === 'ufc') {
-        accent = '#00ff41';
-      }
-
-      // 클릭 지점에 초대형으로 스윕하는 레이더 타겟 마커 단일 생성
-      clickMarkersRef.current.push({
-        x,
-        y,
-        radius: 0,
-        maxRadius: 360, // 적정 레이더 반경 (지름 720px)
-        color: accent,
-        alpha: 0.85, // 은은하지만 선명하게 보이는 시작 불투명도 복구
-        decay: 0.0095 // 약 1.2초 동안 서서히 사라지도록 최적화
-      });
-    };
-
-    window.addEventListener('click', handleClick);
-    return () => {
-      window.removeEventListener('click', handleClick);
-    };
-  }, [activeSection]);
-
   // 애니메이션 루프 및 캔버스 드로잉
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -348,75 +310,11 @@ export default function CosmicBackground({ activeSection }: { activeSection: str
         }
       });
 
-      // 🌌 나사펑크 레이더 스윕 펄스 업데이트 및 렌더링
-      const markers = clickMarkersRef.current;
-      for (let i = markers.length - 1; i >= 0; i--) {
-        const m = markers[i];
-        
-        // 초대형 스케일에 걸맞은 극도로 부드러운 감속 팽창 이징 (0.035)
-        m.radius += (m.maxRadius - m.radius) * 0.035;
-        m.alpha -= m.decay;
-
-        if (m.alpha <= 0) {
-          markers.splice(i, 1);
-          continue;
-        }
-
-        ctx.save();
-        ctx.strokeStyle = m.color;
-        ctx.lineWidth = 1.0;
-
-        // 1. 첫 번째 메인 레이더 팽창 링 (선명도 확보)
-        ctx.globalAlpha = m.alpha * 0.72;
-        ctx.beginPath();
-        ctx.arc(m.x, m.y, m.radius, 0, Math.PI * 2);
-        ctx.stroke();
-
-        // 2. 두 번째 지연 링
-        const secondRadius = m.radius * 0.68;
-        if (secondRadius > 5) {
-          ctx.globalAlpha = m.alpha * 0.45;
-          ctx.beginPath();
-          ctx.arc(m.x, m.y, secondRadius, 0, Math.PI * 2);
-          ctx.stroke();
-        }
-
-        // 3. 바깥쪽 점선 보조 레이더 가이드 링 (1.35배 크기)
-        const outerRadius = m.radius * 1.35;
-        ctx.strokeStyle = m.color;
-        ctx.globalAlpha = m.alpha * 0.25;
-        ctx.beginPath();
-        ctx.arc(m.x, m.y, outerRadius, 0, Math.PI * 2);
-        ctx.setLineDash([3, 8]);
-        ctx.stroke();
-        ctx.setLineDash([]); // 대시 복구
-
-        // 4. 레이더 방위각 눈금선 (동서남북 4군데 틱, 스케일에 비례해 8px 크기 확보)
-        ctx.globalAlpha = m.alpha * 0.32;
-        ctx.beginPath();
-        // 북
-        ctx.moveTo(m.x, m.y - m.radius - 8);
-        ctx.lineTo(m.x, m.y - m.radius + 2);
-        // 남
-        ctx.moveTo(m.x, m.y + m.radius + 8);
-        ctx.lineTo(m.x, m.y + m.radius - 2);
-        // 서
-        ctx.moveTo(m.x - m.radius - 8, m.y);
-        ctx.lineTo(m.x - m.radius + 2, m.y);
-        // 동
-        ctx.moveTo(m.x + m.radius + 8, m.y);
-        ctx.lineTo(m.x + m.radius - 2, m.y);
-        ctx.stroke();
-
-        ctx.restore();
-      }
-      ctx.globalAlpha = 1.0; // 복구
-
       // 그라데이션 오버레이 레이어 그리기
       const grad = ctx.createRadialGradient(w / 2, h / 2, Math.min(w, h) * 0.1, w / 2, h / 2, Math.max(w, h) * 0.7);
-      grad.addColorStop(0, 'rgba(0, 0, 0, 0)');
-      grad.addColorStop(0.2, 'rgba(0, 0, 0, 0)');
-      grad.addColorStop(1, 'rgba(0, 0, 0, 0.4)');
+      grad.addColorStop(0, 'rgba(7, 7, 10, 0)');
+      grad.addColorStop(0.5, 'rgba(7, 7, 10, 0.2)');
+      grad.addColorStop(1, 'rgba(7, 7, 10, 0.6)');
       ctx.fillStyle = grad;
       ctx.fillRect(0, 0, w, h);
 

@@ -178,12 +178,12 @@ export default function PeecemakerSection() {
         >
           {/* Header */}
           <motion.div variants={pinDropVariants}>
-            <p className="text-[#fb923c] font-mono text-xs tracking-[0.4em] uppercase font-bold mb-2 flex items-center gap-2">
+            <p className="text-[#fb923c] font-display text-xs tracking-[0.3em] uppercase font-semibold mb-2 flex items-center gap-2">
               <span className="w-1.5 h-1.5 rounded-full bg-[#fb923c] animate-pulse inline-block" />
-              PEECE_MAKER_NODE::JEJU_CLEAN_MAP//
+              JEJU CLEAN MAP
             </p>
             <h1
-              className="font-black uppercase leading-[0.82] text-white mb-3.5"
+              className="font-display font-extrabold uppercase leading-[0.82] text-white mb-3.5"
               style={{
                 fontSize: 'clamp(2.0rem, 5.0vw, 5.0rem)',
                 letterSpacing: '-0.03em',
@@ -200,8 +200,8 @@ export default function PeecemakerSection() {
 
           {/* Tech Stack */}
           <div className="flex flex-col">
-            <p className="text-white/30 font-mono text-[10px] tracking-[0.3em] uppercase mb-3">
-              TECH_STACK//
+            <p className="text-white/40 font-display text-[11px] tracking-[0.25em] uppercase mb-3 font-semibold">
+              TECH STACK
             </p>
             <motion.div variants={techStackContainerVariants} className="grid grid-cols-2 sm:grid-cols-3 gap-2">
               {stacks.map((s, i) => (
@@ -222,8 +222,8 @@ export default function PeecemakerSection() {
 
           {/* Engineering Highlights */}
           <div className="space-y-2.5">
-            <p className="text-white/30 font-mono text-[10px] tracking-[0.3em] uppercase">
-              ENGINEERING_HIGHLIGHTS//
+            <p className="text-white/40 font-display text-[11px] tracking-[0.25em] uppercase font-semibold">
+              ENGINEERING HIGHLIGHTS
             </p>
             <motion.div variants={highlightsContainerVariants} className="space-y-2.5">
               {highlights.map((h, i) => (
@@ -270,7 +270,7 @@ export default function PeecemakerSection() {
               {!imageLoaded && (
                 <div className="absolute inset-0 flex flex-col items-center justify-center bg-[#070708] gap-3">
                   <div className="w-8 h-8 border-2 border-[#fb923c]/20 border-t-[#fb923c] rounded-full animate-spin" />
-                  <span className="text-[10px] font-mono tracking-[0.2em] text-[#fb923c] animate-pulse">LOAD_ASSET//</span>
+                  <span className="text-[10px] font-display tracking-[0.2em] text-[#fb923c] animate-pulse">LOADING ASSET</span>
                 </div>
               )}
             </div>

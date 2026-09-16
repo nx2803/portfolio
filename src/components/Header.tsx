@@ -29,7 +29,7 @@ export default function Header() {
     setMounted(true);
   }, []);
 
-  const currentColor = themeColors[activeSection] || '#ffffff';
+  const currentColor = themeColors[activeSection] || '#D4AF37';
 
   useEffect(() => {
     if (isMenuOpen) document.body.style.overflow = 'hidden';
@@ -63,15 +63,15 @@ export default function Header() {
 
   return (
     <>
-      {/* ── PC HEADER: 미니멀리즘 전술 네비게이션 ── */}
-      <header className="hidden md:block fixed top-12 left-1/2 -translate-x-1/2 z-[200] w-full max-w-fit px-6">
-        <nav className="relative px-9 py-4 flex items-center gap-8 whitespace-nowrap">
+      {/* ── PC HEADER: 모던 글래스 네비게이션 ── */}
+      <header className="hidden md:block fixed top-8 left-1/2 -translate-x-1/2 z-[200] w-full max-w-fit px-6">
+        <nav className="relative px-8 py-3.5 flex items-center gap-8 whitespace-nowrap rounded-full bg-[#0a0a0d]/80 backdrop-blur-xl border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.6)]">
 
-          {/* 3. Actual Content */}
+          {/* Actual Content */}
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5, delay: 1.0 }}
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
             className="flex items-center gap-8 text-white z-10 w-full"
           >
             {/* Logo */}
@@ -79,24 +79,24 @@ export default function Header() {
               onClick={() => handleNavClick('intro', 'portal')}
               className="flex items-center gap-2 group shrink-0"
             >
-              <span className="text-[15px] font-extrabold tracking-[0.2em] uppercase font-mono text-white/70 group-hover:text-white transition-colors">
-                PORTFOLIO
+              <span className="text-[14px] font-bold tracking-[0.2em] uppercase font-display text-white/80 group-hover:text-[#D4AF37] transition-colors">
+                NX280 <span className="text-[#D4AF37] font-semibold">.</span>
               </span>
             </button>
 
-            <div className="h-4 w-px bg-white/15 shrink-0" />
+            <div className="h-3.5 w-px bg-white/15 shrink-0" />
 
             {/* Navigation Links */}
-            <div className="flex gap-7 items-center">
+            <div className="flex gap-6 items-center">
               {sections.map(({ id, label, mode }) => (
                 <button
                   key={id}
                   onClick={() => handleNavClick(id, mode)}
                   className={`
-                    relative py-1 text-[14px] font-extrabold tracking-[0.18em] uppercase transition-all duration-300
+                    relative py-1 text-[13px] font-semibold tracking-[0.15em] uppercase transition-all duration-300
                     ${activeSection === id
-                      ? 'font-black'
-                      : 'text-white/50 hover:text-white/90'
+                      ? 'font-bold'
+                      : 'text-white/60 hover:text-white'
                     }
                   `}
                   style={{ color: activeSection === id ? currentColor : undefined }}
@@ -105,8 +105,8 @@ export default function Header() {
                   {activeSection === id && (
                     <motion.div
                       layoutId="activeTabHeader"
-                      className="absolute -bottom-1.5 left-0 w-full h-[2.5px] rounded-none"
-                      style={{ backgroundColor: currentColor }}
+                      className="absolute -bottom-1 left-0 w-full h-[2px] rounded-full"
+                      style={{ backgroundColor: currentColor, boxShadow: `0 0 10px ${currentColor}` }}
                       transition={{ type: "spring", stiffness: 380, damping: 30 }}
                     />
                   )}

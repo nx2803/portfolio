@@ -140,10 +140,10 @@ export default function ForTheTeamSection() {
 
           {/* Header & Title */}
           <motion.div variants={itemVariants}>
-            <div className="flex items-center gap-2 mb-3">
-              <span className="w-1.5 h-1.5 bg-[#e23645] inline-block shrink-0 rounded-none animate-pulse" />
-              <p className="text-[#e23645] font-mono text-xs tracking-[0.4em] uppercase font-bold">
-                ENTERPRISE_SPORTS_HUB::NODE_CALENDAR//
+            <div className="flex items-center gap-2 mb-2">
+              <span className="w-1.5 h-1.5 bg-[#e23645] inline-block shrink-0 rounded-full animate-pulse" />
+              <p className="text-[#e23645] font-display text-xs tracking-[0.3em] uppercase font-semibold">
+                ENTERPRISE SPORTS HUB
               </p>
             </div>
             
@@ -173,19 +173,19 @@ export default function ForTheTeamSection() {
 
           {/* Tech Stack */}
           <motion.div variants={itemVariants}>
-            <p className="text-white/30 font-mono text-[10px] tracking-[0.3em] uppercase mb-3">
-              TECH_STACK//
+            <p className="text-white/40 font-display text-[11px] tracking-[0.25em] uppercase mb-3 font-semibold">
+              TECH STACK
             </p>
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
               {stacks.map((s, i) => (
                 <div
                   key={i}
-                  className="flex items-center gap-2 px-3.5 py-2 bg-white/5 border border-white/10 hover:border-[#e23645]/60 hover:bg-[#e23645]/8 rounded-none transition-colors duration-300 group"
+                  className="flex items-center gap-2 px-3.5 py-2 bg-white/5 border border-white/10 hover:border-[#e23645]/60 hover:bg-[#e23645]/8 rounded-lg transition-colors duration-300 group"
                 >
                   <s.Icon className="text-[#e23645] text-base shrink-0 group-hover:scale-110 transition-transform" />
                   <div>
                     <p className="text-white font-semibold text-xs leading-tight">{s.name}</p>
-                    <p className="text-white/40 font-mono text-[8px] leading-tight">{s.desc}</p>
+                    <p className="text-white/40 font-display text-[8px] leading-tight">{s.desc}</p>
                   </div>
                 </div>
               ))}
@@ -194,12 +194,12 @@ export default function ForTheTeamSection() {
 
           {/* Engineering Highlights */}
           <div className="space-y-3.5">
-            <motion.p variants={itemVariants} className="text-white/30 font-mono text-[10px] tracking-[0.3em] uppercase">
-              ENGINEERING_HIGHLIGHTS//
+            <motion.p variants={itemVariants} className="text-white/40 font-display text-[11px] tracking-[0.25em] uppercase font-semibold">
+              ENGINEERING HIGHLIGHTS
             </motion.p>
             {highlights.map((h, i) => (
               <motion.div key={i} variants={itemVariants} className="flex gap-3.5 group">
-                <div className="relative w-0.5 shrink-0 mt-1 rounded-none overflow-hidden">
+                <div className="relative w-0.5 shrink-0 mt-1 rounded-full overflow-hidden">
                   <div className="absolute inset-0 bg-white/10" />
                   <motion.div
                     initial={{ scaleY: 0 }}
@@ -228,7 +228,7 @@ export default function ForTheTeamSection() {
         >
           {/* Screenshot */}
           <div
-            className="w-full lg:max-h-[38dvh] drop-shadow-[0_20px_50px_rgba(0,0,0,0.9)] select-none overflow-hidden border border-white/10 rounded-none bg-[#070708] relative"
+            className="w-full lg:max-h-[38dvh] drop-shadow-[0_20px_50px_rgba(0,0,0,0.9)] select-none overflow-hidden border border-white/10 rounded-2xl bg-[#070708] relative"
           >
             <div 
               className="w-full h-full aspect-video lg:aspect-auto overflow-hidden relative bg-[#0c0d0f]"
@@ -244,7 +244,7 @@ export default function ForTheTeamSection() {
               {!imageLoaded && (
                 <div className="absolute inset-0 flex flex-col items-center justify-center bg-[#070708] gap-3">
                   <div className="w-8 h-8 border-2 border-[#e23645]/20 border-t-[#e23645] rounded-full animate-spin" />
-                  <span className="text-[10px] font-mono tracking-[0.2em] text-[#e23645] animate-pulse">LOAD_ASSET//</span>
+                  <span className="text-[10px] font-display tracking-[0.2em] text-[#e23645] animate-pulse">LOADING ASSET</span>
                 </div>
               )}
             </div>

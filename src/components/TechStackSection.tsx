@@ -53,72 +53,65 @@ export default function TechStackSection() {
       <div className="w-full max-w-[1800px] flex flex-col justify-center relative z-10">
 
         {/* ── HEADER ── */}
-        <div className="mb-10 md:mb-16 flex items-center gap-10 relative overflow-hidden">
+        <div className="mb-10 md:mb-16 flex items-center gap-8 relative overflow-hidden">
           <motion.h2
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0 }}
-            className="text-3xl md:text-6xl font-black uppercase tracking-tighter shrink-0"
+            className="text-3xl md:text-6xl font-display font-extrabold uppercase tracking-tight shrink-0 text-white"
           >
-            TECH_STACK
+            TECH STACK
           </motion.h2>
           <motion.div
             initial={{ scaleX: 0 }}
             animate={{ scaleX: 1 }}
             transition={{ duration: 1.8, ease: easing, delay: 0.3 }}
-            className="h-1.5 bg-current flex-1 origin-left"
+            className="h-px bg-linear-to-r from-[#D4AF37]/60 via-white/20 to-transparent flex-1 origin-left mt-2"
           />
         </div>
 
         {/* ── ROWS ── */}
-        <div className="flex flex-col relative border-t-2 border-current/10">
+        <div className="flex flex-col relative border-t border-white/10">
           {techGroups.map((group, groupIdx) => (
-            <div key={group.category} className="group relative w-full py-10 md:py-14 border-b-2 border-current/10">
+            <div key={group.category} className="group relative w-full py-10 md:py-14 border-b border-white/10">
 
               <motion.div
                 initial={{ scaleX: 0 }}
                 animate={{ scaleX: 1 }}
                 transition={{ duration: 1.2, ease: easing, delay: groupIdx * 0.15 + 0.5 }}
-                className="absolute top-0 left-0 w-full h-px bg-current opacity-20 origin-left"
+                className="absolute top-0 left-0 w-full h-px bg-[#D4AF37]/20 origin-left"
               />
 
-              {/* Category Label (Tightened //) */}
-              <div className="flex items-center gap-6 mb-8">
+              {/* Category Label */}
+              <div className="flex items-center gap-4 mb-8">
                 <motion.span
                   initial={{ opacity: 0 }}
-                  animate={{ opacity: 0.4 }}
+                  animate={{ opacity: 0.8 }}
                   transition={{ duration: 0.8, delay: groupIdx * 0.2 + 1.2 }}
-                  className="text-xs md:text-sm font-mono tracking-[0.5em] font-black text-(--accent)"
+                  className="text-xs md:text-sm font-display tracking-[0.35em] font-semibold text-[#D4AF37] uppercase"
                 >
-                  {group.category}//
+                  {group.category.replace('_', ' ')}
                 </motion.span>
                 <motion.div
                   initial={{ scaleX: 0 }}
                   animate={{ scaleX: 1 }}
                   transition={{ delay: groupIdx * 0.2 + 0.6, duration: 0.8 }}
-                  className="h-0.5 w-16 bg-(--accent) origin-left"
+                  className="h-px w-12 bg-[#D4AF37]/50 origin-left"
                 />
               </div>
 
               {/* Items Grid */}
               <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-12 md:gap-x-24 gap-y-10">
                 {group.items.map((tech, techIdx) => (
-                  <div key={tech.name} className="flex items-center gap-6 md:gap-10 group/item cursor-crosshair min-w-0">
+                  <div key={tech.name} className="flex items-center gap-6 md:gap-8 group/item cursor-pointer min-w-0">
                     <div className="relative shrink-0">
                       <motion.div
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 0.9 }}
                         transition={{ duration: 1, delay: 1.5 + techIdx * 0.05 }}
                       >
-                        <tech.icon className="text-5xl md:text-7xl lg:text-[90px] text-white group-hover/item:text-(--accent) group-hover/item:scale-110 transition-all duration-700 drop-shadow-[0_0_25px_rgba(255,255,255,0.2)]" />
+                        <tech.icon className="text-5xl md:text-7xl lg:text-[80px] text-white/80 group-hover/item:text-[#D4AF37] group-hover/item:scale-105 transition-all duration-500 drop-shadow-[0_0_25px_rgba(212,175,55,0.15)]" />
                       </motion.div>
-
-                      <motion.div
-                        initial={{ scaleY: 0 }}
-                        animate={{ scaleY: 1 }}
-                        transition={{ delay: 0.8 + techIdx * 0.05, duration: 1 }}
-                        className="absolute -left-4 top-0 w-1 h-full bg-(--accent) opacity-60 origin-top"
-                      />
                     </div>
 
                     <div className="flex flex-col flex-1 min-w-0">
@@ -126,17 +119,17 @@ export default function TechStackSection() {
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         transition={{ duration: 1, delay: 1.6 + techIdx * 0.05 }}
-                        className="text-2xl md:text-4xl font-black tracking-tighter leading-none uppercase text-white group-hover/item:text-(--accent) transition-colors truncate"
+                        className="text-xl md:text-3xl font-display font-bold tracking-tight leading-none uppercase text-white/90 group-hover/item:text-[#E5C378] transition-colors truncate"
                       >
                         {tech.name}
                       </motion.span>
 
-                      <div className="h-2 bg-white/10 mt-3 relative overflow-hidden">
+                      <div className="h-0.5 bg-white/10 mt-3 relative overflow-hidden rounded-full">
                         <motion.div
                           initial={{ scaleX: 0 }}
                           animate={{ scaleX: 1 }}
                           transition={{ delay: 1 + techIdx * 0.05, duration: 1.5, ease: easing }}
-                          className="absolute inset-y-0 left-0 w-full bg-(--accent) shadow-[0_0_20px_var(--accent)] origin-left"
+                          className="absolute inset-y-0 left-0 w-full bg-linear-to-r from-[#D4AF37] to-[#E5C378] opacity-80 origin-left"
                         />
                       </div>
                     </div>
@@ -150,19 +143,19 @@ export default function TechStackSection() {
         {/* ── FOOTER SYSTEM LOG ── */}
         <motion.div
           initial={{ opacity: 0 }}
-          animate={{ opacity: 0.4 }}
+          animate={{ opacity: 0.6 }}
           transition={{ duration: 1, delay: 2.2 }}
-          className="mt-12 flex justify-between items-center text-xs font-mono"
+          className="mt-10 flex justify-between items-center text-xs font-display tracking-widest text-white/60"
         >
-          <div className="flex items-center gap-10">
-            <span className="font-black tracking-widest text-(--accent)">INTEGRITY_CHECK: PASSED//</span>
-            <div className="flex gap-2">
-              {[...Array(10)].map((_, i) => (
-                <div key={i} className="w-8 h-2 bg-(--accent)" />
+          <div className="flex items-center gap-6">
+            <span className="font-semibold text-[#D4AF37]">SYSTEM ARCHITECTURE INTEGRITY</span>
+            <div className="hidden md:flex gap-1.5 opacity-60">
+              {[...Array(6)].map((_, i) => (
+                <div key={i} className="w-6 h-0.5 bg-[#D4AF37]" />
               ))}
             </div>
           </div>
-          <span className="hidden md:block tracking-[0.4em]">SYSTEM_READY_OPERATIONAL//</span>
+          <span className="hidden md:block tracking-[0.3em] uppercase">OPERATIONAL // OPTIMIZED</span>
         </motion.div>
 
       </div>
