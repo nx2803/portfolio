@@ -1,0 +1,454 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Footer from "../../components/Footer.tsx";
+import { PROJECTS, type ProjectDetail } from "../../data/projects";
+import { HiArrowLeft, HiArrowRight } from "react-icons/hi";
+import { HiArrowUpRight } from "react-icons/hi2";
+import { FaGithub } from "react-icons/fa";
+
+export function getStaticPaths() {
+  return PROJECTS.map((project, index) => {
+    const prevProject =
+      index > 0 ? PROJECTS[index - 1] : PROJECTS[PROJECTS.length - 1];
+    const nextProject =
+      index < PROJECTS.length - 1 ? PROJECTS[index + 1] : PROJECTS[0];
+    return {
+      params: { slug: project.slug },
+      props: { project, prevProject, nextProject },
+    };
+  });
+}
+
+interface Props {
+  project: ProjectDetail;
+  prevProject: ProjectDetail;
+  nextProject: ProjectDetail;
+}
+
+const { project, prevProject, nextProject } = Astro.props;
+---
+
+<Layout
+  title={`${project.title} | NX280 Case Study`}
+  description={project.tagline}
+  currentPath="/works"
+>
+  <main class="w-full flex flex-col pt-24 bg-[#08080a] text-white">
+    <!-- Top Breadcrumb & Metadata Track -->
+    <div
+      class="w-full px-6 sm:px-10 lg:px-16 max-w-[1440px] mx-auto flex items-center justify-between text-xs font-mono text-white/50 border-b border-white/10 pb-4"
+    >
+      <a
+        href="/works"
+        class="flex items-center gap-1.5 hover:text-[#D4AF37] transition-colors group"
+      >
+        <HiArrowLeft
+          className="group-hover:-translate-x-1 transition-transform"
+        />
+        <span>WORKS ARCHIVE</span>
+      </a>
+      <span class="flex items-center gap-2">
+        <span
+          class="w-2 h-2 rounded-full"
+          style={{ backgroundColor: project.accent }}></span>
+        <span>PHASE {project.phaseId} // {project.phaseTag}</span>
+      </span>
+    </div>
+
+    <!-- Master Article Container -->
+    <article
+      class="w-full px-6 sm:px-10 lg:px-16 py-10 max-w-[1440px] mx-auto flex flex-col gap-12 sm:gap-14"
+    >
+      <!-- 1. Master Header (타이틀, 태그라인, 핵심 메타, 3대 메트릭스) -->
+      <header class="flex flex-col gap-6 border-b border-white/10 pb-10">
+        <div class="flex flex-col gap-2">
+          <span
+            class="text-[11px] font-mono tracking-widest uppercase font-bold"
+            style={{ color: project.accent }}
+          >
+            {project.subtitle}
+          </span>
+          <h1
+            class="text-4xl sm:text-6xl font-display font-extrabold uppercase tracking-tight text-white leading-tight"
+          >
+            {project.title}
+          </h1>
+          <p
+            class="text-base sm:text-lg text-white/80 font-normal max-w-4xl leading-relaxed break-keep"
+          >
+            {project.tagline}
+          </p>
+        </div>
+
+        {/* Project Meta Details Strip */}
+        <div
+          class="flex flex-wrap items-center gap-x-6 gap-y-2 text-xs font-mono text-white/60 border-y border-white/10 py-3"
+        >
+          <div>
+            <span class="text-white/40">TIMELINE:</span>
+            {project.timeline}
+          </div>
+          <div><span class="text-white/40">ROLE:</span> {project.role}</div>
+          {
+            project.links.github && (
+              <a
+                href={project.links.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center gap-1.5 text-white hover:text-[#D4AF37] transition-colors"
+              >
+                <FaGithub size={13} />
+                <span>GITHUB</span>
+                <HiArrowUpRight size={11} />
+              </a>
+            )
+          }
+          {
+            project.links.videoDemo && (
+              <a
+                href={project.links.videoDemo}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center gap-1.5 text-white hover:text-[#D4AF37] transition-colors"
+              >
+                <span>DEMO</span>
+                <HiArrowUpRight size={11} />
+              </a>
+            )
+          }
+        </div>
+
+        {/* 3 Quantitative Metrics Grid */}
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-1">
+          {
+            project.metrics.map((m) => (
+              <div class="p-5 rounded-xl glass-panel border border-white/10 flex flex-col justify-between gap-2">
+                <span class="text-[10px] font-mono tracking-wider text-white/40 uppercase">
+                  {m.label}
+                </span>
+                <span
+                  class="text-2xl sm:text-3xl font-mono font-bold text-white tracking-tight"
+                  style={{ color: project.accent }}
+                >
+                  {m.value}
+                </span>
+                <span class="text-xs text-white/60 leading-relaxed font-normal">
+                  {m.desc}
+                </span>
+              </div>
+            ))
+          }
+        </div>
+      </header>
+
+      <!-- 2. Cinematic Preview Banner (와이드 스크린샷) -->
+      <section
+        class="w-full relative aspect-[21/9] overflow-hidden rounded-2xl bg-black border border-white/15 shadow-xl"
+      >
+        <img
+          src={project.heroImage}
+          alt={project.title}
+          class="w-full h-full object-cover object-center contrast-110"
+        />
+      </section>
+
+      <!-- 3. Problem Statement & Architectural Goals (2열 대비 구조) -->
+      <section
+        class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start border-b border-white/10 pb-12"
+      >
+        <div class="lg:col-span-4 flex flex-col gap-1.5">
+          <span
+            class="text-[11px] font-mono tracking-widest text-[#D4AF37] uppercase font-bold"
+          >
+            01 // BACKGROUND & GOALS
+          </span>
+          <h2
+            class="text-2xl sm:text-3xl font-display font-extrabold uppercase tracking-tight text-white"
+          >
+            WHY IT WAS BUILT
+          </h2>
+        </div>
+
+        <div class="lg:col-span-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div
+            class="p-6 rounded-xl glass-panel border border-white/10 flex flex-col gap-3"
+          >
+            <span
+              class="text-[11px] font-mono tracking-widest font-bold text-[#E5C378] uppercase"
+            >
+              [ PROBLEM STATEMENT ]
+            </span>
+            <p
+              class="text-sm text-white/80 leading-relaxed font-normal break-keep"
+            >
+              {project.background.problemStatement}
+            </p>
+          </div>
+
+          <div
+            class="p-6 rounded-xl glass-panel border border-white/10 flex flex-col gap-3"
+          >
+            <span
+              class="text-[11px] font-mono tracking-widest font-bold text-[#D4AF37] uppercase"
+            >
+              [ ARCHITECTURAL GOALS ]
+            </span>
+            <p
+              class="text-sm text-white/80 leading-relaxed font-normal break-keep"
+            >
+              {project.background.designGoal}
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 4. System Architecture & Data Flow -->
+      <section
+        class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start border-b border-white/10 pb-12"
+      >
+        <div class="lg:col-span-4 flex flex-col gap-1.5">
+          <span
+            class="text-[11px] font-mono tracking-widest text-[#D4AF37] uppercase font-bold"
+          >
+            02 // SYSTEM BLUEPRINT
+          </span>
+          <h2
+            class="text-2xl sm:text-3xl font-display font-extrabold uppercase tracking-tight text-white"
+          >
+            ARCHITECTURE & DATA FLOW
+          </h2>
+        </div>
+
+        <div class="lg:col-span-8 flex flex-col gap-6">
+          <div
+            class="p-6 rounded-xl glass-panel border border-white/10 flex flex-col gap-3"
+          >
+            <h3
+              class="text-base font-display font-bold text-white tracking-tight"
+            >
+              핵심 아키텍처 구성 포인트
+            </h3>
+            <ul
+              class="flex flex-col gap-2.5 text-sm text-white/80 leading-relaxed font-normal"
+            >
+              {
+                project.architecturePoints.map((point) => (
+                  <li class="flex items-start gap-2.5">
+                    <span
+                      class="mt-2 w-1.5 h-1.5 rounded-full shrink-0"
+                      style={{ backgroundColor: project.accent }}
+                    />
+                    <span class="break-keep">{point}</span>
+                  </li>
+                ))
+              }
+            </ul>
+          </div>
+
+          <div
+            class="p-6 rounded-xl glass-panel border border-white/10 flex flex-col gap-3"
+          >
+            <h3
+              class="text-base font-display font-bold text-white tracking-tight"
+            >
+              데이터베이스 설계 및 데이터 흐름
+            </h3>
+            <ul
+              class="flex flex-col gap-2.5 text-sm text-white/80 leading-relaxed font-normal"
+            >
+              {
+                project.databaseAndFlow.map((flow) => (
+                  <li class="flex items-start gap-2.5">
+                    <span
+                      class="mt-2 w-1.5 h-1.5 rounded-full shrink-0"
+                      style={{ backgroundColor: project.accent }}
+                    />
+                    <span class="break-keep">{flow}</span>
+                  </li>
+                ))
+              }
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- 5. Engineering Challenges & Deep-Dive Solutions -->
+      <section
+        class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start border-b border-white/10 pb-12"
+      >
+        <div class="lg:col-span-4 flex flex-col gap-1.5">
+          <span
+            class="text-[11px] font-mono tracking-widest text-[#D4AF37] uppercase font-bold"
+          >
+            03 // TECHNICAL CHALLENGES
+          </span>
+          <h2
+            class="text-2xl sm:text-3xl font-display font-extrabold uppercase tracking-tight text-white"
+          >
+            CHALLENGES & SOLUTIONS
+          </h2>
+        </div>
+
+        <div class="lg:col-span-8 flex flex-col gap-6">
+          {
+            project.challenges.map((ch, idx) => (
+              <div class="p-6 rounded-xl glass-panel border border-white/10 flex flex-col gap-4">
+                <div class="flex items-center gap-3 border-b border-white/10 pb-3">
+                  <span class="text-[10px] font-mono tracking-wider text-[#D4AF37] font-bold px-2 py-0.5 rounded bg-[#D4AF37]/10 border border-[#D4AF37]/30">
+                    CHALLENGE 0{idx + 1}
+                  </span>
+                  <h3 class="text-base sm:text-lg font-display font-bold text-white tracking-tight">
+                    {ch.title}
+                  </h3>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div class="p-4 rounded-lg bg-white/[0.02] border border-white/5 flex flex-col gap-1.5">
+                    <span class="text-[10px] font-mono tracking-wider text-rose-400 font-bold uppercase">
+                      [ PROBLEM & BOTTLENECK ]
+                    </span>
+                    <p class="text-xs text-white/70 leading-relaxed break-keep font-normal">
+                      {ch.problem}
+                    </p>
+                  </div>
+
+                  <div class="p-4 rounded-lg bg-white/[0.02] border border-white/5 flex flex-col gap-1.5">
+                    <span class="text-[10px] font-mono tracking-wider text-emerald-400 font-bold uppercase">
+                      [ ARCHITECTURAL RESOLUTION ]
+                    </span>
+                    <p class="text-xs text-white/80 leading-relaxed break-keep font-normal">
+                      {ch.solution}
+                    </p>
+                  </div>
+                </div>
+
+                <div class="p-3 rounded-lg bg-white/[0.03] border border-white/10 text-xs font-mono flex items-center justify-between text-white/80">
+                  <span class="text-white/40">VERIFIED OUTCOME:</span>
+                  <span
+                    class="font-semibold text-white"
+                    style={{ color: project.accent }}
+                  >
+                    {ch.result}
+                  </span>
+                </div>
+              </div>
+            ))
+          }
+        </div>
+      </section>
+
+      <!-- 6. Key Features Grid -->
+      <section
+        class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start border-b border-white/10 pb-12"
+      >
+        <div class="lg:col-span-4 flex flex-col gap-1.5">
+          <span
+            class="text-[11px] font-mono tracking-widest text-[#D4AF37] uppercase font-bold"
+          >
+            04 // DELIVERED FEATURES
+          </span>
+          <h2
+            class="text-2xl sm:text-3xl font-display font-extrabold uppercase tracking-tight text-white"
+          >
+            KEY CAPABILITIES
+          </h2>
+        </div>
+
+        <div class="lg:col-span-8 grid grid-cols-1 sm:grid-cols-2 gap-4">
+          {
+            project.keyFeatures.map((feat) => (
+              <div class="p-5 rounded-xl glass-panel border border-white/10 flex flex-col gap-1.5">
+                <h4 class="text-sm font-display font-bold text-white tracking-tight">
+                  {feat.title}
+                </h4>
+                <p class="text-xs text-white/70 leading-relaxed font-normal break-keep">
+                  {feat.desc}
+                </p>
+              </div>
+            ))
+          }
+        </div>
+      </section>
+
+      <!-- 7. Quantitative Results & Retrospective -->
+      <section
+        class="p-6 sm:p-8 rounded-2xl glass-panel border border-white/10 grid grid-cols-1 lg:grid-cols-12 gap-6 items-center"
+      >
+        <div class="lg:col-span-6 flex flex-col gap-3">
+          <span
+            class="text-[11px] font-mono tracking-widest text-[#D4AF37] uppercase font-bold"
+          >
+            05 // QUANTITATIVE VERIFICATION
+          </span>
+          <ul class="flex flex-col gap-2 text-sm text-white/80">
+            {
+              project.retrospective.results.map((res) => (
+                <li class="flex items-start gap-2">
+                  <span class="text-emerald-400 font-bold">✓</span>
+                  <span class="break-keep font-normal">{res}</span>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+
+        <div
+          class="lg:col-span-6 flex flex-col gap-2 border-t lg:border-t-0 lg:border-l border-white/10 pt-6 lg:pt-0 lg:pl-6"
+        >
+          <span
+            class="text-[10px] font-mono tracking-widest text-white/40 uppercase font-bold"
+          >
+            ENGINEERING RETROSPECTIVE
+          </span>
+          <blockquote
+            class="text-sm sm:text-base text-white/90 leading-relaxed italic break-keep font-normal"
+          >
+            "{project.retrospective.takeaway}"
+          </blockquote>
+        </div>
+      </section>
+
+      <!-- 8. Prev / Next Navigation -->
+      <nav class="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-2">
+        <a
+          href={`/works/${prevProject.slug}`}
+          class="p-6 rounded-xl glass-panel flex flex-col gap-1 hover:border-white/30 transition-all group"
+        >
+          <span
+            class="text-[10px] font-mono tracking-widest text-white/40 group-hover:text-white flex items-center gap-1.5"
+          >
+            <HiArrowLeft
+              className="group-hover:-translate-x-1 transition-transform"
+            /> PREVIOUS PROJECT
+          </span>
+          <span
+            class="text-lg font-display font-bold text-white group-hover:text-[#D4AF37] transition-colors"
+          >
+            {prevProject.title}
+          </span>
+        </a>
+
+        <a
+          href={`/works/${nextProject.slug}`}
+          class="p-6 rounded-xl glass-panel flex flex-col gap-1 items-end text-right hover:border-white/30 transition-all group"
+        >
+          <span
+            class="text-[10px] font-mono tracking-widest text-white/40 group-hover:text-white flex items-center gap-1.5"
+          >
+            NEXT PROJECT <HiArrowRight
+              className="group-hover:translate-x-1 transition-transform"
+            />
+          </span>
+          <span
+            class="text-lg font-display font-bold text-white group-hover:text-[#D4AF37] transition-colors"
+          >
+            {nextProject.title}
+          </span>
+        </a>
+      </nav>
+    </article>
+
+    <!-- Global Footer -->
+    <Footer client:load />
+  </main>
+</Layout>
