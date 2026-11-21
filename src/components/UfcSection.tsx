@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
+import React, { useEffect, useRef, useState } from 'react';
+import { motion, useInView } from 'framer-motion';
 import { SiSpring, SiFastapi, SiPython, SiPostgresql, SiNextdotjs, SiVercel } from 'react-icons/si';
 import { FaJava, FaGithub } from 'react-icons/fa';
 import { useStore } from '@nanostores/react';
@@ -179,14 +179,15 @@ function CornerFrame({
 }
 
 export default function UfcSection() {
-  const [mounted, setMounted] = useState(false);
   const [imageLoaded, setImageLoaded] = useState(false);
   const activeSection = useStore($activeSection);
   const isTransitionTarget = activeSection === 'ufc';
   const easing = [0.16, 1, 0.3, 1] as any;
 
-  useEffect(() => { setMounted(true); }, []);
-  if (!mounted) return <section id="ufc" className="min-h-screen" />;
+  // 섹션이 뷰포트에 들어올 때 타이핑을 시작한다.
+  // (activeSection 기반 게이팅은 세로 스크롤 모델에서 발화가 늦어 빈 섹션처럼 보일 수 있었다)
+  const sectionRef = useRef<HTMLElement | null>(null);
+  const sectionInView = useInView(sectionRef, { once: true, margin: '-120px' });
 
   const stacks = [
     { Icon: FaJava, name: 'JAVA 21', desc: 'Virtual Threads Core' },
@@ -214,9 +215,9 @@ export default function UfcSection() {
 
   return (
     <section
-      id="ufc"
-      className="relative w-full h-full flex items-center justify-center text-white bg-transparent pt-24 pb-28 lg:pt-[10dvh] lg:pb-[2.5dvh] overflow-y-auto lg:overflow-hidden"
-      style={{ fontFamily: 'var(--font-ufc)', WebkitOverflowScrolling: 'touch' }}
+      ref={sectionRef}
+      className="relative w-full min-h-screen flex items-center justify-center text-white bg-transparent py-24 lg:py-32"
+      style={{ fontFamily: 'var(--font-ufc)' }}
     >
       {/* Subtle bg */}
       <div className="absolute inset-0 pointer-events-none z-0">
@@ -239,7 +240,7 @@ export default function UfcSection() {
                 className="text-[#6a737d] font-display text-xs tracking-[0.3em] uppercase font-semibold"
                 delay={0.1}
                 speed={20}
-                active={isTransitionTarget}
+                active={sectionInView}
               />
             </div>
             
@@ -254,7 +255,7 @@ export default function UfcSection() {
               }}
               delay={0.3}
               speed={25}
-              active={isTransitionTarget}
+              active={sectionInView}
               as="h2"
             />
 
@@ -265,7 +266,7 @@ export default function UfcSection() {
               style={{ fontSize: 'clamp(1.0rem, 1.15vw, 1.25rem)', lineHeight: '1.5' }}
               delay={0.8}
               speed={16}
-              active={isTransitionTarget}
+              active={sectionInView}
               as="p"
               cursorColor="rgba(255,255,255,0.5)"
             />
@@ -278,7 +279,7 @@ export default function UfcSection() {
               className="text-white/35 font-display text-[11px] tracking-[0.25em] uppercase mb-3 block font-semibold"
               delay={1.1}
               speed={30}
-              active={isTransitionTarget}
+              active={sectionInView}
             />
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
               {stacks.map((s, i) => (
@@ -307,7 +308,7 @@ export default function UfcSection() {
               className="text-white/35 font-display text-[11px] tracking-[0.25em] uppercase mb-2 block font-semibold"
               delay={1.4}
               speed={30}
-              active={isTransitionTarget}
+              active={sectionInView}
             />
             {highlights.map((h, i) => (
               <div key={i} className="flex gap-3.5 group">
@@ -324,14 +325,14 @@ export default function UfcSection() {
                     className="text-white font-bold text-lg md:text-xl mb-1.5 block"
                     delay={1.6 + i * 0.15}
                     speed={15}
-                    active={isTransitionTarget}
+                    active={sectionInView}
                   />
                   <InlineTypewriter
                     text={h.desc}
                     className="text-white/65 text-base md:text-lg leading-relaxed block"
                     delay={1.8 + i * 0.15}
                     speed={10}
-                    active={isTransitionTarget}
+                    active={sectionInView}
                     cursor={false}
                   />
                 </div>

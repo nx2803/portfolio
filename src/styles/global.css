@@ -30,14 +30,21 @@
 
 html, body {
   height: 100%;
-  overflow: hidden;
   background-color: var(--background);
   color: var(--foreground);
   font-family: var(--font-main);
-  /* Smoother, more sophisticated transition */
-  transition: background-color 1.2s cubic-bezier(0.2, 1, 0.3, 1),
-    color 1.2s cubic-bezier(0.2, 1, 0.3, 1);
   -webkit-font-smoothing: antialiased;
+}
+
+/* Lenis smooth scroll */
+html.lenis, html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
 }
 
 /* 모바일 터치 하이라이트 전역 제거 */
@@ -103,22 +110,6 @@ html, body {
 }
 
 
-
-/* ================== */
-/* PORTAL / DETAIL TRANSITION UTILS */
-/* ================== */
-
-/* Ensure sections take up minimum height to avoid layout jumps */
-section {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-#footer {
-  min-height: auto;
-}
 
 /* ================== */
 /* FOR THE TEAM KEYFRAMES & ACCELERATED CLASSES (GPU) */

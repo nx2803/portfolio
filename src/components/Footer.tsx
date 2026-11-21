@@ -1,20 +1,12 @@
-import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { SiGithub } from 'react-icons/si';
 import { MdEmail } from 'react-icons/md';
 
 export default function Footer() {
-  const [mounted, setMounted] = useState(false);
   const easing = [0.16, 1, 0.3, 1] as any;
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  if (!mounted) return <section id="contact" className="h-screen" />;
-
   return (
-    <section id="contact" className="w-full h-full relative flex flex-col items-center px-6 md:px-16 lg:px-24 overflow-y-auto lg:overflow-hidden bg-transparent text-(--foreground) pt-24 pb-28 lg:pt-[8.5dvh] lg:pb-[3.5dvh] md:pt-32" style={{ WebkitOverflowScrolling: 'touch' }}>
+    <section className="w-full relative flex flex-col items-center px-6 md:px-16 lg:px-24 bg-transparent text-(--foreground) min-h-screen py-24 lg:py-32">
 
       <div className="w-full max-w-[1800px] flex flex-col items-center relative z-10 flex-1 justify-center">
 

@@ -1,17 +1,18 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { useStore } from '@nanostores/react';
-import { $activeSection, updateActiveSection, type ViewMode } from '../store/sectionStore';
+import { $activeSection } from '../store/sectionStore';
+import { scrollToSection } from '../lib/scroll';
 import { useState, useEffect } from 'react';
-import { HiMenu, HiX, HiChevronLeft, HiChevronRight } from 'react-icons/hi';
+import { HiMenu, HiX } from 'react-icons/hi';
 
 const sections = [
-  { id: 'intro', label: 'Intro', mode: 'portal' as ViewMode },
-  { id: 'techstack', label: 'Tech Stack', mode: 'portal' as ViewMode },
-  { id: 'trilogy_intro', label: 'Trilogy', mode: 'portal' as ViewMode },
-  { id: 'peecemaker', label: 'Peecemaker', mode: 'detail' as ViewMode },
-  { id: 'fortheteam', label: 'For The Team', mode: 'detail' as ViewMode },
-  { id: 'ufc', label: 'UFC', mode: 'detail' as ViewMode },
-  { id: 'contact', label: 'Contact', mode: 'portal' as ViewMode },
+  { id: 'intro', label: 'Intro' },
+  { id: 'techstack', label: 'Tech Stack' },
+  { id: 'trilogy_intro', label: 'Trilogy' },
+  { id: 'peecemaker', label: 'Peecemaker' },
+  { id: 'fortheteam', label: 'For The Team' },
+  { id: 'ufc', label: 'UFC' },
+  { id: 'contact', label: 'Contact' },
 ];
 
 const themeColors: Record<string, string> = {
@@ -23,51 +24,41 @@ const themeColors: Record<string, string> = {
 export default function Header() {
   const activeSection = useStore($activeSection);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [mounted, setMounted] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    setMounted(true);
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 40);
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-
-  const currentColor = themeColors[activeSection] || '#D4AF37';
 
   useEffect(() => {
     if (isMenuOpen) document.body.style.overflow = 'hidden';
-    else document.body.style.overflow = 'unset';
+    else document.body.style.overflow = '';
   }, [isMenuOpen]);
 
-  const handleNavClick = (id: string, mode: ViewMode) => {
-    updateActiveSection(id);
+  const currentColor = themeColors[activeSection] || '#D4AF37';
+
+  const handleNavClick = (id: string) => {
     setIsMenuOpen(false);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    scrollToSection(id);
   };
-
-  const activeLabel = sections.find(s => s.id === activeSection)?.label || 'Intro';
-  const activeIndex = sections.findIndex(s => s.id === activeSection);
-
-  const navigatePrev = () => {
-    if (activeIndex > 0) {
-      const prev = sections[activeIndex - 1];
-      handleNavClick(prev.id, prev.mode);
-    }
-  };
-
-  const navigateNext = () => {
-    if (activeIndex < sections.length - 1) {
-      const next = sections[activeIndex + 1];
-      handleNavClick(next.id, next.mode);
-    }
-  };
-
-  if (!mounted) return null;
 
   return (
     <>
-      {/* ── PC HEADER: 모던 글래스 네비게이션 ── */}
+      {/* ── PC HEADER ── */}
       <header className="hidden md:block fixed top-8 left-1/2 -translate-x-1/2 z-[200] w-full max-w-fit px-6">
-        <nav className="relative px-8 py-3.5 flex items-center gap-8 whitespace-nowrap rounded-full bg-[#0a0a0d]/80 backdrop-blur-xl border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.6)]">
-
-          {/* Actual Content */}
+        <nav
+          className="relative px-8 py-3.5 flex items-center gap-8 whitespace-nowrap rounded-full backdrop-blur-2xl backdrop-saturate-150 border shadow-[0_8px_32px_rgba(0,0,0,0.6)] transition-all duration-500"
+          style={{
+            backgroundColor: scrolled ? 'rgba(10,10,13,0.72)' : 'rgba(10,10,13,0.42)',
+            borderColor: scrolled ? 'rgba(255,255,255,0.14)' : 'rgba(255,255,255,0.09)',
+            backdropFilter: 'blur(24px) saturate(160%)',
+            WebkitBackdropFilter: 'blur(24px) saturate(160%)',
+          }}
+        >
           <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
@@ -75,8 +66,8 @@ export default function Header() {
             className="flex items-center gap-8 text-white z-10 w-full"
           >
             {/* Logo */}
-            <button 
-              onClick={() => handleNavClick('intro', 'portal')}
+            <button
+              onClick={() => handleNavClick('intro')}
               className="flex items-center gap-2 group shrink-0"
             >
               <span className="text-[14px] font-bold tracking-[0.2em] uppercase font-display text-white/80 group-hover:text-[#D4AF37] transition-colors">
@@ -88,16 +79,13 @@ export default function Header() {
 
             {/* Navigation Links */}
             <div className="flex gap-6 items-center">
-              {sections.map(({ id, label, mode }) => (
+              {sections.map(({ id, label }) => (
                 <button
                   key={id}
-                  onClick={() => handleNavClick(id, mode)}
+                  onClick={() => handleNavClick(id)}
                   className={`
                     relative py-1 text-[13px] font-semibold tracking-[0.15em] uppercase transition-all duration-300
-                    ${activeSection === id
-                      ? 'font-bold'
-                      : 'text-white/60 hover:text-white'
-                    }
+                    ${activeSection === id ? 'font-bold' : 'text-white/60 hover:text-white'}
                   `}
                   style={{ color: activeSection === id ? currentColor : undefined }}
                 >
@@ -107,7 +95,7 @@ export default function Header() {
                       layoutId="activeTabHeader"
                       className="absolute -bottom-1 left-0 w-full h-[2px] rounded-full"
                       style={{ backgroundColor: currentColor, boxShadow: `0 0 10px ${currentColor}` }}
-                      transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                      transition={{ type: 'spring', stiffness: 380, damping: 30 }}
                     />
                   )}
                 </button>
@@ -120,58 +108,46 @@ export default function Header() {
       {/* ── MOBILE HEADER ── */}
       <header className="md:hidden fixed top-6 left-1/2 -translate-x-1/2 z-[210] w-full max-w-[90vw] px-4">
         <div
-          className={`relative px-5 py-3 flex items-center justify-between rounded-xl transition-all duration-300 ${isMenuOpen ? '' : 'bg-[#08080a]/90 backdrop-blur-md border border-white/10 shadow-[0_4px_24px_rgba(0,0,0,0.6)]'}`}
-          style={{ WebkitTapHighlightColor: 'transparent' }}
+          className={`relative px-5 py-3 flex items-center justify-between rounded-xl transition-all duration-300 ${isMenuOpen ? '' : 'bg-[#08080a]/70 border border-white/10 shadow-[0_4px_24px_rgba(0,0,0,0.6)]'}`}
+          style={{
+            WebkitTapHighlightColor: 'transparent',
+            backdropFilter: isMenuOpen ? undefined : 'blur(18px) saturate(160%)',
+            WebkitBackdropFilter: isMenuOpen ? undefined : 'blur(18px) saturate(160%)',
+          }}
         >
-
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.5, delay: 1.0 }}
+            transition={{ duration: 0.5, delay: 0.8 }}
             className="flex items-center justify-between z-10 text-white w-full gap-2"
           >
-            {/* 이전 섹션 버튼 */}
+            {/* Logo */}
             <button
-              onClick={navigatePrev}
-              disabled={activeIndex === 0}
-              className="p-1 shrink-0 transition-colors disabled:opacity-20"
-              style={{ color: currentColor }}
-              aria-label="Previous section"
+              onClick={() => handleNavClick('intro')}
+              className="shrink-0"
             >
-              <HiChevronLeft className="text-2xl" />
+              <span className="text-[13px] font-bold tracking-[0.2em] uppercase font-display" style={{ color: currentColor }}>
+                NX280<span className="text-[#D4AF37]">.</span>
+              </span>
             </button>
 
-            {/* 현재 섹션 라벨 (탭하면 메뉴 오픈) */}
+            {/* 현재 섹션 라벨 */}
+            <span
+              className="text-[11px] font-mono tracking-[0.18em] uppercase font-bold flex-1 text-center truncate"
+              style={{ color: currentColor }}
+            >
+              {sections.find(s => s.id === activeSection)?.label?.toUpperCase() || 'INTRO'}
+            </span>
+
+            {/* 메뉴 토글 */}
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="flex-1 flex items-center justify-center gap-2 overflow-hidden"
-            >
-              <span
-                className="text-[13px] font-mono tracking-[0.18em] uppercase truncate transition-colors duration-300 font-bold"
-                style={{ color: currentColor }}
-              >
-                {isMenuOpen ? 'CLOSE' : activeLabel.toUpperCase()}
-              </span>
-              {!isMenuOpen && (
-                <HiMenu className="text-lg shrink-0" style={{ color: currentColor }} />
-              )}
-              {isMenuOpen && (
-                <HiX className="text-lg shrink-0" style={{ color: currentColor }} />
-              )}
-            </button>
-
-            {/* 다음 섹션 버튼 */}
-            <button
-              onClick={navigateNext}
-              disabled={activeIndex === sections.length - 1}
-              className="p-1 shrink-0 transition-colors disabled:opacity-20"
+              className="p-1 shrink-0"
               style={{ color: currentColor }}
-              aria-label="Next section"
             >
-              <HiChevronRight className="text-2xl" />
+              {isMenuOpen ? <HiX className="text-xl" /> : <HiMenu className="text-xl" />}
             </button>
           </motion.div>
-
         </div>
       </header>
 
@@ -182,14 +158,13 @@ export default function Header() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-200 bg-[#050505]/98 backdrop-blur-sm text-white flex flex-col overflow-y-auto"
+            className="fixed inset-0 z-[200] bg-[#050505]/98 backdrop-blur-sm text-white flex flex-col overflow-y-auto"
           >
-            {/* 메뉴 아이템 목록 — pt-28로 상단 플로팅 헤더와 겹치지 않게 여백 확보 */}
             <div className="flex flex-col gap-1 px-6 pt-28 pb-16">
-              {sections.map(({ id, label, mode }, idx) => (
+              {sections.map(({ id, label }, idx) => (
                 <motion.button
                   key={id}
-                  onClick={() => handleNavClick(id, mode)}
+                  onClick={() => handleNavClick(id)}
                   initial={{ opacity: 0, x: -16 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: idx * 0.04 }}
@@ -201,14 +176,12 @@ export default function Header() {
                   >
                     {String(idx + 1).padStart(2, '0')}
                   </span>
-                  <div className="flex flex-col">
-                    <span
-                      className="text-2xl font-bold uppercase tracking-tight leading-none transition-colors"
-                      style={{ color: activeSection === id ? currentColor : 'rgba(255,255,255,0.55)' }}
-                    >
-                      {label}
-                    </span>
-                  </div>
+                  <span
+                    className="text-2xl font-bold uppercase tracking-tight leading-none transition-colors"
+                    style={{ color: activeSection === id ? currentColor : 'rgba(255,255,255,0.55)' }}
+                  >
+                    {label}
+                  </span>
                   {activeSection === id && (
                     <span
                       className="ml-auto w-1.5 h-1.5 rounded-full shrink-0"

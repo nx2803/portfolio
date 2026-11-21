@@ -1,42 +1,17 @@
-import React, { useEffect, useState } from 'react';
-import { motion, useMotionValue, useTransform, useMotionTemplate } from 'framer-motion';
+import { useState } from 'react';
+import { motion } from 'framer-motion';
 import { SiNextdotjs, SiDocker, SiSupabase, SiReactquery, SiPostgresql, SiVercel, SiGithub } from 'react-icons/si';
 import { RiMapPinRangeLine } from 'react-icons/ri';
 import { useStore } from '@nanostores/react';
 import { $activeSection } from '../store/sectionStore';
 
 export default function PeecemakerSection() {
-  const [mounted, setMounted] = useState(false);
   const [imageLoaded, setImageLoaded] = useState(false);
   const activeSection = useStore($activeSection);
   const isTransitionTarget = activeSection === 'peecemaker';
 
   // 제주도의 부드럽고 산뜻한 감성에 맞는 Easing 정의
   const customEasing = [0.16, 1, 0.3, 1] as any;
-
-  // 3D Tilt 효과 제어
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-  
-  const rotateX = useTransform(mouseY, [-180, 180], [6, -6]);
-  const rotateY = useTransform(mouseX, [-320, 320], [-6, 6]);
-  const radialGlow = useMotionTemplate`radial-gradient(circle 220px at ${mouseX}px ${mouseY}px, rgba(251, 146, 60, 0.15) 0%, transparent 80%)`;
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const x = e.clientX - rect.left - rect.width / 2;
-    const y = e.clientY - rect.top - rect.height / 2;
-    mouseX.set(x);
-    mouseY.set(y);
-  };
-
-  const handleMouseLeave = () => {
-    mouseX.set(0);
-    mouseY.set(0);
-  };
-
-  useEffect(() => { setMounted(true); }, []);
-  if (!mounted) return <section id="peecemaker" className="min-h-screen" />;
 
   // Stagger 컨테이너 Variants (블록 레벨 순차 등장)
   const containerVariants = {
@@ -156,9 +131,8 @@ export default function PeecemakerSection() {
 
   return (
     <section
-      id="peecemaker"
-      className="relative w-full h-full flex items-center justify-center text-white bg-transparent pt-24 pb-28 lg:pt-[8.5dvh] lg:pb-[3.5dvh] overflow-y-auto lg:overflow-hidden"
-      style={{ fontFamily: 'var(--font-peecemaker)', WebkitOverflowScrolling: 'touch' }}
+      className="relative w-full min-h-screen flex items-center justify-center text-white bg-transparent py-24 lg:py-32"
+      style={{ fontFamily: 'var(--font-peecemaker)' }}
     >
       {/* 은은하고 싱그러운 제주 감귤/한라봉 귤빛 오렌지 백그라운드 오라 */}
       <div className="absolute inset-0 pointer-events-none z-0">
@@ -166,13 +140,14 @@ export default function PeecemakerSection() {
         <div className="absolute -bottom-40 -right-40 w-100 h-100 rounded-full bg-[#fb923c]/5 blur-[120px]" />
       </div>
 
-      <div className="relative z-10 w-full max-w-450 mx-auto px-8 xl:px-16 grid grid-cols-1 lg:grid-cols-[5fr_7fr] gap-10 xl:gap-14 items-center">
+      <div className="relative z-10 w-full max-w-[1800px] mx-auto px-8 xl:px-16 grid grid-cols-1 lg:grid-cols-[5fr_7fr] gap-10 xl:gap-14 items-center">
 
         {/* ── LEFT: Content (순차 Stagger 등장 구조 복원 및 이중 이동 간섭 제거) ── */}
         <motion.div
           variants={containerVariants}
           initial="initial"
-          animate="animate"
+          whileInView="animate"
+          viewport={{ once: true, amount: 0.2 }}
           style={{ willChange: 'opacity' }}
           className="flex flex-col gap-4"
         >
@@ -249,7 +224,8 @@ export default function PeecemakerSection() {
         {/* ── RIGHT: Browser Mockup + Buttons below ── */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
           transition={{ duration: 1.0, ease: customEasing, delay: 0.25 }}
           style={{ willChange: 'transform, opacity' }}
           className="flex flex-col gap-3"

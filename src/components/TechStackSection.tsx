@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import {
   SiNextdotjs, SiReact, SiTypescript,
@@ -38,17 +37,10 @@ const techGroups = [
 ];
 
 export default function TechStackSection() {
-  const [mounted, setMounted] = useState(false);
   const easing = [0.16, 1, 0.3, 1] as any;
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  if (!mounted) return <section id="techstack" className="h-screen" />;
-
   return (
-    <section id="techstack" className="w-full h-full relative flex flex-col justify-center items-center px-6 md:px-16 lg:px-24 pt-24 pb-28 lg:pt-[8.5dvh] lg:pb-[3.5dvh] overflow-x-hidden overflow-y-auto lg:overflow-hidden bg-transparent text-(--foreground)" style={{ WebkitOverflowScrolling: 'touch' }}>
+    <section className="w-full relative flex flex-col justify-center items-center px-6 md:px-16 lg:px-24 py-24 lg:py-32 overflow-x-hidden bg-transparent text-(--foreground)">
 
       <div className="w-full max-w-[1800px] flex flex-col justify-center relative z-10">
 

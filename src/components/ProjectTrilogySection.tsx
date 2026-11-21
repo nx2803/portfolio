@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { updateActiveSection, updateViewMode } from '../store/sectionStore';
+import { scrollToSection } from '../lib/scroll';
 
 const phases = [
   {
@@ -34,23 +33,10 @@ const phases = [
 ];
 
 export default function ProjectTrilogySection() {
-  const [mounted, setMounted] = useState(false);
   const easing = [0.16, 1, 0.3, 1] as any;
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  const handleProjectClick = (sectionId: string) => {
-    updateActiveSection(sectionId);
-    updateViewMode('detail');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
-  if (!mounted) return <section id="trilogy_intro" className="min-h-[80vh] md:min-h-screen" />;
-
   return (
-    <section id="trilogy_intro" className="relative w-full h-full flex flex-col justify-center pt-24 pb-28 lg:pt-[8.5dvh] lg:pb-[3.5dvh] overflow-y-auto lg:overflow-hidden bg-transparent text-(--foreground)" style={{ WebkitOverflowScrolling: 'touch' }}>
+    <section className="relative w-full min-h-screen flex flex-col justify-center py-24 lg:py-32 bg-transparent text-(--foreground)">
 
       {/* ── HEADER AREA ── */}
       <div className="w-full px-6 md:px-10 mb-16 md:mb-24 relative z-10 max-w-[1800px] mx-auto">
@@ -112,7 +98,7 @@ export default function ProjectTrilogySection() {
           {phases.map((phase, idx) => (
             <div
               key={phase.id}
-              onClick={() => handleProjectClick(phase.sectionId)}
+              onClick={() => scrollToSection(phase.sectionId)}
               className="relative group p-10 md:p-14 flex flex-col gap-12 transition-all duration-700 overflow-hidden cursor-pointer hover:bg-white/[0.02]"
               style={{ '--accent': phase.accent } as any}
             >

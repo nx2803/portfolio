@@ -1,18 +1,10 @@
-import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 
 export default function HeroSection() {
-  const [mounted, setMounted] = useState(false);
   const easing = [0.16, 1, 0.3, 1] as any;
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  if (!mounted) return <section id="intro" className="min-h-screen" />;
-
   return (
-    <section id="intro" className="relative w-full h-screen overflow-hidden bg-transparent text-(--foreground)">
+    <section className="relative w-full min-h-screen overflow-hidden bg-transparent text-(--foreground)">
 
       {/* ── 모바일 레이아웃 (lg 미만) ── */}
       <div className="lg:hidden absolute inset-0 flex flex-col items-center justify-center pt-20 pb-20 px-6">
