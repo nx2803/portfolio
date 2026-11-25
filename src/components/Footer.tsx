@@ -3,150 +3,67 @@ import { SiGithub } from 'react-icons/si';
 import { MdEmail } from 'react-icons/md';
 
 /** 섹션이 뷰포트에 들어올 때 1회만 재생 (마운트 시 실행 방지) */
-const inView = { once: true, amount: 0.2 } as const;
+const inView = { once: true, amount: 0.3 } as const;
 
 export default function Footer() {
   const easing: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
   return (
-    <section className="w-full relative flex flex-col items-center px-6 md:px-16 lg:px-24 bg-transparent text-(--foreground) py-24 lg:py-32">
+    <footer className="relative w-full border-t border-white/[0.08] bg-transparent text-(--foreground) px-6 md:px-16 lg:px-24 py-20 lg:py-28">
+      <div className="mx-auto flex w-full max-w-[1800px] flex-col gap-10 md:gap-14">
 
-      <div className="w-full max-w-[1800px] flex flex-col items-center relative z-10">
-
-        {/* ── HEADER ── */}
-        <div className="mb-12 md:mb-20 lg:mb-24 flex items-center gap-6 md:gap-10 w-full overflow-hidden">
+        {/* ── HEADER (다른 섹션 제목과 동일 스케일) ── */}
+        <div className="flex items-center gap-6 md:gap-10 relative overflow-hidden">
           <motion.h2
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={inView}
             transition={{ duration: 0.7 }}
-            className="text-3xl md:text-6xl lg:text-7xl font-display font-extrabold uppercase tracking-tight shrink-0 whitespace-nowrap text-white"
+            className="text-3xl md:text-6xl font-display font-extrabold uppercase tracking-tight shrink-0 whitespace-nowrap text-white"
           >
             CONTACT
           </motion.h2>
-          <motion.div
+          <motion.span
             initial={{ scaleX: 0 }}
             whileInView={{ scaleX: 1 }}
             viewport={inView}
-            transition={{ duration: 1.4, ease: easing, delay: 0.1 }}
-            className="h-px bg-linear-to-r from-[#D4AF37]/60 via-white/20 to-transparent flex-1 origin-left mt-2"
-          />
-        </div>
-
-        {/* ── SYMMETRIC CONTACT GRID ── */}
-        <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-0 relative">
-
-          {/* Vertical Separator */}
-          <motion.div
-            initial={{ scaleY: 0 }}
-            whileInView={{ scaleY: 1 }}
-            viewport={inView}
             transition={{ duration: 1.4, ease: easing, delay: 0.15 }}
-            className="absolute left-1/2 top-0 w-px h-full bg-white/10 hidden md:block origin-top z-20"
+            className="h-px flex-1 bg-linear-to-r from-[#D4AF37]/60 via-white/20 to-transparent origin-left mt-2"
           />
-
-          {/* EMAIL PORT */}
-          <div className="relative flex flex-col items-center justify-center p-8 md:p-14 lg:p-20 group">
-            <div className="flex flex-col items-center gap-6 w-full">
-
-              {/* Icon rendering */}
-              <motion.div
-                initial={{ opacity: 0, scale: 0.8 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={inView}
-                transition={{ duration: 0.9, delay: 0.1, ease: easing }}
-              >
-                <MdEmail className="text-6xl md:text-[120px] lg:text-[140px] text-white/80 transition-all duration-500 group-hover:scale-105 group-hover:text-[#D4AF37] drop-shadow-[0_0_30px_rgba(212,175,55,0.2)]" />
-              </motion.div>
-
-              <div className="flex flex-col items-center gap-3 w-full max-w-lg">
-                <div className="flex items-center gap-3">
-                  <motion.div
-                    initial={{ scaleX: 0 }}
-                    whileInView={{ scaleX: 1 }}
-                    viewport={inView}
-                    transition={{ duration: 0.7, delay: 0.2 }}
-                    className="w-6 h-px bg-[#D4AF37]/60 origin-left"
-                  />
-                  <motion.span
-                    initial={{ opacity: 0 }}
-                    whileInView={{ opacity: 0.8 }}
-                    viewport={inView}
-                    transition={{ duration: 0.7, delay: 0.25 }}
-                    className="text-xs font-display tracking-[0.3em] font-semibold text-[#D4AF37] uppercase"
-                  >
-                    EMAIL CONTACT
-                  </motion.span>
-                </div>
-
-                <motion.a
-                  initial={{ opacity: 0, y: 10 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={inView}
-                  transition={{ duration: 0.7, delay: 0.3 }}
-                  href="mailto:nx2803@gmail.com"
-                  className="text-xl md:text-3xl lg:text-4xl font-display font-bold tracking-tight uppercase leading-none transition-colors text-center break-all text-white group-hover:text-[#E5C378]"
-                >
-                  nx2803@gmail.com
-                </motion.a>
-              </div>
-            </div>
-          </div>
-
-          {/* 모바일 구분선 */}
-          <div className="md:hidden w-full h-px bg-white/10 my-2" />
-
-          {/* GITHUB PORT */}
-          <div className="relative flex flex-col items-center justify-center p-8 md:p-14 lg:p-20 group">
-            <div className="flex flex-col items-center gap-6 w-full">
-
-              {/* Icon rendering */}
-              <motion.div
-                initial={{ opacity: 0, scale: 0.8 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={inView}
-                transition={{ duration: 0.9, delay: 0.15, ease: easing }}
-              >
-                <SiGithub className="text-6xl md:text-[120px] lg:text-[140px] text-white/80 transition-all duration-500 group-hover:scale-105 group-hover:text-[#D4AF37] drop-shadow-[0_0_30px_rgba(212,175,55,0.2)]" />
-              </motion.div>
-
-              <div className="flex flex-col items-center gap-3 w-full max-w-lg">
-                <div className="flex items-center gap-3">
-                  <motion.div
-                    initial={{ scaleX: 0 }}
-                    whileInView={{ scaleX: 1 }}
-                    viewport={inView}
-                    transition={{ duration: 0.7, delay: 0.25 }}
-                    className="w-6 h-px bg-[#D4AF37]/60 origin-left"
-                  />
-                  <motion.span
-                    initial={{ opacity: 0 }}
-                    whileInView={{ opacity: 0.8 }}
-                    viewport={inView}
-                    transition={{ duration: 0.7, delay: 0.3 }}
-                    className="text-xs font-display tracking-[0.3em] font-semibold text-[#D4AF37] uppercase"
-                  >
-                    GITHUB PROFILE
-                  </motion.span>
-                </div>
-
-                <motion.a
-                  initial={{ opacity: 0, y: 10 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={inView}
-                  transition={{ duration: 0.7, delay: 0.35 }}
-                  href="https://github.com/nx2803"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-xl md:text-3xl lg:text-4xl font-display font-bold tracking-tight uppercase leading-none transition-colors text-center text-white group-hover:text-[#E5C378]"
-                >
-                  github.com/nx2803
-                </motion.a>
-              </div>
-            </div>
-          </div>
         </div>
+
+        {/* ── LINKS: 중앙 기준 좌우 반반 ── */}
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={inView}
+          transition={{ duration: 0.7, delay: 0.1 }}
+          className="relative flex flex-row items-center justify-center gap-6 md:grid md:grid-cols-2 md:gap-0 md:border-t md:border-white/[0.06] md:pt-10"
+        >
+          {/* 중앙 구분선 */}
+          <span className="hidden md:block absolute left-1/2 -translate-x-1/2 top-10 bottom-0 w-px bg-white/[0.08]" />
+
+          <a
+            href="mailto:nx2803@gmail.com"
+            className="group flex items-center justify-center gap-2.5 sm:gap-4 text-base sm:text-lg md:text-3xl lg:text-4xl font-display font-bold tracking-tight text-white/90 hover:text-[#E5C378] transition-colors min-w-0"
+          >
+            <MdEmail className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl text-white/80 shrink-0 transition-all group-hover:scale-110 group-hover:text-[#D4AF37]" />
+            <span className="whitespace-nowrap">nx2803@gmail.com</span>
+          </a>
+
+          <a
+            href="https://github.com/nx2803"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group flex items-center justify-center gap-2.5 sm:gap-4 text-base sm:text-lg md:text-3xl lg:text-4xl font-display font-bold tracking-tight text-white/90 hover:text-[#E5C378] transition-colors min-w-0"
+          >
+            <SiGithub className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl text-white/80 shrink-0 transition-all group-hover:scale-110 group-hover:text-[#D4AF37]" />
+            {/* 좁은 화면에서 한 줄을 지키려면 핸들만 노출 (sm 이상은 전체 URL) */}
+            <span className="whitespace-nowrap sm:hidden">@nx2803</span>
+            <span className="hidden sm:inline whitespace-nowrap">github.com/nx2803</span>
+          </a>
+        </motion.div>
       </div>
-    </section>
+    </footer>
   );
 }
