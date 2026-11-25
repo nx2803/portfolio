@@ -3,6 +3,9 @@ import { motion, useInView } from 'framer-motion';
 import { SiSpring, SiFastapi, SiPython, SiPostgresql, SiNextdotjs, SiRedis, SiVercel } from 'react-icons/si';
 import { FaJava, FaGithub } from 'react-icons/fa';
 
+/** 섹션이 뷰포트에 들어올 때 1회만 재생 (마운트 시 실행 방지) */
+const inView = { once: true, amount: 0.2 } as const;
+
 /**
  * 100% 안전한 인라인 Typewriter 커스텀 훅
  * absolute 포지셔닝이나 감춰진 Spacer 없이, 표준 HTML inline-level span으로
@@ -106,14 +109,16 @@ function CornerFrame({
         {/* Horizontal */}
         <motion.div
           initial={{ scaleX: 0 }}
-          animate={{ scaleX: 1 }}
+          whileInView={{ scaleX: 1 }}
+          viewport={inView}
           transition={{ duration: 0.7, ease: easing, delay }}
           style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: `${thickness}px`, backgroundColor: color, originX: 0 }}
         />
         {/* Vertical */}
         <motion.div
           initial={{ scaleY: 0 }}
-          animate={{ scaleY: 1 }}
+          whileInView={{ scaleY: 1 }}
+          viewport={inView}
           transition={{ duration: 0.7, ease: easing, delay }}
           style={{ position: 'absolute', top: 0, left: 0, width: `${thickness}px`, height: '100%', backgroundColor: color, originY: 0 }}
         />
@@ -124,14 +129,16 @@ function CornerFrame({
         {/* Horizontal */}
         <motion.div
           initial={{ scaleX: 0 }}
-          animate={{ scaleX: 1 }}
+          whileInView={{ scaleX: 1 }}
+          viewport={inView}
           transition={{ duration: 0.7, ease: easing, delay }}
           style={{ position: 'absolute', top: 0, right: 0, width: '100%', height: `${thickness}px`, backgroundColor: color, originX: 1 }}
         />
         {/* Vertical */}
         <motion.div
           initial={{ scaleY: 0 }}
-          animate={{ scaleY: 1 }}
+          whileInView={{ scaleY: 1 }}
+          viewport={inView}
           transition={{ duration: 0.7, ease: easing, delay }}
           style={{ position: 'absolute', top: 0, right: 0, width: `${thickness}px`, height: '100%', backgroundColor: color, originY: 0 }}
         />
@@ -142,14 +149,16 @@ function CornerFrame({
         {/* Horizontal */}
         <motion.div
           initial={{ scaleX: 0 }}
-          animate={{ scaleX: 1 }}
+          whileInView={{ scaleX: 1 }}
+          viewport={inView}
           transition={{ duration: 0.7, ease: easing, delay }}
           style={{ position: 'absolute', bottom: 0, left: 0, width: '100%', height: `${thickness}px`, backgroundColor: color, originX: 0 }}
         />
         {/* Vertical */}
         <motion.div
           initial={{ scaleY: 0 }}
-          animate={{ scaleY: 1 }}
+          whileInView={{ scaleY: 1 }}
+          viewport={inView}
           transition={{ duration: 0.7, ease: easing, delay }}
           style={{ position: 'absolute', bottom: 0, left: 0, width: `${thickness}px`, height: '100%', backgroundColor: color, originY: 1 }}
         />
@@ -160,14 +169,16 @@ function CornerFrame({
         {/* Horizontal */}
         <motion.div
           initial={{ scaleX: 0 }}
-          animate={{ scaleX: 1 }}
+          whileInView={{ scaleX: 1 }}
+          viewport={inView}
           transition={{ duration: 0.7, ease: easing, delay }}
           style={{ position: 'absolute', bottom: 0, right: 0, width: '100%', height: `${thickness}px`, backgroundColor: color, originX: 1 }}
         />
         {/* Vertical */}
         <motion.div
           initial={{ scaleY: 0 }}
-          animate={{ scaleY: 1 }}
+          whileInView={{ scaleY: 1 }}
+          viewport={inView}
           transition={{ duration: 0.7, ease: easing, delay }}
           style={{ position: 'absolute', bottom: 0, right: 0, width: `${thickness}px`, height: '100%', backgroundColor: color, originY: 1 }}
         />
@@ -282,8 +293,9 @@ export default function UfcSection() {
                 <motion.div
                   key={i}
                   initial={{ opacity: 0, scale: 0.95 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.6, ease: easing, delay: 1.2 + i * 0.05 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={inView}
+                  transition={{ duration: 0.6, ease: easing, delay: i * 0.05 }}
                   className="flex items-center gap-2 px-3.5 py-2 bg-black/40 border border-[#747474]/40 hover:border-white/60 hover:bg-white/5 transition-colors duration-300 group"
                   style={{ borderRadius: 0 }}
                 >
@@ -311,8 +323,9 @@ export default function UfcSection() {
                 {/* 선형 생성 애니메이션 바 */}
                 <motion.div
                   initial={{ scaleY: 0 }}
-                  animate={{ scaleY: 1 }}
-                  transition={{ duration: 0.8, ease: easing, delay: 1.5 + i * 0.15 }}
+                  whileInView={{ scaleY: 1 }}
+                  viewport={inView}
+                  transition={{ duration: 0.8, ease: easing, delay: i * 0.15 }}
                   className="w-0.5 bg-white/20 shrink-0 origin-top group-hover:bg-white/60 transition-colors mt-1"
                 />
                 <div className="flex-1 min-w-0">
@@ -340,7 +353,8 @@ export default function UfcSection() {
         {/* ── RIGHT: Screenshot + Buttons ── */}
         <motion.div
           initial={{ opacity: 0, scale: 0.98 }}
-          animate={{ opacity: 1, scale: 1 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={inView}
           transition={{ duration: 1.0, ease: easing, delay: 0.1 }}
           className="flex flex-col gap-3"
         >
@@ -357,29 +371,33 @@ export default function UfcSection() {
               {/* Top */}
               <motion.div
                 initial={{ scaleX: 0 }}
-                animate={{ scaleX: 1 }}
-                transition={{ duration: 0.9, ease: easing, delay: 0.5 }}
+                whileInView={{ scaleX: 1 }}
+                viewport={inView}
+                transition={{ duration: 0.9, ease: easing, delay: 0.2 }}
                 style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '1px', backgroundColor: '#747474', originX: 0, zIndex: 10 }}
               />
               {/* Bottom */}
               <motion.div
                 initial={{ scaleX: 0 }}
-                animate={{ scaleX: 1 }}
-                transition={{ duration: 0.9, ease: easing, delay: 0.5 }}
+                whileInView={{ scaleX: 1 }}
+                viewport={inView}
+                transition={{ duration: 0.9, ease: easing, delay: 0.2 }}
                 style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: '1px', backgroundColor: '#747474', originX: 1, zIndex: 10 }}
               />
               {/* Left */}
               <motion.div
                 initial={{ scaleY: 0 }}
-                animate={{ scaleY: 1 }}
-                transition={{ duration: 0.9, ease: easing, delay: 0.5 }}
+                whileInView={{ scaleY: 1 }}
+                viewport={inView}
+                transition={{ duration: 0.9, ease: easing, delay: 0.2 }}
                 style={{ position: 'absolute', top: 0, bottom: 0, left: 0, width: '1px', backgroundColor: '#747474', originY: 0, zIndex: 10 }}
               />
               {/* Right */}
               <motion.div
                 initial={{ scaleY: 0 }}
-                animate={{ scaleY: 1 }}
-                transition={{ duration: 0.9, ease: easing, delay: 0.5 }}
+                whileInView={{ scaleY: 1 }}
+                viewport={inView}
+                transition={{ duration: 0.9, ease: easing, delay: 0.2 }}
                 style={{ position: 'absolute', top: 0, bottom: 0, right: 0, width: '1px', backgroundColor: '#747474', originY: 1, zIndex: 10 }}
               />
 
@@ -408,8 +426,9 @@ export default function UfcSection() {
           <div className="flex gap-3 relative z-20">
             <motion.a
               initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, ease: easing, delay: 1.4 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={inView}
+              transition={{ duration: 0.6, ease: easing, delay: 0.1 }}
               href="https://ultimate-framework-championship.vercel.app/"
               target="_blank"
               rel="noopener noreferrer"
@@ -421,8 +440,9 @@ export default function UfcSection() {
             </motion.a>
             <motion.a
               initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, ease: easing, delay: 1.5 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={inView}
+              transition={{ duration: 0.6, ease: easing, delay: 0.2 }}
               href="https://github.com/nx2803/UFC"
               target="_blank"
               rel="noopener noreferrer"

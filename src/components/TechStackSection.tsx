@@ -36,6 +36,9 @@ const techGroups = [
   }
 ];
 
+/** 섹션이 뷰포트에 들어올 때 1회만 재생 (마운트 시 실행 방지) */
+const inView = { once: true, amount: 0.2 } as const;
+
 export default function TechStackSection() {
   const easing: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
@@ -48,16 +51,18 @@ export default function TechStackSection() {
         <div className="mb-10 md:mb-16 flex items-center gap-8 relative overflow-hidden">
           <motion.h2
             initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={inView}
+            transition={{ duration: 0.7 }}
             className="text-3xl md:text-6xl font-display font-extrabold uppercase tracking-tight shrink-0 text-white"
           >
             TECH STACK
           </motion.h2>
           <motion.div
             initial={{ scaleX: 0 }}
-            animate={{ scaleX: 1 }}
-            transition={{ duration: 1.8, ease: easing, delay: 0.3 }}
+            whileInView={{ scaleX: 1 }}
+            viewport={inView}
+            transition={{ duration: 1.4, ease: easing, delay: 0.15 }}
             className="h-px bg-linear-to-r from-[#D4AF37]/60 via-white/20 to-transparent flex-1 origin-left mt-2"
           />
         </div>
@@ -69,8 +74,9 @@ export default function TechStackSection() {
 
               <motion.div
                 initial={{ scaleX: 0 }}
-                animate={{ scaleX: 1 }}
-                transition={{ duration: 1.2, ease: easing, delay: groupIdx * 0.15 + 0.5 }}
+                whileInView={{ scaleX: 1 }}
+                viewport={inView}
+                transition={{ duration: 1.2, ease: easing, delay: 0.1 }}
                 className="absolute top-0 left-0 w-full h-px bg-[#D4AF37]/20 origin-left"
               />
 
@@ -78,16 +84,18 @@ export default function TechStackSection() {
               <div className="flex items-center gap-4 mb-8">
                 <motion.span
                   initial={{ opacity: 0 }}
-                  animate={{ opacity: 0.8 }}
-                  transition={{ duration: 0.8, delay: groupIdx * 0.2 + 1.2 }}
+                  whileInView={{ opacity: 0.8 }}
+                  viewport={inView}
+                  transition={{ duration: 0.7, delay: groupIdx * 0.08 }}
                   className="text-xs md:text-sm font-display tracking-[0.35em] font-semibold text-[#D4AF37] uppercase"
                 >
                   {group.category.replaceAll('_', ' ')}
                 </motion.span>
                 <motion.div
                   initial={{ scaleX: 0 }}
-                  animate={{ scaleX: 1 }}
-                  transition={{ delay: groupIdx * 0.2 + 0.6, duration: 0.8 }}
+                  whileInView={{ scaleX: 1 }}
+                  viewport={inView}
+                  transition={{ delay: groupIdx * 0.08 + 0.1, duration: 0.7 }}
                   className="h-px w-12 bg-[#D4AF37]/50 origin-left"
                 />
               </div>
@@ -99,8 +107,9 @@ export default function TechStackSection() {
                     <div className="relative shrink-0">
                       <motion.div
                         initial={{ opacity: 0 }}
-                        animate={{ opacity: 0.9 }}
-                        transition={{ duration: 1, delay: 1.5 + techIdx * 0.05 }}
+                        whileInView={{ opacity: 0.9 }}
+                        viewport={inView}
+                        transition={{ duration: 0.8, delay: techIdx * 0.06 }}
                       >
                         <tech.icon className="text-5xl md:text-7xl lg:text-[80px] text-white/80 group-hover/item:text-[#D4AF37] group-hover/item:scale-105 transition-all duration-500 drop-shadow-[0_0_25px_rgba(212,175,55,0.15)]" />
                       </motion.div>
@@ -109,8 +118,9 @@ export default function TechStackSection() {
                     <div className="flex flex-col flex-1 min-w-0">
                       <motion.span
                         initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ duration: 1, delay: 1.6 + techIdx * 0.05 }}
+                        whileInView={{ opacity: 1 }}
+                        viewport={inView}
+                        transition={{ duration: 0.8, delay: 0.05 + techIdx * 0.06 }}
                         className="text-xl md:text-3xl font-display font-bold tracking-tight leading-none uppercase text-white/90 group-hover/item:text-[#E5C378] transition-colors truncate"
                       >
                         {tech.name}
@@ -119,8 +129,9 @@ export default function TechStackSection() {
                       <div className="h-0.5 bg-white/10 mt-3 relative overflow-hidden rounded-full">
                         <motion.div
                           initial={{ scaleX: 0 }}
-                          animate={{ scaleX: 1 }}
-                          transition={{ delay: 1 + techIdx * 0.05, duration: 1.5, ease: easing }}
+                          whileInView={{ scaleX: 1 }}
+                          viewport={inView}
+                          transition={{ delay: techIdx * 0.06, duration: 1.2, ease: easing }}
                           className="absolute inset-y-0 left-0 w-full bg-linear-to-r from-[#D4AF37] to-[#E5C378] opacity-80 origin-left"
                         />
                       </div>
@@ -135,8 +146,9 @@ export default function TechStackSection() {
         {/* ── FOOTER SYSTEM LOG ── */}
         <motion.div
           initial={{ opacity: 0 }}
-          animate={{ opacity: 0.6 }}
-          transition={{ duration: 1, delay: 2.2 }}
+          whileInView={{ opacity: 0.6 }}
+          viewport={inView}
+          transition={{ duration: 0.9, delay: 0.15 }}
           className="mt-10 flex justify-between items-center text-xs font-display tracking-widest text-white/60"
         >
           <div className="flex items-center gap-6">

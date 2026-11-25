@@ -1,4 +1,4 @@
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, MotionConfig } from 'framer-motion';
 import { useStore } from '@nanostores/react';
 import { $activeSection } from '../store/sectionStore';
 import { scrollToSection, $lenis } from '../lib/scroll';
@@ -60,11 +60,18 @@ export default function Header() {
   };
 
   return (
-    <>
+    <MotionConfig reducedMotion="user">
       {/* ── PC HEADER ── */}
       <header className="hidden md:block fixed top-8 left-1/2 -translate-x-1/2 z-[200] w-full max-w-fit px-6">
-        <nav
-          className="relative px-8 py-3.5 flex items-center gap-8 whitespace-nowrap rounded-full backdrop-blur-2xl backdrop-saturate-150 border shadow-[0_8px_32px_rgba(0,0,0,0.6)] transition-all duration-500"
+        {/* 바깥 알약 프레임도 함께 등장 (transform은 framer가 소유하므로 transition은 색상만) */}
+        <motion.nav
+          initial={{ opacity: 0, y: -170 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{
+            y: { type: 'spring', stiffness: 110, damping: 16, mass: 0.9, delay: 0.05 },
+            opacity: { duration: 0.4, delay: 0.05 },
+          }}
+          className="relative px-8 py-3.5 flex items-center gap-8 whitespace-nowrap rounded-full backdrop-blur-2xl backdrop-saturate-150 border shadow-[0_8px_32px_rgba(0,0,0,0.6)] transition-colors duration-500"
           style={{
             backgroundColor: scrolled ? 'rgba(10,10,13,0.72)' : 'rgba(10,10,13,0.42)',
             borderColor: scrolled ? 'rgba(255,255,255,0.14)' : 'rgba(255,255,255,0.09)',
@@ -73,9 +80,9 @@ export default function Header() {
           }}
         >
           <motion.div
-            initial={{ opacity: 0, y: -10 }}
+            initial={{ opacity: 0, y: -6 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
             className="flex items-center gap-8 text-white z-10 w-full"
           >
             {/* Logo */}
@@ -115,13 +122,19 @@ export default function Header() {
               ))}
             </div>
           </motion.div>
-        </nav>
+        </motion.nav>
       </header>
 
       {/* ── MOBILE HEADER ── */}
       <header className="md:hidden fixed top-6 left-1/2 -translate-x-1/2 z-[210] w-full max-w-[90vw] px-4">
-        <div
-          className={`relative px-5 py-3 flex items-center justify-between rounded-xl transition-all duration-300 ${isMenuOpen ? '' : 'bg-[#08080a]/70 border border-white/10 shadow-[0_4px_24px_rgba(0,0,0,0.6)]'}`}
+        <motion.div
+          initial={{ opacity: 0, y: -150 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{
+            y: { type: 'spring', stiffness: 110, damping: 16, mass: 0.9, delay: 0.1 },
+            opacity: { duration: 0.4, delay: 0.1 },
+          }}
+          className={`relative px-5 py-3 flex items-center justify-between rounded-xl transition-colors duration-300 ${isMenuOpen ? '' : 'bg-[#08080a]/70 border border-white/10 shadow-[0_4px_24px_rgba(0,0,0,0.6)]'}`}
           style={{
             WebkitTapHighlightColor: 'transparent',
             backdropFilter: isMenuOpen ? undefined : 'blur(18px) saturate(160%)',
@@ -131,7 +144,7 @@ export default function Header() {
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.8 }}
+            transition={{ duration: 0.5, delay: 0.3 }}
             className="flex items-center justify-between z-10 text-white w-full gap-2"
           >
             {/* Logo */}
@@ -164,7 +177,7 @@ export default function Header() {
               {isMenuOpen ? <HiX className="text-xl" /> : <HiMenu className="text-xl" />}
             </button>
           </motion.div>
-        </div>
+        </motion.div>
       </header>
 
       {/* ── MOBILE OVERLAY MENU ── */}
@@ -211,6 +224,6 @@ export default function Header() {
           </motion.div>
         )}
       </AnimatePresence>
-    </>
+    </MotionConfig>
   );
 }

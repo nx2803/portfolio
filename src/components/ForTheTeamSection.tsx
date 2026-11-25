@@ -3,6 +3,9 @@ import { motion } from 'framer-motion';
 import { SiNestjs, SiNextdotjs, SiSocketdotio, SiOpentelemetry, SiRedis, SiPostgresql, SiPrisma, SiDocker, SiVercel, SiGithub } from 'react-icons/si';
 import { HiOutlineCollection } from 'react-icons/hi';
 
+/** 섹션이 뷰포트에 들어올 때 1회만 재생 (마운트 시 실행 방지) */
+const inView = { once: true, amount: 0.2 } as const;
+
 export default function ForTheTeamSection() {
   const [imageLoaded, setImageLoaded] = useState(false);
 
@@ -137,8 +140,9 @@ export default function ForTheTeamSection() {
               FOR THE <br className="md:hidden" /> <span className="text-[#e23645]"> TEAM</span>
               <motion.span
                 initial={{ scaleX: 0 }}
-                animate={{ scaleX: 1 }}
-                transition={{ duration: 0.8, ease: customEasing, delay: 0.45 }}
+                whileInView={{ scaleX: 1 }}
+                viewport={inView}
+                transition={{ duration: 0.8, ease: customEasing, delay: 0.2 }}
                 style={{ originX: 0 }}
                 className="absolute bottom-0 left-0 right-0 h-[3px] bg-[#e23645] block"
               />
@@ -181,8 +185,9 @@ export default function ForTheTeamSection() {
                   <div className="absolute inset-0 bg-white/10" />
                   <motion.div
                     initial={{ scaleY: 0 }}
-                    animate={{ scaleY: 1 }}
-                    transition={{ delay: 0.5 + i * 0.1, duration: 0.5, ease: customEasing }}
+                    whileInView={{ scaleY: 1 }}
+                    viewport={inView}
+                    transition={{ delay: i * 0.1, duration: 0.5, ease: customEasing }}
                     style={{ originY: 0 }}
                     className="absolute inset-0 bg-[#e23645]/50 group-hover:bg-[#e23645] transition-colors"
                   />
