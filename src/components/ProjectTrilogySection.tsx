@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import type { CSSProperties } from 'react';
 import { scrollToSection } from '../lib/scroll';
 
 const phases = [
@@ -33,7 +34,7 @@ const phases = [
 ];
 
 export default function ProjectTrilogySection() {
-  const easing = [0.16, 1, 0.3, 1] as any;
+  const easing: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
   return (
     <section className="relative w-full min-h-screen flex flex-col justify-center py-24 lg:py-32 bg-transparent text-(--foreground)">
@@ -96,11 +97,15 @@ export default function ProjectTrilogySection() {
           />
 
           {phases.map((phase, idx) => (
-            <div
+            <a
               key={phase.id}
-              onClick={() => scrollToSection(phase.sectionId)}
-              className="relative group p-10 md:p-14 flex flex-col gap-12 transition-all duration-700 overflow-hidden cursor-pointer hover:bg-white/[0.02]"
-              style={{ '--accent': phase.accent } as any}
+              href={`#${phase.sectionId}`}
+              onClick={(e) => {
+                e.preventDefault();
+                scrollToSection(phase.sectionId);
+              }}
+              className="relative block group p-10 md:p-14 flex flex-col gap-12 transition-all duration-700 overflow-hidden hover:bg-white/[0.02]"
+              style={{ '--accent': phase.accent } as CSSProperties}
             >
               {/* Horizontal Grid Line Separator for Mobile */}
               {idx > 0 && (
@@ -194,7 +199,7 @@ export default function ProjectTrilogySection() {
                   </motion.div>
                 </div>
               </div>
-            </div>
+            </a>
           ))}
         </div>
       </div>

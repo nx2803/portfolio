@@ -3,7 +3,7 @@ import { SiGithub } from 'react-icons/si';
 import { MdEmail } from 'react-icons/md';
 
 export default function Footer() {
-  const easing = [0.16, 1, 0.3, 1] as any;
+  const easing: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
   return (
     <section className="w-full relative flex flex-col items-center px-6 md:px-16 lg:px-24 bg-transparent text-(--foreground) min-h-screen py-24 lg:py-32">
@@ -12,14 +12,14 @@ export default function Footer() {
 
         {/* ── HEADER ── */}
         <div className="mb-12 md:mb-20 lg:mb-24 flex items-center gap-6 md:gap-10 w-full overflow-hidden">
-          <motion.h1
+          <motion.h2
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
             className="text-3xl md:text-6xl lg:text-7xl font-display font-extrabold uppercase tracking-tight shrink-0 whitespace-nowrap text-white"
           >
             CONTACT
-          </motion.h1>
+          </motion.h2>
           <motion.div
             initial={{ scaleX: 0 }}
             animate={{ scaleX: 1 }}

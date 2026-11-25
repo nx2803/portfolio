@@ -1,6 +1,10 @@
 ---
 import '../styles/global.css';
 const { title } = Astro.props;
+
+// 배포 도메인(astro.config의 site)이 설정되어 있으면 절대 URL을, 아니면 상대 경로를 쓴다.
+const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site) : null;
+const ogImage = Astro.site ? new URL('/og.png', Astro.site).href : '/og.png';
 ---
 <!doctype html>
 <html lang="ko" class="dark">
@@ -12,13 +16,25 @@ const { title } = Astro.props;
 		<meta property="og:title" content="NX280 | Trilogy Portfolio" />
 		<meta property="og:description" content="시스템의 정교함과 사용자의 감각을 연결하는 인터페이스 빌더, NX2803의 프로젝트 포트폴리오입니다." />
 		<meta property="og:type" content="website" />
+		<meta property="og:site_name" content="NX280 | Trilogy Portfolio" />
+		<meta property="og:locale" content="ko_KR" />
+		<meta property="og:image" content={ogImage} />
+		<meta property="og:image:width" content="1200" />
+		<meta property="og:image:height" content="630" />
+		<meta property="og:image:alt" content="NX280 — Full Stack Engineer Portfolio" />
+		{canonical && <link rel="canonical" href={canonical.href} />}
+		{canonical && <meta property="og:url" content={canonical.href} />}
 		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:title" content="NX280 | Trilogy Portfolio" />
+		<meta name="twitter:description" content="시스템의 정교함과 사용자의 감각을 연결하는 인터페이스 빌더, NX2803의 프로젝트 포트폴리오입니다." />
+		<meta name="twitter:image" content={ogImage} />
+		<meta name="theme-color" content="#08080a" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 		<link href="https://fonts.googleapis.com/css2?family=Chiron+GoRound+TC&text=ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789%20%21%40%23%24%25%5E%26%2A%28%29%2D%5F%3D%2B%5B%5D%7B%7D%3B%3A%27%22%2C%2E%3C%3E%2F%3F%5C%7C%60%7E&display=swap" rel="stylesheet">
-		<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&family=Geologica:wght@300;400;700;900&family=Outfit:wght@400;700&family=Inter:wght@400;600&family=Noto+Sans+KR:wght@400;700&family=Saira+Stencil+One&display=swap" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&family=Geologica:wght@300;400;700;900&family=Outfit:wght@400;700&family=Inter:wght@400;600&family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
 		<title>{title}</title>
 	</head>
 	<body class="antialiased selection:bg-white selection:text-black">

@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 
 export default function HeroSection() {
-  const easing = [0.16, 1, 0.3, 1] as any;
+  const easing: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
   return (
     <section className="relative w-full min-h-screen overflow-hidden bg-transparent text-(--foreground)">
@@ -104,7 +104,10 @@ export default function HeroSection() {
             transition={{ duration: 1.5, ease: easing, delay: 1.2 }}
             className="relative"
           >
-            <h1 className="text-[230px] xl:text-[260px] font-display font-extrabold leading-[0.78] tracking-[-0.04em] select-none uppercase text-white drop-shadow-[0_0_60px_rgba(212,175,55,0.1)] whitespace-nowrap">
+            <h1
+              className="font-display font-extrabold leading-[0.78] tracking-[-0.04em] select-none uppercase text-white drop-shadow-[0_0_60px_rgba(212,175,55,0.1)] whitespace-nowrap"
+              style={{ fontSize: 'clamp(4rem, 14vw, 15rem)' }}
+            >
               PORTFOLIO
             </h1>
           </motion.div>

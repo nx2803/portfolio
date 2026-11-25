@@ -1,4 +1,5 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { useReducedMotion } from 'framer-motion';
 
 interface MouseTrailProps {
   activeSection?: string;
@@ -32,6 +33,11 @@ export default function MouseTrail({ activeSection = 'intro' }: MouseTrailProps)
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const trailRef = useRef<TrailPoint[]>([]);
   const lastPosRef = useRef({ x: -100, y: -100 });
+  const reduceMotion = useReducedMotion();
+
+  // 섹션 변경 시 렌더 루프를 재생성하지 않도록 최신 값을 ref로만 전달
+  const activeSectionRef = useRef(activeSection);
+  activeSectionRef.current = activeSection;
 
   // 실시간 색상 Lerp 보간용 Ref
   const colorRef = useRef<ColorRGB>({ ...defaultTheme });
@@ -41,7 +47,7 @@ export default function MouseTrail({ activeSection = 'intro' }: MouseTrailProps)
   }, []);
 
   useEffect(() => {
-    if (!mounted || (typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches)) {
+    if (!mounted || reduceMotion || (typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches)) {
       return;
     }
 
@@ -105,7 +111,7 @@ export default function MouseTrail({ activeSection = 'intro' }: MouseTrailProps)
       ctx.clearRect(0, 0, w, h);
 
       // 섹션별 포인트 컬러 실시간 Lerp 변환
-      const targetColor = sectionThemeMap[activeSection] || defaultTheme;
+      const targetColor = sectionThemeMap[activeSectionRef.current] || defaultTheme;
       const curColor = colorRef.current;
 
       curColor.r += (targetColor.r - curColor.r) * 0.08;
@@ -189,9 +195,9 @@ export default function MouseTrail({ activeSection = 'intro' }: MouseTrailProps)
       window.removeEventListener('mousemove', handleMouseMove);
       cancelAnimationFrame(animationFrameId);
     };
-  }, [mounted, activeSection]);
+  }, [mounted, reduceMotion]);
 
-  if (!mounted || (typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches)) {
+  if (!mounted || reduceMotion || (typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches)) {
     return null;
   }
 

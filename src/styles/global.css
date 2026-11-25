@@ -5,7 +5,6 @@
   --font-peecemaker: "Chiron GoRound TC", "Noto Sans KR", sans-serif;
   --font-ftt: "Oswald", "Noto Sans KR", sans-serif;
   --font-ufc: "Geologica", "Noto Sans KR", sans-serif;
-  --font-stencil: "Outfit", "Geologica", sans-serif;
 
   --color-pm: var(--pm-accent);
   --color-ftt: var(--ftt-accent);
@@ -14,7 +13,7 @@
 :root {
   --background: #08080a;
   --foreground: #f4f4f6;
-  
+
   --pm-accent: #fb923c;
   --ftt-accent: #e23645;
   --ufc-accent: #00ff41;
@@ -23,17 +22,14 @@
   --champagne-gold-glow: rgba(212, 175, 55, 0.25);
 }
 
-:root.dark {
-  --background: #08080a;
-  --foreground: #f4f4f6;
-}
-
 html, body {
   height: 100%;
   background-color: var(--background);
   color: var(--foreground);
   font-family: var(--font-main);
   -webkit-font-smoothing: antialiased;
+  /* 가로 스크롤 여지 차단 (Lenis는 세로 스크롤만 담당) */
+  overflow-x: clip;
 }
 
 /* Lenis smooth scroll */
@@ -50,7 +46,12 @@ html.lenis, html.lenis body {
 /* 모바일 터치 하이라이트 전역 제거 */
 * {
   -webkit-tap-highlight-color: transparent;
-  outline-color: transparent;
+}
+
+/* 키보드 포커스는 항상 보이게 (마우스 클릭 시에는 표시 안 함) */
+:focus-visible {
+  outline: 2px solid var(--champagne-gold);
+  outline-offset: 3px;
 }
 
 /* ================== */
@@ -62,24 +63,6 @@ html.lenis, html.lenis body {
   letter-spacing: -0.02em;
 }
 
-.massive-text {
-  font-size: clamp(4rem, 15vw, 18rem);
-  font-weight: 800;
-  line-height: 0.85;
-  letter-spacing: -0.04em;
-}
-
-.champagne-gradient-text {
-  background: linear-gradient(135deg, #FFF0D0 0%, #D4AF37 50%, #AA8221 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.gold-glow-border {
-  border: 1px solid rgba(212, 175, 55, 0.3);
-  box-shadow: 0 0 20px rgba(212, 175, 55, 0.08);
-}
-
 .text-micro {
   font-family: var(--font-main);
   font-size: 11px;
@@ -88,28 +71,11 @@ html.lenis, html.lenis body {
   font-weight: 600;
 }
 
-/* Modern Glassmorphism */
-.glass-panel {
-  position: relative;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(24px);
-}
-
-.glass-panel-gold {
-  position: relative;
-  background: rgba(212, 175, 55, 0.03);
-  border: 1px solid rgba(212, 175, 55, 0.15);
-  backdrop-filter: blur(24px);
-}
-
 /* Hide scrollbars */
 ::-webkit-scrollbar {
   width: 0px;
   background: transparent;
 }
-
-
 
 /* ================== */
 /* FOR THE TEAM KEYFRAMES & ACCELERATED CLASSES (GPU) */
@@ -124,10 +90,6 @@ html.lenis, html.lenis body {
   0% { transform: translate3d(-50%, 0, 0); }
   100% { transform: translate3d(0, 0, 0); }
 }
-@keyframes tickerFadeIn {
-  0% { opacity: 0; }
-  100% { opacity: 0.25; }
-}
 .animate-ticker-left {
   animation: tickerLeft linear infinite;
   will-change: transform;
@@ -136,58 +98,26 @@ html.lenis, html.lenis body {
   animation: tickerRight linear infinite;
   will-change: transform;
 }
-.animate-ticker-fade {
-  animation: tickerFadeIn 2.5s cubic-bezier(0.1, 0.9, 0.2, 1) forwards;
-}
 
-/* 본문 진입 양방향 수렴 슬라이드 (더욱 타이트하고 우아해진 25px offset) */
-@keyframes cubicSlideInLeft {
-  0% { opacity: 0; transform: translate3d(-25px, 0, 0); }
-  100% { opacity: 1; transform: translate3d(0, 0, 0); }
-}
-@keyframes cubicSlideInRight {
-  0% { opacity: 0; transform: translate3d(30px, 0, 0) scale(0.98); }
-  100% { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
-}
-.animate-entrance-left {
-  opacity: 0;
-  animation: cubicSlideInLeft 1.2s cubic-bezier(0.1, 0.9, 0.2, 1) forwards;
-  will-change: transform, opacity;
-}
-.animate-entrance-right {
-  opacity: 0;
-  animation: cubicSlideInRight 1.4s cubic-bezier(0.1, 0.9, 0.2, 1) 0.1s forwards;
-  will-change: transform, opacity;
-}
-
-/* 카드 내부 콘텐츠 순차적 블루밍 스태거 (CSS GPU 가속 가동) */
-@keyframes contentBloom {
-  0% { opacity: 0; transform: translate3d(0, 12px, 0); }
-  100% { opacity: 1; transform: translate3d(0, 0, 0); }
-}
-.stagger-item {
-  opacity: 0;
-  animation: contentBloom 1.0s cubic-bezier(0.1, 0.9, 0.2, 1) forwards;
-  will-change: transform, opacity;
-}
-
-/* CosmicBackground 별 반짝임 최적화 (GPU 가속) */
-@keyframes twinkle {
-  0%, 100% {
-    opacity: var(--twinkle-min-opacity, 0.1);
-    transform: scale(0.8) translate3d(0, 0, 0);
+/* ================== */
+/* REDUCED MOTION */
+/* ================== */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
   }
-  50% {
-    opacity: var(--twinkle-max-opacity, 0.8);
-    transform: scale(1.2) translate3d(0, 0, 0);
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  /* 흐르는 텍스트 티커는 정지 */
+  .animate-ticker-left,
+  .animate-ticker-right {
+    animation: none !important;
   }
 }
-
-.animate-twinkle {
-  animation: twinkle var(--twinkle-duration, 5s) ease-in-out infinite;
-  animation-delay: var(--twinkle-delay, 0s);
-  will-change: transform, opacity;
-}
-
-
-

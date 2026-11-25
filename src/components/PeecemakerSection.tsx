@@ -2,16 +2,12 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { SiNextdotjs, SiDocker, SiSupabase, SiReactquery, SiPostgresql, SiVercel, SiGithub } from 'react-icons/si';
 import { RiMapPinRangeLine } from 'react-icons/ri';
-import { useStore } from '@nanostores/react';
-import { $activeSection } from '../store/sectionStore';
 
 export default function PeecemakerSection() {
   const [imageLoaded, setImageLoaded] = useState(false);
-  const activeSection = useStore($activeSection);
-  const isTransitionTarget = activeSection === 'peecemaker';
 
   // 제주도의 부드럽고 산뜻한 감성에 맞는 Easing 정의
-  const customEasing = [0.16, 1, 0.3, 1] as any;
+  const customEasing: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
   // Stagger 컨테이너 Variants (블록 레벨 순차 등장)
   const containerVariants = {
@@ -157,17 +153,16 @@ export default function PeecemakerSection() {
               <span className="w-1.5 h-1.5 rounded-full bg-[#fb923c] animate-pulse inline-block" />
               JEJU CLEAN MAP
             </p>
-            <h1
+            <h2
               className="font-display font-extrabold uppercase leading-[0.82] text-white mb-3.5"
               style={{
                 fontSize: 'clamp(2.0rem, 5.0vw, 5.0rem)',
                 letterSpacing: '-0.03em',
-                viewTransitionName: isTransitionTarget ? 'project-title' : 'none',
               }}
             >
               <span className="text-[#fb923c]">PEECE</span>
               <br />MAKER
-            </h1>
+            </h2>
             <p className="text-white/80 leading-relaxed font-light" style={{ fontSize: 'clamp(1.0rem, 1.2vw, 1.3rem)', lineHeight: '1.55' }}>
               제주도 내 공중화장실의 위치 및 편의시설 공공데이터를 카카오맵 지도 상에 직관적으로 시각화하고, Supabase RLS 무서버 보안 아키텍처 기반의 실시간 소통 공간을 제공하는 로컬 라이프 커뮤니티 플랫폼입니다.
             </p>
@@ -240,6 +235,10 @@ export default function PeecemakerSection() {
               <img
                 src="/projects/peecemaker.webp"
                 alt="PeeceMaker 스크린샷"
+                width={1920}
+                height={1080}
+                loading="lazy"
+                decoding="async"
                 className={`w-full h-full object-cover object-top transition-all duration-700 ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
                 onLoad={() => setImageLoaded(true)}
               />

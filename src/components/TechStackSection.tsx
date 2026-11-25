@@ -37,7 +37,7 @@ const techGroups = [
 ];
 
 export default function TechStackSection() {
-  const easing = [0.16, 1, 0.3, 1] as any;
+  const easing: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
   return (
     <section className="w-full relative flex flex-col justify-center items-center px-6 md:px-16 lg:px-24 py-24 lg:py-32 overflow-x-hidden bg-transparent text-(--foreground)">
@@ -82,7 +82,7 @@ export default function TechStackSection() {
                   transition={{ duration: 0.8, delay: groupIdx * 0.2 + 1.2 }}
                   className="text-xs md:text-sm font-display tracking-[0.35em] font-semibold text-[#D4AF37] uppercase"
                 >
-                  {group.category.replace('_', ' ')}
+                  {group.category.replaceAll('_', ' ')}
                 </motion.span>
                 <motion.div
                   initial={{ scaleX: 0 }}

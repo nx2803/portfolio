@@ -1,7 +1,7 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { useStore } from '@nanostores/react';
 import { $activeSection } from '../store/sectionStore';
-import { scrollToSection } from '../lib/scroll';
+import { scrollToSection, $lenis } from '../lib/scroll';
 import { useState, useEffect } from 'react';
 import { HiMenu, HiX } from 'react-icons/hi';
 
@@ -34,9 +34,22 @@ export default function Header() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // 메뉴가 열리면 Lenis와 네이티브 스크롤을 함께 잠그고, 닫으면 반드시 복구한다.
   useEffect(() => {
-    if (isMenuOpen) document.body.style.overflow = 'hidden';
-    else document.body.style.overflow = '';
+    const lenis = $lenis.get();
+
+    if (isMenuOpen) {
+      lenis?.stop();
+      document.body.style.overflow = 'hidden';
+    } else {
+      lenis?.start();
+      document.body.style.overflow = '';
+    }
+
+    return () => {
+      lenis?.start();
+      document.body.style.overflow = '';
+    };
   }, [isMenuOpen]);
 
   const currentColor = themeColors[activeSection] || '#D4AF37';
@@ -71,7 +84,7 @@ export default function Header() {
               className="flex items-center gap-2 group shrink-0"
             >
               <span className="text-[14px] font-bold tracking-[0.2em] uppercase font-display text-white/80 group-hover:text-[#D4AF37] transition-colors">
-                NX280 <span className="text-[#D4AF37] font-semibold">.</span>
+                PORTFOLIO <span className="text-[#D4AF37] font-semibold">.</span>
               </span>
             </button>
 
@@ -127,7 +140,7 @@ export default function Header() {
               className="shrink-0"
             >
               <span className="text-[13px] font-bold tracking-[0.2em] uppercase font-display" style={{ color: currentColor }}>
-                NX280<span className="text-[#D4AF37]">.</span>
+                PORTFOLIO<span className="text-[#D4AF37]">.</span>
               </span>
             </button>
 
@@ -144,6 +157,9 @@ export default function Header() {
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               className="p-1 shrink-0"
               style={{ color: currentColor }}
+              aria-label={isMenuOpen ? '메뉴 닫기' : '메뉴 열기'}
+              aria-expanded={isMenuOpen}
+              aria-controls="mobile-nav-menu"
             >
               {isMenuOpen ? <HiX className="text-xl" /> : <HiMenu className="text-xl" />}
             </button>
@@ -155,6 +171,7 @@ export default function Header() {
       <AnimatePresence>
         {isMenuOpen && (
           <motion.div
+            id="mobile-nav-menu"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}

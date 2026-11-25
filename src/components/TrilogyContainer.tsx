@@ -1,7 +1,9 @@
 import { useEffect } from 'react';
 import { useStore } from '@nanostores/react';
+import { MotionConfig } from 'framer-motion';
 import { $activeSection, updateActiveSection } from '../store/sectionStore';
 import { setLenis } from '../lib/scroll';
+import type Lenis from 'lenis';
 
 // 섹션 컴포넌트 직접 임포트
 import HeroSection from './HeroSection';
@@ -27,20 +29,14 @@ export default function TrilogyContainer() {
 
   // Lenis 스무스 스크롤 초기화 (인스턴스는 전역 store로 공유해 내비게이션과 동일 엔진 사용)
   useEffect(() => {
-    // 프로젝트 이미지 프리로드
-    ['/projects/peecemaker.webp', '/projects/fortheteam.webp', '/projects/ufc.webp'].forEach((src) => {
-      const img = new Image();
-      img.src = src;
-    });
-
-    let lenis: any;
+    let lenis: Lenis | null = null;
     let rafId = 0;
     let cancelled = false;
 
-    import('lenis').then(({ default: Lenis }) => {
+    import('lenis').then(({ default: LenisCtor }) => {
       if (cancelled) return;
 
-      lenis = new Lenis({
+      lenis = new LenisCtor({
         duration: 1.2,
         easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
         smoothWheel: true,
@@ -48,7 +44,7 @@ export default function TrilogyContainer() {
       setLenis(lenis);
 
       const raf = (time: number) => {
-        lenis.raf(time);
+        lenis?.raf(time);
         rafId = requestAnimationFrame(raf);
       };
       rafId = requestAnimationFrame(raf);
@@ -64,22 +60,29 @@ export default function TrilogyContainer() {
 
   // Intersection Observer로 activeSection 추적
   useEffect(() => {
+    // threshold를 넘은 배치가 없어도 정확한 섹션이 남도록 전체 ratio를 누적해서 비교한다.
+    const ratios = new Map<string, number>();
+
     const observer = new IntersectionObserver(
       (entries) => {
-        // 가장 많이 보이는 섹션을 active로 설정
-        let maxRatio = 0;
-        let dominantId = '';
         entries.forEach((entry) => {
-          if (entry.isIntersecting && entry.intersectionRatio > maxRatio) {
-            maxRatio = entry.intersectionRatio;
-            dominantId = entry.target.id;
+          ratios.set(entry.target.id, entry.isIntersecting ? entry.intersectionRatio : 0);
+        });
+
+        let dominantId = '';
+        let maxRatio = 0;
+        ratios.forEach((ratio, id) => {
+          if (ratio > maxRatio) {
+            maxRatio = ratio;
+            dominantId = id;
           }
         });
+
         if (dominantId) {
           updateActiveSection(dominantId);
         }
       },
-      { threshold: [0.3, 0.5, 0.7] }
+      { threshold: [0, 0.15, 0.3, 0.5, 0.7, 0.9] }
     );
 
     SECTION_IDS.forEach((id) => {
@@ -93,56 +96,58 @@ export default function TrilogyContainer() {
   const accentColor = ACCENT_COLORS[activeSection] || '#D4AF37';
 
   return (
-    <main
-      className="relative w-full bg-[#08080a] text-white"
-      style={{
-        '--accent': accentColor,
-        '--foreground': '#f4f4f2',
-        '--background': '#08080a',
-      } as any}
-    >
-      {/* ── MOUSE TRAIL LAYER ── */}
-      <MouseTrail activeSection={activeSection} />
+    <MotionConfig reducedMotion="user">
+      <main
+        className="relative w-full bg-[#08080a] text-white"
+        style={{
+          '--accent': accentColor,
+          '--foreground': '#f4f4f2',
+          '--background': '#08080a',
+        } as React.CSSProperties}
+      >
+        {/* ── MOUSE TRAIL LAYER ── */}
+        <MouseTrail activeSection={activeSection} />
 
-      {/* ── COSMIC BACKGROUND (fixed) ── */}
-      <CosmicBackground activeSection={activeSection} />
+        {/* ── COSMIC BACKGROUND (fixed) ── */}
+        <CosmicBackground activeSection={activeSection} />
 
-      {/* Peecemaker 글로벌 그라데이션 */}
-      <div
-        className="fixed inset-0 bg-linear-to-tr from-[#e0f5ff]/20 via-[#ffe9c5]/20 to-[#e0f5ff]/20 pointer-events-none transition-opacity duration-1000"
-        style={{ zIndex: 1, opacity: activeSection === 'peecemaker' ? 1 : 0 }}
-      />
+        {/* Peecemaker 글로벌 그라데이션 */}
+        <div
+          className="fixed inset-0 bg-linear-to-tr from-[#e0f5ff]/20 via-[#ffe9c5]/20 to-[#e0f5ff]/20 pointer-events-none transition-opacity duration-1000"
+          style={{ zIndex: 1, opacity: activeSection === 'peecemaker' ? 1 : 0 }}
+        />
 
-      {/* ── 모든 섹션을 세로로 연속 배치 ── */}
-      <div className="relative z-10">
-        <section id="intro" className="min-h-screen">
-          <HeroSection />
-        </section>
+        {/* ── 모든 섹션을 세로로 연속 배치 ── */}
+        <div className="relative z-10">
+          <section id="intro" className="min-h-screen scroll-mt-24">
+            <HeroSection />
+          </section>
 
-        <section id="techstack">
-          <TechStackSection />
-        </section>
+          <section id="techstack" className="scroll-mt-24">
+            <TechStackSection />
+          </section>
 
-        <section id="trilogy_intro">
-          <ProjectTrilogySection />
-        </section>
+          <section id="trilogy_intro" className="scroll-mt-24">
+            <ProjectTrilogySection />
+          </section>
 
-        <section id="peecemaker">
-          <PeecemakerSection />
-        </section>
+          <section id="peecemaker" className="scroll-mt-24">
+            <PeecemakerSection />
+          </section>
 
-        <section id="fortheteam">
-          <ForTheTeamSection />
-        </section>
+          <section id="fortheteam" className="scroll-mt-24">
+            <ForTheTeamSection />
+          </section>
 
-        <section id="ufc">
-          <UfcSection />
-        </section>
+          <section id="ufc" className="scroll-mt-24">
+            <UfcSection />
+          </section>
 
-        <section id="contact">
-          <Footer />
-        </section>
-      </div>
-    </main>
+          <section id="contact" className="scroll-mt-24">
+            <Footer />
+          </section>
+        </div>
+      </main>
+    </MotionConfig>
   );
 }

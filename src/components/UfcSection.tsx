@@ -2,8 +2,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { SiSpring, SiFastapi, SiPython, SiPostgresql, SiNextdotjs, SiVercel } from 'react-icons/si';
 import { FaJava, FaGithub } from 'react-icons/fa';
-import { useStore } from '@nanostores/react';
-import { $activeSection } from '../store/sectionStore';
 
 /**
  * 100% 안전한 인라인 Typewriter 커스텀 훅
@@ -59,7 +57,7 @@ function InlineTypewriter({
   style?: React.CSSProperties;
   cursor?: boolean;
   cursorColor?: string;
-  as?: any;
+  as?: React.ElementType;
 }) {
   const typed = useTypewriter(text, delay, speed, active);
   return (
@@ -99,7 +97,7 @@ function CornerFrame({
   delay?: number;
 }) {
   const o = -offset;
-  const easing = [0.16, 1, 0.3, 1] as any;
+  const easing: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
   return (
     <>
@@ -180,9 +178,7 @@ function CornerFrame({
 
 export default function UfcSection() {
   const [imageLoaded, setImageLoaded] = useState(false);
-  const activeSection = useStore($activeSection);
-  const isTransitionTarget = activeSection === 'ufc';
-  const easing = [0.16, 1, 0.3, 1] as any;
+  const easing: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
   // 섹션이 뷰포트에 들어올 때 타이핑을 시작한다.
   // (activeSection 기반 게이팅은 세로 스크롤 모델에서 발화가 늦어 빈 섹션처럼 보일 수 있었다)
@@ -251,7 +247,6 @@ export default function UfcSection() {
                 fontSize: 'clamp(1.8rem, 4.2vw, 4.2rem)',
                 letterSpacing: '-0.04em',
                 fontFamily: '"Geologica", sans-serif',
-                viewTransitionName: isTransitionTarget ? 'project-title' : 'none',
               }}
               delay={0.3}
               speed={25}
@@ -391,6 +386,10 @@ export default function UfcSection() {
                 <img
                   src="/projects/ufc.webp"
                   alt="UFC Dashboard 스크린샷"
+                  width={1920}
+                  height={1080}
+                  loading="lazy"
+                  decoding="async"
                   className={`w-full h-full object-cover object-top transition-all duration-700 ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
                   onLoad={() => setImageLoaded(true)}
                 />

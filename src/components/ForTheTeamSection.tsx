@@ -1,16 +1,12 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { useStore } from '@nanostores/react';
-import { $activeSection } from '../store/sectionStore';
 import { SiNestjs, SiNextdotjs, SiSocketdotio, SiOpentelemetry, SiRedis, SiPostgresql, SiVercel, SiGithub } from 'react-icons/si';
 
 export default function ForTheTeamSection() {
   const [imageLoaded, setImageLoaded] = useState(false);
-  const activeSection = useStore($activeSection);
-  const isTransitionTarget = activeSection === 'fortheteam';
 
-  // 피스메이커와 100% 동기화된 프리미엄 시네마틱 모션 Easing 정의
-  const customEasing = [0.16, 1, 0.3, 1] as any; // Ultra-smooth cubic bezier
+
+  const customEasing: [number, number, number, number] = [0.16, 1, 0.3, 1]; // Ultra-smooth cubic bezier
 
   // Stagger 컨테이너 Variants (기계적 조립 컨셉)
   const containerVariants = {
@@ -125,14 +121,13 @@ export default function ForTheTeamSection() {
                 ENTERPRISE SPORTS HUB
               </p>
             </div>
-            
+
             <h2
               className="font-bold uppercase italic leading-[0.82] text-white pb-3 w-fit mb-6 relative"
               style={{
                 fontSize: 'clamp(2.2rem, 5.5vw, 5.5rem)',
                 letterSpacing: '-0.04em',
                 fontFamily: '"Oswald", sans-serif',
-                viewTransitionName: isTransitionTarget ? 'project-title' : 'none',
               }}
             >
               FOR THE <br className="md:hidden" /> <span className="text-[#e23645]"> TEAM</span>
@@ -210,13 +205,15 @@ export default function ForTheTeamSection() {
           <div
             className="w-full lg:max-h-[38dvh] drop-shadow-[0_20px_50px_rgba(0,0,0,0.9)] select-none overflow-hidden border border-white/10 rounded-2xl bg-[#070708] relative"
           >
-            <div 
+            <div
               className="w-full h-full aspect-video lg:aspect-auto overflow-hidden relative bg-[#0c0d0f]"
             >
               <img
                 src="/projects/fortheteam.webp"
                 alt="For The Team 스크린샷"
-                loading="eager"
+                width={1920}
+                height={1080}
+                loading="lazy"
                 decoding="async"
                 className={`w-full h-full object-cover object-top transition-opacity duration-700 ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
                 onLoad={() => setImageLoaded(true)}
