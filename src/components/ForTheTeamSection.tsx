@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { SiNestjs, SiNextdotjs, SiSocketdotio, SiOpentelemetry, SiRedis, SiPostgresql, SiVercel, SiGithub } from 'react-icons/si';
+import { SiNestjs, SiNextdotjs, SiSocketdotio, SiOpentelemetry, SiRedis, SiPostgresql, SiPrisma, SiDocker, SiVercel, SiGithub } from 'react-icons/si';
+import { HiOutlineCollection } from 'react-icons/hi';
 
 export default function ForTheTeamSection() {
   const [imageLoaded, setImageLoaded] = useState(false);
@@ -55,9 +56,12 @@ export default function ForTheTeamSection() {
     { Icon: SiNextdotjs, name: 'Next.js 16', desc: 'PPR Architecture' },
     { Icon: SiNestjs, name: 'NestJS', desc: 'WebSocket Gateway' },
     { Icon: SiSocketdotio, name: 'Socket.io', desc: 'Live Score Sync' },
-    { Icon: SiRedis, name: 'Redis Cache', desc: 'Zero Latency' },
+    { Icon: SiRedis, name: 'Redis Cache', desc: 'Query Cache' },
     { Icon: SiOpentelemetry, name: 'OpenTelemetry', desc: 'Distributed Tracing' },
     { Icon: SiPostgresql, name: 'PostgreSQL', desc: 'Normalized Domain' },
+    { Icon: SiPrisma, name: 'Prisma', desc: 'Type-Safe ORM' },
+    { Icon: HiOutlineCollection, name: 'Zustand', desc: 'Global Store' },
+    { Icon: SiDocker, name: 'Docker', desc: 'Compose Deploy' },
   ];
 
   const highlights = [
@@ -67,7 +71,7 @@ export default function ForTheTeamSection() {
     },
     {
       title: "실시간 스코어 동기화 & Next.js PPR 스트리밍",
-      desc: "Next.js 16 PPR(Partial Prerendering)로 정적 셸을 즉시 서빙하고, NestJS WebSocket Gateway와 React Query 캐시 Invalidation을 결합해 1초 미만의 지연 시간으로 최신 스코어를 동기화했습니다.",
+      desc: "Next.js 16 PPR(Partial Prerendering)로 정적 셸을 즉시 서빙하고, NestJS WebSocket Gateway와 React Query 캐시 Invalidation을 결합해 소켓 이벤트 수신 즉시 최신 스코어로 화면을 갱신합니다.",
     },
     {
       title: "WCAG 2.0 대비 알고리즘 & 런타임 CSS 테마 엔진",
@@ -141,7 +145,7 @@ export default function ForTheTeamSection() {
             </h2>
 
             <p className="text-white/80 leading-relaxed font-light" style={{ fontSize: 'clamp(1.15rem, 1.35vw, 1.45rem)', lineHeight: '1.6' }}>
-              다양한 글로벌 스포츠 프로바이더의 이기종 데이터를 규격화된 단일 도메인 모델로 정규화하고, 소켓 기반 라이브 스코어 동기화와 사용자 맞춤형 테마 주입을 지원하는 실시간 스포츠 허브 플랫폼입니다.
+              다양한 글로벌 스포츠 프로바이더의 이기종 데이터를 규격화된 단일 도메인 모델로 정규화하고, 소켓 기반 라이브 스코어 동기화와 팔로우 팀 개인화 캘린더, 사용자 맞춤형 테마 주입을 지원하는 실시간 스포츠 허브 플랫폼입니다.
             </p>
           </motion.div>
 

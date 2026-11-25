@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { SiNextdotjs, SiDocker, SiSupabase, SiReactquery, SiPostgresql, SiVercel, SiGithub } from 'react-icons/si';
+import { SiNextdotjs, SiDocker, SiSupabase, SiReactquery, SiPostgresql, SiGoogle, SiVercel, SiGithub } from 'react-icons/si';
 import { RiMapPinRangeLine } from 'react-icons/ri';
+import { HiChartBar } from 'react-icons/hi';
 
 export default function PeecemakerSection() {
   const [imageLoaded, setImageLoaded] = useState(false);
@@ -108,6 +109,8 @@ export default function PeecemakerSection() {
     { Icon: SiPostgresql, name: 'PostgreSQL', desc: 'Row Level Security' },
     { Icon: SiReactquery, name: 'React Query', desc: 'Smart Caching v5' },
     { Icon: RiMapPinRangeLine, name: 'Kakao Maps', desc: 'Marker Clustering' },
+    { Icon: HiChartBar, name: 'Recharts', desc: 'Data Dashboard' },
+    { Icon: SiGoogle, name: 'OAuth 2.0', desc: 'Google · GitHub' },
   ];
 
   const highlights = [
@@ -116,12 +119,16 @@ export default function PeecemakerSection() {
       desc: "백엔드 서버 없이 PostgreSQL RLS(행 수준 보안) 정책과 JWT 세션 검증을 DB 단에 직접 구현하여, API 강제 변조를 통한 커뮤니티 데이터의 무단 수정 및 비인가 조작을 원천 차단했습니다.",
     },
     {
-      title: "카카오맵 1,500개 마커 렌더링 성능 최적화",
-      desc: "제주도 전역 화장실 데이터를 지도 상에 시각화할 때 발생하는 브라우저 DOM 렌더링 병목을 해결하기 위해 Kakao Map Clusterer를 도입, 축척별 동적 그룹화로 렌더링 프레임 성능을 개선했습니다.",
+      title: "카카오맵 마커 렌더링 성능 최적화",
+      desc: "제주시 전역 화장실 데이터를 지도 상에 시각화할 때 발생하는 브라우저 DOM 렌더링 병목을 해결하기 위해 Kakao Map Clusterer를 도입, 축척별 동적 그룹화로 렌더링 프레임 성능을 개선했습니다.",
     },
     {
       title: "Docker Standalone 기반의 컨테이너 배포 경량화",
-      desc: "Next.js standalone 빌드 및 Multi-stage 패키징 파이프라인을 도입하여, 프로덕션 구동에 불필요한 의존성 용량을 80% 이상 제거하고 컨테이너 이미지를 초경량으로 배포 최적화했습니다.",
+      desc: "Next.js standalone 빌드 및 Multi-stage 패키징 파이프라인을 도입하여, 프로덕션 구동에 불필요한 의존성을 덜어내고 컨테이너 이미지를 초경량으로 배포 최적화했습니다.",
+    },
+    {
+      title: "공공데이터 기반 통계 대시보드 시각화",
+      desc: "읍·면·동별 화장실 분포와 편의시설 수용력을 Recharts 기반 반응형 차트로 제공하여, 정적인 텍스트 공공데이터를 조건별 필터링이 가능한 인사이트로 전환했습니다.",
     },
   ];
 
@@ -164,7 +171,7 @@ export default function PeecemakerSection() {
               <br />MAKER
             </h2>
             <p className="text-white/80 leading-relaxed font-light" style={{ fontSize: 'clamp(1.0rem, 1.2vw, 1.3rem)', lineHeight: '1.55' }}>
-              제주도 내 공중화장실의 위치 및 편의시설 공공데이터를 카카오맵 지도 상에 직관적으로 시각화하고, Supabase RLS 무서버 보안 아키텍처 기반의 실시간 소통 공간을 제공하는 로컬 라이프 커뮤니티 플랫폼입니다.
+              제주시 공중화장실의 위치 및 편의시설 공공데이터를 카카오맵 지도 상에 직관적으로 시각화하고, Supabase RLS 무서버 보안 아키텍처 기반의 실시간 소통 공간을 제공하는 로컬 라이프 커뮤니티 플랫폼입니다.
             </p>
           </motion.div>
 

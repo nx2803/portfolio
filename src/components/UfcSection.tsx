@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { motion, useInView } from 'framer-motion';
-import { SiSpring, SiFastapi, SiPython, SiPostgresql, SiNextdotjs, SiVercel } from 'react-icons/si';
+import { SiSpring, SiFastapi, SiPython, SiPostgresql, SiNextdotjs, SiRedis, SiVercel } from 'react-icons/si';
 import { FaJava, FaGithub } from 'react-icons/fa';
 
 /**
@@ -188,10 +188,11 @@ export default function UfcSection() {
   const stacks = [
     { Icon: FaJava, name: 'JAVA 21', desc: 'Virtual Threads Core' },
     { Icon: SiSpring, name: 'SPRING BATCH 6', desc: 'Chunk Processing' },
-    { Icon: SiPython, name: 'PYTHON 3.12', desc: 'Data Analytics' },
+    { Icon: SiPython, name: 'PYTHON 3.12', desc: 'LLM Service' },
     { Icon: SiFastapi, name: 'FASTAPI', desc: 'LLM Agent Orchestration' },
     { Icon: SiNextdotjs, name: 'NEXT.JS 15', desc: 'RSC Streaming' },
     { Icon: SiPostgresql, name: 'POSTGRESQL', desc: 'Relational Store' },
+    { Icon: SiRedis, name: 'REDIS (UPSTASH)', desc: 'Response Caching' },
   ];
 
   const highlights = [
@@ -256,7 +257,7 @@ export default function UfcSection() {
 
             {/* 소개 */}
             <InlineTypewriter
-              text="대규모 기술 트렌드 데이터를 수집·시각화하고 Gemini AI로 실시간 트렌드 해설을 생성하여 스포츠 중계 톤으로 제공하는 지능형 시계열 기술 분석 대시보드입니다."
+              text="대규모 기술 트렌드 데이터를 수집·시각화하고 Gemini AI로 실시간 트렌드 해설을 생성하여 스포츠 중계 톤으로 제공하는 지능형 시계열 기술 분석 대시보드로, 수집용 Spring Boot 서버·FastAPI AI 모듈·Next.js 클라이언트가 분리된 3-서비스 구조로 운영됩니다."
               className="text-white/80 leading-relaxed font-light block"
               style={{ fontSize: 'clamp(1.0rem, 1.15vw, 1.25rem)', lineHeight: '1.5' }}
               delay={0.8}
