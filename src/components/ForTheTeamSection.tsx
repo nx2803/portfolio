@@ -243,7 +243,7 @@ export default function ForTheTeamSection() {
               <span>Live Site</span>
             </a>
             <a
-              href="https://github.com/nx2803"
+              href="https://github.com/nx2803/ForTheTeam"
               target="_blank"
               rel="noopener noreferrer"
               className="flex-1 py-3 bg-white/5 hover:bg-white/10 border border-white/10 text-white font-bold text-sm rounded-none flex items-center justify-center gap-2 tracking-wide transition-all"
